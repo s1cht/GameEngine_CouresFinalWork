@@ -1,24 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="App">
-      <UniqueIdentifier>{9e7c2cc5-3bfe-471f-8eed-086df5a1a030}</UniqueIdentifier>
+    <Filter Include="include">
+      <UniqueIdentifier>{02308f9f-dd00-46fb-b644-ae9ce69773fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{7dfe0c78-4449-4f82-8587-fe3e2e78590b}</UniqueIdentifier>
+    <Filter Include="include\Window">
+      <UniqueIdentifier>{e64c5a1b-d9d0-4eab-a48f-86156d18a35d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{05313ffe-27b5-435c-bffe-0c6ef5a431ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>App</Filter>
-    </ClCompile>
     <ClCompile Include="Window.cpp">
-      <Filter>Engine</Filter>
+      <Filter>include\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
-      <Filter>Engine</Filter>
+      <Filter>include\Window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

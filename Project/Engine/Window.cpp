@@ -1,55 +1,56 @@
 #include "Window.h"
 
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+
+LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	switch (uMsg)
-	{
-		case WM_PAINT:
-		{
-			PAINTSTRUCT ps;
-			HDC hdc = BeginPaint(hwnd, &ps);
+    switch (msg)
+    {
+    case WM_PAINT:
+    {
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hwnd, &ps);
 
-			// All painting occurs here, between BeginPaint and EndPaint.
+        // All painting occurs here, between BeginPaint and EndPaint.
 
-			FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-	
-			EndPaint(hwnd, &ps);
-		}
-		case WM_DESTROY:
-		{
-			PostQuitMessage(0);
-			return 0;
-		}
-		default:
-		{
-			return DefWindowProc(hwnd, uMsg, wParam, lParam);
-		}
-	}
+        FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+
+        EndPaint(hwnd, &ps);
+        break;
+    }
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        return 0;
+        break;
+    default:
+        return DefWindowProc(hwnd, msg, wParam, lParam);
+    }
+
 }
 
-Window::Window(INT w, INT h, const WCHAR className[], HINSTANCE hInstance) : w_width(w), w_heigth(h)
-{	
-	WNDCLASSEX wcex = {};
-	wcex.cbSize = sizeof(WNDCLASSEX);
-	wcex.lpfnWndProc = WindowProc;
-	wcex.hInstance = HINSTANCE();
-	wcex.lpszClassName = className;
+bool Window::Create(LPCWSTR title, HINSTANCE hInstance, INT nShowCmd)
+{
+    WNDCLASSEX wcex = {};
+    wcex.cbSize = sizeof(WNDCLASSEX);
+    wcex.lpfnWndProc = WndProc;
+    wcex.hInstance = hInstance;
+    wcex.lpszClassName = winClass;
 
-	RegisterClassEx(&wcex);
+    RegisterClassEx(&wcex);
 
-	m_HWND = CreateWindowExW(0, className, L"Welcome!", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, w_width, w_heigth, NULL, NULL, hInstance, NULL);
-	
-	if (m_HWND == NULL)
-	{
-		PostQuitMessage(0);
-	}
+    m_hwnd = CreateWindowExW(NULL,
+        winClass, title,
+        WS_OVERLAPPEDWINDOW | WS_MAXIMIZE, 
+        CW_USEDEFAULT, CW_USEDEFAULT,
+        width, heigth,
+        NULL, NULL, hInstance, NULL);
+
+    if (!m_hwnd)
+        return FALSE;
+
+    ShowWindow(m_hwnd, nShowCmd);
+    return TRUE;
 }
 
 Window::~Window()
 {
-}
-
-HWND Window::GetHWND()
-{
-	return m_HWND;
 }

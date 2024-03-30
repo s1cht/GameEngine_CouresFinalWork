@@ -1,16 +1,17 @@
 #pragma once
+#include <Windows.h>
 
-#include <windows.h>
+const LPCWSTR winClass = L"Engine";
 
 class Window
 {
 private:
-	INT w_width, w_heigth;
-	HWND m_HWND;
+	HWND m_hwnd;
+	int width, heigth;
+	static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 public:
-	Window(INT, INT, const WCHAR[], HINSTANCE);
+	Window(INT w, INT h) : width(w), heigth(h), m_hwnd(HWND()) {};
+	bool Create(LPCWSTR title, HINSTANCE hInstance, INT nShowCmd);
 	~Window();
-	
-	HWND GetHWND();
 };
 
