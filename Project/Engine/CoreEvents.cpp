@@ -26,6 +26,18 @@ size_t CoreEvents::AddListener(const Event::Function& function, std::string even
 	return size_t();
 }
 
+void CoreEvents::FireEvent(std::string eventName)
+{
+	for (auto element = Events.begin(), _end = Events.end(); element != _end; element++)
+	{
+		if (element->first == eventName)
+		{
+			element->second->Fire();
+			break;
+		}
+	}
+}
+
 void CoreEvents::DeleteListener(std::string eventName, size_t function)
 {
 	for (auto element = Events.begin(), _end = Events.end(); element != _end; element++)
@@ -37,3 +49,5 @@ void CoreEvents::DeleteListener(std::string eventName, size_t function)
 		}
 	}
 }
+
+CoreEvents EngineCoreEvents;

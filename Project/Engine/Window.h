@@ -11,11 +11,11 @@ private:
 	int width, height;
 	bool isRunning = false;
 	static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	// Event classes
+
 	class WindowDestroyedEvent : public Event
 	{
 	public:
-		~WindowDestroyedEvent() override {};
+		~WindowDestroyedEvent() {};
 	public:
 		size_t Connect(const Function& handler) override
 		{
@@ -40,6 +40,6 @@ public:
 	~Window();
 public:
 	//virtual void onDestroy(); -- DEPRECATED
-	WindowDestroyedEvent onDestroy;
+	WindowDestroyedEvent destroy;
 };
 

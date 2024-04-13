@@ -23,8 +23,7 @@ void App::Update()
 
 bool App::Runs()
 {
-	//return m_Window->Runs();
-	return true;
+	return m_Window->Runs();
 }
 
 App::~App()

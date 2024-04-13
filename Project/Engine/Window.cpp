@@ -4,26 +4,26 @@
 
 LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    switch (msg)
-    {
-    case WM_PAINT:
-    {
-        PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hwnd, &ps);
+	switch (msg)
+	{
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hwnd, &ps);
 
-        FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-        EndPaint(hwnd, &ps);
-        break;
-    }
-    case WM_DESTROY:
-    {
-        MessageBox(0, L"Error", L"Error", MB_OK | MB_ICONQUESTION);
-        PostQuitMessage(0);
-        break;
-    }
-    default:
-        return DefWindowProc(hwnd, msg, wParam, lParam);
-    }
+		FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+		EndPaint(hwnd, &ps);
+		break;
+	}
+	case WM_DESTROY:
+	{
+        EngineCoreEvents.FireEvent("WindowDestroyed");
+		PostQuitMessage(0);
+		break;
+	}
+	default:
+		return DefWindowProc(hwnd, msg, wParam, lParam);
+	}
 }
 
 bool Window::Create(LPCWSTR title)
@@ -46,8 +46,8 @@ bool Window::Create(LPCWSTR title)
     if (!m_hwnd)
         return FALSE;
 
-    EngineCoreEvents.RegisterCoreEvent("WindowDestroyed", &onDestroy);
-    //EngineCoreEvents.AddListener([&](void) { isRunning = false; MessageBox(0, L"HI", L"Error", MB_OK | MB_ICONQUESTION); }, "WindowDestroyed");
+    EngineCoreEvents.RegisterCoreEvent("WindowDestroyed", &destroy);
+    EngineCoreEvents.AddListener([&](void) { isRunning = false; return; }, "WindowDestroyed");
 
     ShowWindow(m_hwnd, SW_SHOW);
     UpdateWindow(m_hwnd);
