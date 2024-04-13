@@ -8,11 +8,15 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_PAINT:
 	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hwnd, &ps);
 
+		PAINTSTRUCT ps;
+        RECT rc;
+        HDC hdc = BeginPaint(hwnd, &ps);
+        GetClientRect(hwnd, &rc);
 		FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
 		EndPaint(hwnd, &ps);
+        EngineCoreEvents.FireEvent("WindowDestroyed");
+        EngineCoreEvents.FireEvent<RECT>("WindowUpdated", rc);
 		break;
 	}
 	case WM_DESTROY:
@@ -47,7 +51,12 @@ bool Window::Create(LPCWSTR title)
         return FALSE;
 
     EngineCoreEvents.RegisterCoreEvent("WindowDestroyed", &destroy);
-    EngineCoreEvents.AddListener([&](void) { isRunning = false; return; }, "WindowDestroyed");
+    EngineCoreEvents.RegisterCoreEvent("WindowUpdated", &update);
+
+
+
+    EngineCoreEvents.AddListener<void()>([&]() { isRunning = false; return; }, "WindowDestroyed");
+    EngineCoreEvents.AddListener<void(RECT)>([&](RECT rc) { OutputDebugString((LPCWSTR)rc.left); }, "WindowUpdated");
 
     ShowWindow(m_hwnd, SW_SHOW);
     UpdateWindow(m_hwnd);

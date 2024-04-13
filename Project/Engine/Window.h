@@ -16,22 +16,30 @@ private:
 	{
 	public:
 		~WindowDestroyedEvent() {};
-	public:
-		size_t Connect(const Function& handler) override
-		{
-			handlers.push_back(handler);
-			return handlers.size();
-		}
-		void Disconnect(const size_t function) override
-		{
-			handlers.erase(handlers.begin() + function);
-		}
-		void Fire() const override
+
+		void Fire(...) const override 
 		{
 			for (const auto& function : handlers) {
 				function();
 			}
-		}
+		};
+	};
+	class WindowUpdatedEvent : public Event
+	{
+	public:
+		using Function = std::function<void(RECT)>;
+
+	private:
+		std::vector<Function> handlers;
+	public:
+		~WindowUpdatedEvent() {};
+
+		void Fire(RECT rc) const
+		{
+			for (const auto& function : handlers) {
+				function(rc);
+			}
+		};
 	};
 public:
 	Window(INT w, INT h) : width(w), height(h), m_hwnd(HWND()) {};
@@ -41,5 +49,6 @@ public:
 public:
 	//virtual void onDestroy(); -- DEPRECATED
 	WindowDestroyedEvent destroy;
+	WindowUpdatedEvent update;
 };
 

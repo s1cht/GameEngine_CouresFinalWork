@@ -10,21 +10,20 @@ void CoreEvents::RegisterCoreEvent(std::string eventName, Event* event)
 	Events.insert({ eventName, event });
 }
 
-size_t CoreEvents::AddListener(const Event::Function& function, std::string eventName)
+/*
+template <typename... Types>
+void CoreEvents::FireEvent(std::string eventName, Types... args)
 {
-	size_t i = 0;
 	for (auto element = Events.begin(), _end = Events.end(); element != _end; element++)
 	{
 		if (element->first == eventName)
 		{
-			element->second->Connect(function);
-			return i++;
+			element->second->Fire(args...);
 			break;
 		}
-		i++;
 	}
-	return size_t();
 }
+*/
 
 void CoreEvents::FireEvent(std::string eventName)
 {

@@ -10,6 +10,7 @@
 #include <vector>
 #include <map>
 #include <functional>
+#include <stdarg.h>
 
 // DirectX directories
 #include "d3d12.h"
