@@ -1,17 +1,13 @@
-#include "Window.h"
+#include "pch.h"
+#include "App.h"
 
 INT APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nShowCmd)
 {
-	Window window(1000, 1000);
+	App NewWindow;
 
-	if (!window.Create(L"First program!", hInstance, nShowCmd))
-		return 1;
-
-	MSG msg = { };
-	while (GetMessage(&msg, NULL, 0, 0) > 0)
+	while (NewWindow.Runs())
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		NewWindow.Update();
 	}
 
 	return 0;

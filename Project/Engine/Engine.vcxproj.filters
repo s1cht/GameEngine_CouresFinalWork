@@ -1,27 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="include">
+    <Filter Include="Engine">
       <UniqueIdentifier>{02308f9f-dd00-46fb-b644-ae9ce69773fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\Window">
+    <Filter Include="Engine\Window">
       <UniqueIdentifier>{e64c5a1b-d9d0-4eab-a48f-86156d18a35d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src">
+    <Filter Include="Engine\Vector3">
+      <UniqueIdentifier>{e7612ac7-1962-401b-a297-466bd8ab349a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Events">
+      <UniqueIdentifier>{4dd50843-08f4-44af-bbfb-f46977cd3be4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Events\Event">
+      <UniqueIdentifier>{419be0ef-3c86-4182-8c69-4e7afa5d0685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
       <UniqueIdentifier>{05313ffe-27b5-435c-bffe-0c6ef5a431ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\App">
+      <UniqueIdentifier>{0c0fb8c2-3cb1-4dd1-b1f7-ea529f8b6b6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Events\CoreEvents">
+      <UniqueIdentifier>{153156c1-9018-455d-a038-9d6acdb0a7d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
-      <Filter>include\Window</Filter>
+      <Filter>Engine\Window</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>src</Filter>
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Application\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Engine\Vector3</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreEvents.cpp">
+      <Filter>Engine\Events\CoreEvents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
-      <Filter>include\Window</Filter>
+      <Filter>Engine\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>Application\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Engine\Vector3</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Engine\Events\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreEvents.h">
+      <Filter>Engine\Events\CoreEvents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
