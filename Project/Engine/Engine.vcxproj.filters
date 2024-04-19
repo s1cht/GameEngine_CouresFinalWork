@@ -25,6 +25,9 @@
     <Filter Include="Engine\Events\CoreEvents">
       <UniqueIdentifier>{153156c1-9018-455d-a038-9d6acdb0a7d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Logger">
+      <UniqueIdentifier>{80038451-b486-4216-8513-8e3d912a6c16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -45,6 +48,9 @@
     <ClCompile Include="CoreEvents.cpp">
       <Filter>Engine\Events\CoreEvents</Filter>
     </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Engine\Logger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -64,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="CoreEvents.h">
       <Filter>Engine\Events\CoreEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Engine\Logger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

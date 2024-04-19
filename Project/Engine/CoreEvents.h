@@ -1,53 +1,49 @@
 #pragma once
-#include "pch.h"
 #include "Event.h"
+#include <memory>
 
 class CoreEvents
 {
 private:
-	std::map<std::string, Event*> Events;
+    template<typename T>
+    using EventPtr = std::shared_ptr<Event<T>>;
+
+    std::map<std::string, std::map<std::string, std::shared_ptr<EventBase>>> Events;
 
 public:
-	CoreEvents();
-	~CoreEvents();
+    CoreEvents();
+    ~CoreEvents();
 
 public:
-	void DeleteListener(std::string, size_t);
+    template<typename T>
+    size_t AddListener(const std::function<void(const T&)>& function, const std::string& eventName)
+    {
+        auto& innerMap = Events[typeid(T).name()];
 
-public:
-	template <class arg> size_t AddListener(const std::function<arg>& function, std::string eventName)
-	{
-		size_t i = 0;
-		for (auto element = Events.begin(), _end = Events.end(); element != _end; element++) {
-			if (element->first == eventName) {
-				element->second->Connect(function);
-				return i++;
-				break;
-			}
-			i++;
-		}
-		return size_t();
-	};
+        auto it = innerMap.find(eventName);
+        if (it != innerMap.end()) {
+            auto event = std::dynamic_pointer_cast<Event<T>>(it->second);
+            if (!event) {
+                return size_t(-1);
+            }
+            return event->Connect(std::move(function));
+        }
+        else {
+            auto newEvent = std::make_shared<Event<T>>();
+            size_t index = newEvent->Connect(std::move(function));
+            innerMap[eventName] = newEvent;
+            return index;
+        }
+    }
+    size_t AddListener(const std::function<void()>& function, const std::string& eventName);
 
+    void FireEvent(std::string);
+    void FireEvent(std::string eventName, const void* arg);
 private:
-	void RegisterCoreEvent(std::string, Event*);
-	template <typename... Types> void FireEvent(std::string eventName, Types... args)
-	{
-		for (auto element = Events.begin(), _end = Events.end(); element != _end; element++)
-		{
-			if (element->first == eventName)
-			{
-				element->second->Fire(args...);
-				break;
-			}
-		}
-	}
-	void FireEvent(std::string);
-
+    void DeleteListener(std::string, size_t);
 public:
-	friend class Window;
-	friend class App;
+    friend class Window;
+    friend class App;
+};
 
-}; 
-
-extern CoreEvents EngineCoreEvents;
+extern std::unique_ptr<CoreEvents> EngineCoreEvents;

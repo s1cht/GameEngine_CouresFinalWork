@@ -2,6 +2,8 @@
 #include "Window.h"
 #include "CoreEvents.h"
 
+
+
 LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -10,18 +12,17 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 
 		PAINTSTRUCT ps;
-        RECT rc;
-        HDC hdc = BeginPaint(hwnd, &ps);
-        GetClientRect(hwnd, &rc);
+		RECT rc;
+		HDC hdc = BeginPaint(hwnd, &ps);
+		GetClientRect(hwnd, &rc);
 		FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
 		EndPaint(hwnd, &ps);
-        EngineCoreEvents.FireEvent("WindowDestroyed");
-        EngineCoreEvents.FireEvent<RECT>("WindowUpdated", rc);
+		EngineCoreEvents->FireEvent("WindowUpdated", &rc);
 		break;
 	}
 	case WM_DESTROY:
 	{
-        EngineCoreEvents.FireEvent("WindowDestroyed");
+		EngineCoreEvents->FireEvent("WindowDestroyed");
 		PostQuitMessage(0);
 		break;
 	}
@@ -30,45 +31,41 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 }
 
+#include <stdio.h>
+
 bool Window::Create(LPCWSTR title)
 {
-    WNDCLASSEX wcex = {};
-    wcex.cbSize = sizeof(WNDCLASSEX);
-    wcex.lpfnWndProc = WndProc;
-    wcex.hInstance = NULL;
-    wcex.lpszClassName = winClass;
+	WNDCLASSEX wcex = {};
+	wcex.cbSize = sizeof(WNDCLASSEX);
+	wcex.lpfnWndProc = WndProc;
+	wcex.hInstance = NULL;
+	wcex.lpszClassName = winClass;
 
-    RegisterClassEx(&wcex);
+	RegisterClassEx(&wcex);
 
-    m_hwnd = CreateWindowExW(NULL,
-        winClass, title,
-        WS_OVERLAPPEDWINDOW | WS_MAXIMIZE, 
-        CW_USEDEFAULT, CW_USEDEFAULT,
-        width, height,
-        NULL, NULL, NULL, NULL);
+	m_hwnd = CreateWindowExW(NULL,
+		winClass, title,
+		WS_OVERLAPPEDWINDOW | WS_MAXIMIZE, 
+		CW_USEDEFAULT, CW_USEDEFAULT,
+		width, height,
+		NULL, NULL, NULL, NULL);
 
-    if (!m_hwnd)
-        return FALSE;
+	if (!m_hwnd)
+		return FALSE;
 
-    EngineCoreEvents.RegisterCoreEvent("WindowDestroyed", &destroy);
-    EngineCoreEvents.RegisterCoreEvent("WindowUpdated", &update);
+	EngineCoreEvents->AddListener([&](void) { isRunning = false; MessageBox(NULL, L"g", L"LOL", NULL); }, "WindowDestroyed");
 
+	ShowWindow(m_hwnd, SW_SHOW);
+	UpdateWindow(m_hwnd);
 
+	isRunning = TRUE;
 
-    EngineCoreEvents.AddListener<void()>([&]() { isRunning = false; return; }, "WindowDestroyed");
-    EngineCoreEvents.AddListener<void(RECT)>([&](RECT rc) { OutputDebugString((LPCWSTR)rc.left); }, "WindowUpdated");
-
-    ShowWindow(m_hwnd, SW_SHOW);
-    UpdateWindow(m_hwnd);
-
-    isRunning = TRUE;
-
-    return TRUE;
+	return TRUE;
 }
 
 bool Window::Runs()
 {
-    return isRunning;
+	return isRunning;
 }
 
 Window::~Window()

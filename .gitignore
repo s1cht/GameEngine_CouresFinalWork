@@ -1,5 +1,8 @@
 Project/.vs
 Project/Engine/x64
-Project/Engine/debug
-Project/debug
+Project/Engine/Debug
+Project/Debug
 Project/x64
+Project/Engine/Logs/*
+Project/Engine/Release
+Project/Release

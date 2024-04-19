@@ -11,6 +11,8 @@
 #include <map>
 #include <functional>
 #include <stdarg.h>
+#include <fstream>
+#include <ctime>
 
 // DirectX directories
 #include "d3d12.h"

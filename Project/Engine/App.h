@@ -3,6 +3,8 @@
 #include "pch.h"
 #include "Window.h"
 #include "CoreEvents.h"
+#include "Logger.h"
+
 
 class App
 {
@@ -12,12 +14,9 @@ public:
 	bool Runs();
 	~App();
 public:
-	//virtual void OnInit() = 0;
-	//virtual void OnUpdate() = 0;
-	//virtual void OnRender() = 0;
-	//virtual void OnDestroy() = 0;
 private:
 	std::unique_ptr<Window> m_Window;
+	std::shared_ptr<Logger> m_Logger;
 
 private:
 	bool isRunning = false;
