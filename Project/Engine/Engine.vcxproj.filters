@@ -4,17 +4,8 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{02308f9f-dd00-46fb-b644-ae9ce69773fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Window">
-      <UniqueIdentifier>{e64c5a1b-d9d0-4eab-a48f-86156d18a35d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Vector3">
-      <UniqueIdentifier>{e7612ac7-1962-401b-a297-466bd8ab349a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Events">
       <UniqueIdentifier>{4dd50843-08f4-44af-bbfb-f46977cd3be4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Events\Event">
-      <UniqueIdentifier>{419be0ef-3c86-4182-8c69-4e7afa5d0685}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application">
       <UniqueIdentifier>{05313ffe-27b5-435c-bffe-0c6ef5a431ce}</UniqueIdentifier>
@@ -28,10 +19,34 @@
     <Filter Include="Engine\Logger">
       <UniqueIdentifier>{80038451-b486-4216-8513-8e3d912a6c16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Graphics">
+      <UniqueIdentifier>{d652b91f-9044-42d1-a3ec-480309c94d9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\Window">
+      <UniqueIdentifier>{e64c5a1b-d9d0-4eab-a48f-86156d18a35d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\Render">
+      <UniqueIdentifier>{6dd72244-3fea-4c2b-be11-f1f8f0349148}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Math">
+      <UniqueIdentifier>{9274e4b9-7978-4217-8103-b1a2e2090e96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Math\Vector3">
+      <UniqueIdentifier>{e7612ac7-1962-401b-a297-466bd8ab349a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\IRender">
+      <UniqueIdentifier>{12b07f5b-0eb2-4ab1-9639-83106a863b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Events\IEvent">
+      <UniqueIdentifier>{419be0ef-3c86-4182-8c69-4e7afa5d0685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Events\Event">
+      <UniqueIdentifier>{9150b695-f809-4bba-971c-6568ab123584}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
-      <Filter>Engine\Window</Filter>
+      <Filter>Engine\Graphics\Window</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Application</Filter>
@@ -43,7 +58,7 @@
       <Filter>Application\App</Filter>
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
-      <Filter>Engine\Vector3</Filter>
+      <Filter>Engine\Math\Vector3</Filter>
     </ClCompile>
     <ClCompile Include="CoreEvents.cpp">
       <Filter>Engine\Events\CoreEvents</Filter>
@@ -51,10 +66,16 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Engine\Logger</Filter>
     </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>Engine\Graphics\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="IRender.cpp">
+      <Filter>Engine\Graphics\IRender</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
-      <Filter>Engine\Window</Filter>
+      <Filter>Engine\Graphics\Window</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Engine</Filter>
@@ -63,16 +84,25 @@
       <Filter>Application\App</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
-      <Filter>Engine\Vector3</Filter>
+      <Filter>Engine\Math\Vector3</Filter>
     </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>Engine\Events\Event</Filter>
+    <ClInclude Include="IEvent.h">
+      <Filter>Engine\Events\IEvent</Filter>
     </ClInclude>
     <ClInclude Include="CoreEvents.h">
       <Filter>Engine\Events\CoreEvents</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Engine\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>Engine\Graphics\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="IRender.h">
+      <Filter>Engine\Graphics\IRender</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Engine\Events\Event</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
