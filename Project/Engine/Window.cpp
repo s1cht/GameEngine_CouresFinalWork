@@ -31,9 +31,15 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-#include <stdio.h>
+Window::Window()
+{
+}
 
-bool Window::Create(LPCWSTR title)
+Window::Window(const Window&)
+{
+}
+
+bool Window::Initialize(LPCWSTR title)
 {
 	WNDCLASSEX wcex = {};
 	wcex.cbSize = sizeof(WNDCLASSEX);

@@ -6,18 +6,24 @@ const LPCWSTR winClass = L"Engine";
 
 class Window
 {
+public:
+	Window();
+	Window(const Window&);
+	~Window();
+
+	bool Initialize(LPCWSTR title);
+
+	bool Runs();
+
+public:
+	Event<void> destroy;
+	Event<RECT> update;
+
 private:
 	HWND m_hwnd;
 	int width, height;
 	bool isRunning = false;
 	static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-public:
-	Window(INT w, INT h) : width(w), height(h), m_hwnd(HWND()) {};
-	bool Create(LPCWSTR title);
-	bool Runs();
-	~Window();
-public:
-	Event<void> destroy;
-	Event<RECT> update;
+
 };
 

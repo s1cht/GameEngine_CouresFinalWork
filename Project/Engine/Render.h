@@ -1,23 +1,53 @@
 #pragma once
 #include "pch.h"
-#include "IRender.h"
+#include "EngineMath.h"
 
-using namespace Microsoft::WRL;
+using namespace DirectX;
 
-class Render : public IRender
+class Render
 {
 public:
-	Render(UINT width, UINT height, std::wstring name);
-	virtual void OnInit() override {}
-	virtual void OnUpdate() override {}
-	virtual void OnRender() override {}
-	virtual void OnDestroy() override {}
+	Render();
+	Render(const Render&);
+	~Render();
+public:
+	bool Initialize(Vector2, BOOL, HWND, BOOL, FLOAT, FLOAT);
+	void Shutdown();
+
+	void BeginScene(Color4);
+	void EndScene();
+
+	ID3D11Device* GetDevice();
+	ID3D11DeviceContext* GetDeviceContext();
+
+	void GetProjectionMatrix(XMMATRIX&);
+	void GetWorldMatrix(XMMATRIX&);
+	void GetOrthoMatrix(XMMATRIX&);
+
+	void GetVideoCardInfo(char*, int&);
+
+	void SetBackBufferRenderTarget();
+	void ResetViewpoint();
+
 private:
-	ComPtr<IDXGIFactory> m_DXGIFactory;
-	ComPtr<IDXGIAdapter> m_DXGIAdapter;
-	ComPtr<ID3D12Device> m_D3D12Device;
-	ComPtr<ID3D12CommandQueue> m_D3D12CommandQueue;
-	ComPtr<ID3D12CommandAllocator> m_D3D12CommandAllocator;
-	ComPtr<ID3D12GraphicsCommandList> m_D3D12GraphicsCommandList;
+	BOOL m_vsync;
+	INT m_videoCardMemory;
+	char m_videoCardDescription[128];
+
+	IDXGISwapChain* m_swapChain;
+	ID3D11Device* m_device;
+	ID3D11DeviceContext* m_deviceContext;
+	ID3D11RenderTargetView* m_renderTargetView;
+	ID3D11Texture2D* m_depthStencilBuffer;
+	ID3D11DepthStencilState* m_depthStencilState;
+	ID3D11DepthStencilView* m_depthStencilView;
+	ID3D11RasterizerState* m_rasterizerState;
+
+	XMMATRIX m_projectionMatrix;
+	XMMATRIX m_worldMatrix;
+	XMMATRIX m_orthoMatrix;
+
+	D3D11_VIEWPORT m_viewport;
+
 };
 
