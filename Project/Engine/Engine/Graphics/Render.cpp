@@ -36,7 +36,7 @@ bool Render::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, BOOL f
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 	D3D11_RASTERIZER_DESC rasterizerDesc;
-	UINT numModes, i, numerator, denominator;
+	UINT numModes, i, numerator = 0, denominator = 1;
 	size_t stringLength;
 	INT error;
 	FLOAT fieldOfView, screenAspect;
@@ -122,9 +122,9 @@ bool Render::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, BOOL f
 	swapChainDesc.SampleDesc.Quality = 1;
 
 	if (fullscreen)
-		swapChainDesc.Windowed = true;
-	else
 		swapChainDesc.Windowed = false;
+	else
+		swapChainDesc.Windowed = true;
 
 	swapChainDesc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
@@ -135,7 +135,20 @@ bool Render::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, BOOL f
 		
 	featureLevel = D3D_FEATURE_LEVEL_11_1;
 
-	result = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, NULL, &featureLevel, 1, D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device, NULL, &m_deviceContext);
+	result = D3D11CreateDeviceAndSwapChain(
+		NULL, 
+		D3D_DRIVER_TYPE_HARDWARE, 
+		NULL, 
+		NULL, 
+		&featureLevel, 
+		1, 
+		D3D11_SDK_VERSION, 
+		&swapChainDesc, 
+		&m_swapChain, 
+		&m_device, 
+		NULL, 
+		&m_deviceContext
+	);
 	if (error != 0)
 		return false;
 

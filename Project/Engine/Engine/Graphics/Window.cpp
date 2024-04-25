@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Window.h"
-#include "CoreEvents.h"
-
+#include "Engine/CoreEvents.h"
 
 
 LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -17,7 +16,8 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		GetClientRect(hwnd, &rc);
 		FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
 		EndPaint(hwnd, &ps);
-		EngineCoreEvents->FireEvent("WindowUpdated", &rc);
+		Vector2 WindowSize = { rc.right, rc.bottom };
+		EngineCoreEvents->FireEvent("WindowUpdated", &WindowSize);
 		break;
 	}
 	case WM_DESTROY:
@@ -33,13 +33,14 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 Window::Window()
 {
+	m_size = { 1000.f, 1000.f };
 }
 
 Window::Window(const Window&)
 {
 }
 
-bool Window::Initialize(LPCWSTR title)
+bool Window::Initialize(LPCWSTR title, HWND& hwnd)
 {
 	WNDCLASSEX wcex = {};
 	wcex.cbSize = sizeof(WNDCLASSEX);
@@ -53,13 +54,17 @@ bool Window::Initialize(LPCWSTR title)
 		winClass, title,
 		WS_OVERLAPPEDWINDOW | WS_MAXIMIZE, 
 		CW_USEDEFAULT, CW_USEDEFAULT,
-		width, height,
+		m_size.X, m_size.Y,
 		NULL, NULL, NULL, NULL);
 
-	if (!m_hwnd)
+	hwnd = m_hwnd;
+
+	if (!hwnd)
 		return FALSE;
 
 	EngineCoreEvents->AddListener([&](void) { isRunning = false; MessageBox(NULL, L"g", L"LOL", NULL); }, "WindowDestroyed");
+	EngineCoreEvents->AddListener<Vector2>([&](Vector2 newSize) {m_size = newSize; }, "WindowUpdated");
+
 
 	ShowWindow(m_hwnd, SW_SHOW);
 	UpdateWindow(m_hwnd);
@@ -67,6 +72,12 @@ bool Window::Initialize(LPCWSTR title)
 	isRunning = TRUE;
 
 	return TRUE;
+}
+
+
+Vector2 Window::GetSize()
+{
+	return m_size;
 }
 
 bool Window::Runs()

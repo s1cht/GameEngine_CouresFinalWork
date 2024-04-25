@@ -11,4 +11,3 @@ public:
 public:
 	void Log(std::string Object, std::string Message);
 };
-

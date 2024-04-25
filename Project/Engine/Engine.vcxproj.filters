@@ -1,120 +1,120 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{02308f9f-dd00-46fb-b644-ae9ce69773fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Events">
-      <UniqueIdentifier>{4dd50843-08f4-44af-bbfb-f46977cd3be4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application">
-      <UniqueIdentifier>{05313ffe-27b5-435c-bffe-0c6ef5a431ce}</UniqueIdentifier>
+      <UniqueIdentifier>{62a09995-4dc8-47f0-90b2-6ae1b723ff2d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\App">
-      <UniqueIdentifier>{0c0fb8c2-3cb1-4dd1-b1f7-ea529f8b6b6a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Events\CoreEvents">
-      <UniqueIdentifier>{153156c1-9018-455d-a038-9d6acdb0a7d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Logger">
-      <UniqueIdentifier>{80038451-b486-4216-8513-8e3d912a6c16}</UniqueIdentifier>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{9f194e01-1f17-44e2-855f-8a047eed8157}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Graphics">
-      <UniqueIdentifier>{d652b91f-9044-42d1-a3ec-480309c94d9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Graphics\Window">
-      <UniqueIdentifier>{e64c5a1b-d9d0-4eab-a48f-86156d18a35d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Graphics\Render">
-      <UniqueIdentifier>{6dd72244-3fea-4c2b-be11-f1f8f0349148}</UniqueIdentifier>
+      <UniqueIdentifier>{88c478e8-63f4-4628-adde-8a077a62a911}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Math">
-      <UniqueIdentifier>{9274e4b9-7978-4217-8103-b1a2e2090e96}</UniqueIdentifier>
+      <UniqueIdentifier>{e86f9782-647f-4891-b4a7-c748f3762408}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Event">
+      <UniqueIdentifier>{890de256-31ab-4510-b84c-785fa23f5099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\CoreEvents">
+      <UniqueIdentifier>{e81fb4ea-3721-4fbd-84d2-6d9021a719cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\App">
+      <UniqueIdentifier>{a8c860b4-1923-4ba6-852b-908af48af6ec}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Math\Vector3">
-      <UniqueIdentifier>{e7612ac7-1962-401b-a297-466bd8ab349a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Events\IEvent">
-      <UniqueIdentifier>{419be0ef-3c86-4182-8c69-4e7afa5d0685}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Events\Event">
-      <UniqueIdentifier>{9150b695-f809-4bba-971c-6568ab123584}</UniqueIdentifier>
+      <UniqueIdentifier>{95d9cbec-0625-41c6-a388-bf379a107a1c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Math\Vector2">
-      <UniqueIdentifier>{f7e7b95d-eca6-418d-921c-852131747585}</UniqueIdentifier>
+      <UniqueIdentifier>{b331ccbd-b56e-4a0a-915f-45f960590dca}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Math\Color4">
-      <UniqueIdentifier>{cf6ac502-4be0-4431-8f93-5f2cba036151}</UniqueIdentifier>
+      <UniqueIdentifier>{9e5f6935-4df6-4534-83b0-2a53fc31f958}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\Render">
+      <UniqueIdentifier>{7823870e-5aaa-4897-8301-fe7d0d261d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\Window">
+      <UniqueIdentifier>{f22f0786-511f-4e26-ab28-367246553904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Logger">
+      <UniqueIdentifier>{bc4eca09-02a4-4df0-b790-88e757ec4de1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Window.cpp">
-      <Filter>Engine\Graphics\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Application</Filter>
+    <ClCompile Include="App.cpp">
+      <Filter>Application\App</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="App.cpp">
-      <Filter>Application\App</Filter>
+    <ClCompile Include="Engine\CoreEvents.cpp">
+      <Filter>Engine\CoreEvents</Filter>
     </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Engine\Math\Vector3</Filter>
-    </ClCompile>
-    <ClCompile Include="CoreEvents.cpp">
-      <Filter>Engine\Events\CoreEvents</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Engine\Logger</Filter>
-    </ClCompile>
-    <ClCompile Include="Render.cpp">
-      <Filter>Engine\Graphics\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2.cpp">
+    <ClCompile Include="Engine\Math\Vector2.cpp">
       <Filter>Engine\Math\Vector2</Filter>
     </ClCompile>
-    <ClCompile Include="Color4.cpp">
+    <ClCompile Include="Engine\Math\Vector3.cpp">
+      <Filter>Engine\Math\Vector3</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Math\Color4.cpp">
       <Filter>Engine\Math\Color4</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Render.cpp">
+      <Filter>Engine\Graphics\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\GraphicsEngine.cpp">
+      <Filter>Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\Window.cpp">
+      <Filter>Engine\Graphics\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Logger.cpp">
+      <Filter>Engine\Logger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Window.h">
-      <Filter>Engine\Graphics\Window</Filter>
+    <ClInclude Include="App.h">
+      <Filter>Application\App</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="App.h">
-      <Filter>Application\App</Filter>
+    <ClInclude Include="Engine\CoreEvents.h">
+      <Filter>Engine\CoreEvents</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3.h">
+    <ClInclude Include="Engine\Event.h">
+      <Filter>Engine\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\IEvent.h">
+      <Filter>Engine\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Math\Vector3.h">
       <Filter>Engine\Math\Vector3</Filter>
     </ClInclude>
-    <ClInclude Include="IEvent.h">
-      <Filter>Engine\Events\IEvent</Filter>
-    </ClInclude>
-    <ClInclude Include="CoreEvents.h">
-      <Filter>Engine\Events\CoreEvents</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>Engine\Logger</Filter>
-    </ClInclude>
-    <ClInclude Include="Render.h">
-      <Filter>Engine\Graphics\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>Engine\Events\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2.h">
+    <ClInclude Include="Engine\Math\Vector2.h">
       <Filter>Engine\Math\Vector2</Filter>
     </ClInclude>
-    <ClInclude Include="Color4.h">
+    <ClInclude Include="Engine\Math\Color4.h">
       <Filter>Engine\Math\Color4</Filter>
     </ClInclude>
-    <ClInclude Include="EngineMath.h">
+    <ClInclude Include="Engine\Math\EngineMath.h">
       <Filter>Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Render.h">
+      <Filter>Engine\Graphics\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\GraphicsEngine.h">
+      <Filter>Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\Window.h">
+      <Filter>Engine\Graphics\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Logger.h">
+      <Filter>Engine\Logger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
-#include "Event.h"
+#include "Engine/Event.h"
+#include "Engine/Math/EngineMath.h"
 
 const LPCWSTR winClass = L"Engine";
 
@@ -11,9 +12,10 @@ public:
 	Window(const Window&);
 	~Window();
 
-	bool Initialize(LPCWSTR title);
-
+	bool Initialize(LPCWSTR title, HWND&);
 	bool Runs();
+
+	Vector2 GetSize();
 
 public:
 	Event<void> destroy;
@@ -21,7 +23,7 @@ public:
 
 private:
 	HWND m_hwnd;
-	int width, height;
+	Vector2 m_size;
 	bool isRunning = false;
 	static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 

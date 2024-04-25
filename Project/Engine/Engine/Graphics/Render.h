@@ -1,6 +1,10 @@
 #pragma once
 #include "pch.h"
-#include "EngineMath.h"
+#include "Engine/Math/EngineMath.h"
+
+#pragma comment (lib, "d3d11.lib")
+#pragma comment (lib, "dxgi.lib")
+#pragma comment (lib, "d3dcompiler.lib")
 
 using namespace DirectX;
 

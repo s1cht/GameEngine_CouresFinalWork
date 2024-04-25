@@ -3,15 +3,11 @@
 
 App::App()
 {
-	m_Window = std::make_unique<Window>(1000, 1000);
 	m_Logger = std::make_shared<Logger>();
+	m_Graphics = std::make_unique<GraphicsEngine>();
 
-	EngineCoreEvents->AddListener<RECT>([&](RECT rc) { m_Logger->Log("Window", std::to_string(rc.right)); }, "WindowUpdated");
-
-	if (!m_Window->Create(L"First program!"))
+	if (!m_Graphics->Initialize())
 		isRunning = false;
-	else
-		isRunning = true;
 }
 
 void App::Update()
@@ -21,14 +17,20 @@ void App::Update()
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
+		m_Graphics->Frame();
 	}
 }
 
 bool App::Runs()
 {
-	return m_Window->Runs();
+	return false;
 }
 
 App::~App()
 {
+}
+
+void App::Shutdown()
+{
+	m_Graphics->Shutdown();
 }

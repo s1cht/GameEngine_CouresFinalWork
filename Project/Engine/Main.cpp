@@ -10,5 +10,7 @@ INT APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		NewWindow.Update();
 	}
 
+	NewWindow.Shutdown();
+
 	return 0;
 }

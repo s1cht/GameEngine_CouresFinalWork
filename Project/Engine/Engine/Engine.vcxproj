@@ -10,34 +10,6 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="App.cpp" />
-    <ClCompile Include="Engine\CoreEvents.cpp" />
-    <ClCompile Include="Engine\Graphics\GraphicsEngine.cpp" />
-    <ClCompile Include="Engine\Graphics\Render.cpp" />
-    <ClCompile Include="Engine\Graphics\Window.cpp" />
-    <ClCompile Include="Engine\Logger.cpp" />
-    <ClCompile Include="Engine\Math\Color4.cpp" />
-    <ClCompile Include="Engine\Math\Vector2.cpp" />
-    <ClCompile Include="Engine\Math\Vector3.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="pch.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="App.h" />
-    <ClInclude Include="Engine\CoreEvents.h" />
-    <ClInclude Include="Engine\Event.h" />
-    <ClInclude Include="Engine\Graphics\GraphicsEngine.h" />
-    <ClInclude Include="Engine\Graphics\Render.h" />
-    <ClInclude Include="Engine\Graphics\Window.h" />
-    <ClInclude Include="Engine\IEvent.h" />
-    <ClInclude Include="Engine\Logger.h" />
-    <ClInclude Include="Engine\Math\Color4.h" />
-    <ClInclude Include="Engine\Math\EngineMath.h" />
-    <ClInclude Include="Engine\Math\Vector2.h" />
-    <ClInclude Include="Engine\Math\Vector3.h" />
-    <ClInclude Include="pch.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -77,8 +49,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Create</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(ProjectDir);%WindowsSdkDir\Include%WindowsSDKVersion%\\um</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>%WindowsSdkDir\Include%WindowsSDKVersion%\\um</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -112,6 +84,34 @@
       <AdditionalLibraryDirectories>%WindowsSdkDir\Lib%WindowsSDKVersion%\\um\arch;%WINDIR%\System32</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="App.h" />
+    <ClInclude Include="Color4.h" />
+    <ClInclude Include="EngineMath.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="IEvent.h" />
+    <ClInclude Include="CoreEvents.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Render.h" />
+    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Vector3.h" />
+    <ClInclude Include="Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="Color4.cpp" />
+    <ClCompile Include="CoreEvents.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Render.cpp" />
+    <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Vector3.cpp" />
+    <ClCompile Include="Window.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
