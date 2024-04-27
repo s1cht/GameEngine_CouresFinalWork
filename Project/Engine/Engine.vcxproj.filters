@@ -43,6 +43,15 @@
     <Filter Include="Engine\Shaders">
       <UniqueIdentifier>{bea25f64-92ca-41a4-91aa-c751ebf51dda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Instance">
+      <UniqueIdentifier>{1fad1374-93a3-48f5-bb66-01f0bc5d73e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Instance\Model">
+      <UniqueIdentifier>{9ad05089-6427-47a2-b7cf-b275d3480846}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Instance\Camera">
+      <UniqueIdentifier>{8d6c89a6-6e1a-465f-9ad4-378029ca983d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp">
@@ -77,6 +86,15 @@
     </ClCompile>
     <ClCompile Include="Engine\Logger.cpp">
       <Filter>Engine\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorShader.cpp">
+      <Filter>Engine\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Engine\Instance\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Engine\Instance\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,8 +137,22 @@
     <ClInclude Include="Engine\Logger.h">
       <Filter>Engine\Logger</Filter>
     </ClInclude>
+    <ClInclude Include="ColorShader.h">
+      <Filter>Engine\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Engine\Instance\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Engine\Instance\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Color.vs" />
+    <None Include="Color.vs">
+      <Filter>Engine\Shaders</Filter>
+    </None>
+    <None Include="Color.ps">
+      <Filter>Engine\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -8,8 +8,8 @@ const LPCWSTR winClass = L"EngineA‡Î‡Ê";
 class Window
 {
 public:
-	Window();
-	Window(const Window&);
+	Window(Vector2 size);
+	//Window(const Window&);
 	~Window();
 
 	bool Initialize(LPCWSTR title, HWND&);

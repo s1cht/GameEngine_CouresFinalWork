@@ -16,14 +16,16 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		GetClientRect(hwnd, &rc);
 		FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
 		EndPaint(hwnd, &ps);
-		Vector2 WindowSize = { rc.right, rc.bottom };
+		Vector2 WindowSize = { (FLOAT)rc.right, (FLOAT)rc.bottom };
 		EngineCoreEvents->FireEvent("WindowUpdated", &WindowSize);
+		return 0;
 		break;
 	}
 	case WM_DESTROY:
 	{
 		EngineCoreEvents->FireEvent("WindowDestroyed");
 		PostQuitMessage(0);
+		return 0;
 		break;
 	}
 	default:
@@ -31,14 +33,13 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-Window::Window()
+Window::Window(Vector2 size)
 {
-	m_size = { 1000.f, 1000.f };
+	m_size = size;
+	m_hwnd = HWND();
 }
 
-Window::Window(const Window&)
-{
-}
+//Window::Window(const Window& w) {}
 
 bool Window::Initialize(LPCWSTR title, HWND& hwnd)
 {
@@ -52,9 +53,9 @@ bool Window::Initialize(LPCWSTR title, HWND& hwnd)
 
 	m_hwnd = CreateWindowExW(NULL,
 		winClass, title,
-		WS_OVERLAPPEDWINDOW | WS_MAXIMIZE, 
+		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP,
 		CW_USEDEFAULT, CW_USEDEFAULT,
-		m_size.X, m_size.Y,
+		(int)m_size.X, (int)m_size.Y,
 		NULL, NULL, NULL, NULL);
 
 	hwnd = m_hwnd;

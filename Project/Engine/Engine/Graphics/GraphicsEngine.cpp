@@ -3,8 +3,8 @@
 
 GraphicsEngine::GraphicsEngine()
 {
-	m_Window = std::make_unique<Window>();
-	m_Render = std::make_unique<Render>();
+	m_Window = std::make_unique<Window>(WINDOW_SIZE);
+	m_Render = std::make_unique<RenderClass>();
 }
 
 GraphicsEngine::~GraphicsEngine()
@@ -30,13 +30,15 @@ void GraphicsEngine::Shutdown()
 
 bool GraphicsEngine::Frame()
 {
-	if (!RenderSecond())
+	if (!Render())
 		return false;
+	return true;
 }
 
-bool GraphicsEngine::RenderSecond()
+bool GraphicsEngine::Render()
 {
-	m_Render->BeginScene(Color4{ 0.5f, 0.5f, 0.5f, 1 });
+	Color4 color = { 0.27058825f, 0.48235294f, 0.94509804f, 0.f };
+	m_Render->BeginScene(color);
 
 	m_Render->EndScene();
 
