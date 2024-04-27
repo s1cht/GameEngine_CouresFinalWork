@@ -21,14 +21,15 @@ public:
         auto& innerMap = Events[typeid(T).name()];
 
         auto it = innerMap.find(eventName);
-        if (it != innerMap.end()) {
+        if (it != innerMap.end()) 
+        {
             auto event = std::dynamic_pointer_cast<Event<T>>(it->second);
-            if (!event) {
+            if (!event) 
                 return size_t(-1);
-            }
             return event->Connect(std::move(function));
         }
-        else {
+        else 
+        {
             auto newEvent = std::make_shared<Event<T>>();
             size_t index = newEvent->Connect(std::move(function));
             innerMap[eventName] = newEvent;

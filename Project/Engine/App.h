@@ -5,13 +5,13 @@
 #include "Engine/CoreEvents.h"
 #include "Engine/Logger.h"
 
-
 class App
 {
 public:
 	App();
 	~App();
 
+	bool Initialize();
 	void Shutdown();
 
 	void Update();

@@ -40,6 +40,9 @@
     <Filter Include="Engine\Logger">
       <UniqueIdentifier>{bc4eca09-02a4-4df0-b790-88e757ec4de1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Shaders">
+      <UniqueIdentifier>{bea25f64-92ca-41a4-91aa-c751ebf51dda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp">
@@ -116,5 +119,8 @@
     <ClInclude Include="Engine\Logger.h">
       <Filter>Engine\Logger</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Color.vs" />
   </ItemGroup>
 </Project>

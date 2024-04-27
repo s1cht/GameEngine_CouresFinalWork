@@ -8,12 +8,12 @@
 
 using namespace DirectX;
 
-class Render
+class RenderClass
 {
 public:
-	Render();
-	Render(const Render&);
-	~Render();
+	RenderClass();
+	RenderClass(const RenderClass&);
+	~RenderClass();
 public:
 	bool Initialize(Vector2, BOOL, HWND, BOOL, FLOAT, FLOAT);
 	void Shutdown();

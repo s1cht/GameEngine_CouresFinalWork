@@ -20,10 +20,10 @@ public:
 	bool Frame();
 
 private:
-	bool RenderSecond();
+	bool Render();
 
 private:
 	HWND m_hwnd;
-	std::unique_ptr<Render> m_Render;
+	std::unique_ptr<RenderClass> m_Render;
 	std::unique_ptr<Window> m_Window;
 };

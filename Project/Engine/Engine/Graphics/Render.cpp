@@ -3,14 +3,14 @@
 
 Render::Render()
 {
-	m_swapChain = nullptr;
-	m_device = nullptr;
-	m_deviceContext = nullptr;
-	m_renderTargetView = nullptr;
-	m_depthStencilBuffer = nullptr;
-	m_depthStencilState = nullptr;
-	m_depthStencilView = nullptr;
-	m_rasterizerState = nullptr;
+	m_swapChain				= nullptr;
+	m_device				= nullptr;
+	m_deviceContext			= nullptr;
+	m_renderTargetView		= nullptr;
+	m_depthStencilBuffer	= nullptr;
+	m_depthStencilState		= nullptr;
+	m_depthStencilView		= nullptr;
+	m_rasterizerState		= nullptr;
 }
 
 Render::Render(const Render&)
@@ -94,9 +94,9 @@ bool Render::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, BOOL f
 	factory->Release();
 	factory = nullptr;
 
-	ZeroMemory(&swapChainDesc, sizeof(DXGI_SWAP_CHAIN_DESC));
+	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
 
-	swapChainDesc.BufferCount = -1;
+	swapChainDesc.BufferCount = 1;
 
 	swapChainDesc.BufferDesc.Width = (UINT)screenSize.X;
 	swapChainDesc.BufferDesc.Height = (UINT)screenSize.Y;
@@ -118,8 +118,8 @@ bool Render::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, BOOL f
 
 	swapChainDesc.OutputWindow = hwnd;
 
-	swapChainDesc.SampleDesc.Count = 0;
-	swapChainDesc.SampleDesc.Quality = 1;
+	swapChainDesc.SampleDesc.Count = 1;
+	swapChainDesc.SampleDesc.Quality = 0;
 
 	if (fullscreen)
 		swapChainDesc.Windowed = false;
@@ -133,7 +133,7 @@ bool Render::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, BOOL f
 
 	swapChainDesc.Flags = 0;
 		
-	featureLevel = D3D_FEATURE_LEVEL_11_1;
+	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
 	result = D3D11CreateDeviceAndSwapChain(
 		NULL, 
@@ -144,7 +144,7 @@ bool Render::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, BOOL f
 		1, 
 		D3D11_SDK_VERSION, 
 		&swapChainDesc, 
-		&m_swapChain, 
+		&m_swapChain,
 		&m_device, 
 		NULL, 
 		&m_deviceContext
@@ -157,6 +157,8 @@ bool Render::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, BOOL f
 		return false;
 
 	result = m_device->CreateRenderTargetView(backBufferPtr, NULL, &m_renderTargetView);
+	if (error != 0)
+		return false;
 
 	backBufferPtr->Release();
 	backBufferPtr = nullptr;

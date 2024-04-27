@@ -5,10 +5,9 @@ App::App()
 {
 	m_Logger = std::make_shared<Logger>();
 	m_Graphics = std::make_unique<GraphicsEngine>();
-
-	if (!m_Graphics->Initialize())
-		isRunning = false;
 }
+
+
 
 void App::Update()
 {
@@ -23,11 +22,25 @@ void App::Update()
 
 bool App::Runs()
 {
-	return false;
+	return isRunning;
 }
 
 App::~App()
 {
+}
+
+bool App::Initialize()
+{
+	isRunning = true;
+	if (!m_Graphics->Initialize())
+	{
+		isRunning = false;
+		return false;
+	}
+
+	EngineCoreEvents->AddListener([&]() { isRunning = false; }, "WindowDestroyed");
+
+	return true;
 }
 
 void App::Shutdown()

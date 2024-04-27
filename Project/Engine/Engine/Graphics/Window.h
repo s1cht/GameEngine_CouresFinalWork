@@ -3,7 +3,7 @@
 #include "Engine/Event.h"
 #include "Engine/Math/EngineMath.h"
 
-const LPCWSTR winClass = L"Engine";
+const LPCWSTR winClass = L"EngineA‡Î‡Ê";
 
 class Window
 {

@@ -5,10 +5,11 @@ INT APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 {
 	App NewWindow;
 
+	if (!NewWindow.Initialize())
+		return 1;
+
 	while (NewWindow.Runs())
-	{
 		NewWindow.Update();
-	}
 
 	NewWindow.Shutdown();
 
