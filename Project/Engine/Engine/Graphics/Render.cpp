@@ -131,7 +131,8 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 		NULL, 
 		D3D_DRIVER_TYPE_HARDWARE, 
 		NULL, 
-		D3D11_CREATE_DEVICE_DEBUG,
+		//D3D11_CREATE_DEVICE_DEBUG,
+		NULL,
 		&featureLevel, 
 		1, 
 		D3D11_SDK_VERSION, 
@@ -213,7 +214,7 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 
 	rasterizerDesc.AntialiasedLineEnable =		false;
-	rasterizerDesc.CullMode =					D3D11_CULL_NONE;
+	rasterizerDesc.CullMode =					D3D11_CULL_BACK;
 	rasterizerDesc.DepthBias =					0;
 	rasterizerDesc.DepthBiasClamp =				0;
 	rasterizerDesc.DepthClipEnable =			true;
@@ -238,7 +239,7 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 
 	m_deviceContext->RSSetViewports(1, &m_viewport);
 
-	fieldOfView = 3.141592654f / 4.0;
+	fieldOfView = math::ToRadians(103);
 	screenAspect = (FLOAT)screenSize.X / (FLOAT)screenSize.Y;
 
 	m_projectionMatrix =	XMMatrixPerspectiveLH(fieldOfView, screenAspect, screenNear, screenDepth);
