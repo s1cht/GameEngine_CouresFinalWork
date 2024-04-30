@@ -14,7 +14,7 @@ public:
 	bool Initialize();
 	void Shutdown();
 
-	void Update();
+	void Run();
 	bool Runs(); 
 
 private:

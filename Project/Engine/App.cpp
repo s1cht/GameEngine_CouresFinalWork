@@ -9,15 +9,25 @@ App::App()
 
 
 
-void App::Update()
+void App::Run()
 {
-	MSG msg = { };
-	while (GetMessage(&msg, NULL, 0, 0) > 0)
+	MSG msg;
+	
+	ZeroMemory(&msg, sizeof(msg));
+	
+	EngineCoreEvents->AddListener([&](void) { isRunning = false; }, "WindowDestroyed");
+
+	while (isRunning)
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
 		m_Graphics->Frame();
 	}
+
+	return;
 }
 
 bool App::Runs()

@@ -11,7 +11,7 @@ const BOOL VSYNC_ENABLED = true;
 const BOOL FULLSCREEN = false;
 const FLOAT SCREEN_DEPTH = 1000.f;
 const FLOAT SCREEN_NEAR = 0.01f;
-const Vector2 WINDOW_SIZE = { 1920.f, 1080.f };
+const Vector2 WINDOW_SIZE = { 800.f, 600.f };
 
 class GraphicsEngine
 {

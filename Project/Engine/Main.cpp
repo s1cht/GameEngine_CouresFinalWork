@@ -8,8 +8,7 @@ INT APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	if (!NewWindow.Initialize())
 		return 1;
 
-	while (NewWindow.Runs())
-		NewWindow.Update();
+	NewWindow.Run();
 
 	NewWindow.Shutdown();
 

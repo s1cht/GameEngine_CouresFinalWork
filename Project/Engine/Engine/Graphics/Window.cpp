@@ -23,11 +23,17 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	case WM_DESTROY:
 	{
-		EngineCoreEvents->FireEvent("WindowDestroyed");
 		PostQuitMessage(0);
 		return 0;
 		break;
 	}
+	case WM_KEYUP:
+		if (wParam == VK_ESCAPE)
+		{
+			EngineCoreEvents->FireEvent("WindowDestroyed");
+		}
+		return 0;
+		break;
 	default:
 		return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
@@ -63,7 +69,7 @@ bool Window::Initialize(LPCWSTR title, HWND& hwnd)
 	if (!hwnd)
 		return FALSE;
 
-	EngineCoreEvents->AddListener([&](void) { isRunning = false; MessageBox(NULL, L"g", L"LOL", NULL); }, "WindowDestroyed");
+	EngineCoreEvents->AddListener([&](void) { isRunning = false; DestroyWindow(m_hwnd); }, "WindowDestroyed");
 	EngineCoreEvents->AddListener<Vector2>([&](Vector2 newSize) {m_size = newSize; }, "WindowUpdated");
 
 

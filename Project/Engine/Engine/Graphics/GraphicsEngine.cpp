@@ -30,7 +30,7 @@ bool GraphicsEngine::Initialize()
 		return false;
 	}
 	m_Camera = std::make_shared<Camera>();
-	m_Camera->SetPosition(Vector3{ -5.f, 0.f, 0.f });
+	m_Camera->SetPosition(Vector3{ 0.f, 0.f, -5.f });
 
 	m_Model = std::make_shared<ModelClass>();
 	if (!m_Model->Initialize(m_Render->GetDevice()))
@@ -51,9 +51,12 @@ bool GraphicsEngine::Initialize()
 
 void GraphicsEngine::Shutdown()
 {
+	if (m_ColorShader)
+		m_ColorShader->Shutdown();
+	if (m_Model)
+		m_Model->Shutdown();
 	if (m_Render)
 		m_Render->Shutdown();
-
 }
 
 bool GraphicsEngine::Frame()
@@ -65,8 +68,20 @@ bool GraphicsEngine::Frame()
 
 bool GraphicsEngine::Render()
 {
+	XMMATRIX viewMatrix, projectionMatrix, worldMatrix;
 	Color4 color = { 0.27058825f, 0.48235294f, 0.94509804f, 0.f };
 	m_Render->BeginScene(color);
+
+	m_Camera->Render();
+
+	m_Render->GetWorldMatrix(worldMatrix);
+	m_Camera->GetViewMatrix(viewMatrix);
+	m_Render->GetProjectionMatrix(projectionMatrix);
+
+	m_Model->Render(m_Render->GetDeviceContext());
+
+	if (!m_ColorShader->Render(m_Render->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix))
+		return false;
 
 	m_Render->EndScene();
 
