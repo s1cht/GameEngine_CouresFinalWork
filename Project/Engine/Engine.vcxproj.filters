@@ -13,12 +13,6 @@
     <Filter Include="Engine\Math">
       <UniqueIdentifier>{e86f9782-647f-4891-b4a7-c748f3762408}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Event">
-      <UniqueIdentifier>{890de256-31ab-4510-b84c-785fa23f5099}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\CoreEvents">
-      <UniqueIdentifier>{e81fb4ea-3721-4fbd-84d2-6d9021a719cf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\App">
       <UniqueIdentifier>{a8c860b4-1923-4ba6-852b-908af48af6ec}</UniqueIdentifier>
     </Filter>
@@ -40,17 +34,26 @@
     <Filter Include="Engine\Logger">
       <UniqueIdentifier>{bc4eca09-02a4-4df0-b790-88e757ec4de1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Shaders">
+    <Filter Include="Engine\Graphics\Shaders">
       <UniqueIdentifier>{bea25f64-92ca-41a4-91aa-c751ebf51dda}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Instance">
+    <Filter Include="Engine\Graphics\Instance">
       <UniqueIdentifier>{1fad1374-93a3-48f5-bb66-01f0bc5d73e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Instance\Model">
+    <Filter Include="Engine\Graphics\Instance\Model">
       <UniqueIdentifier>{9ad05089-6427-47a2-b7cf-b275d3480846}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Instance\Camera">
+    <Filter Include="Engine\Graphics\Instance\Camera">
       <UniqueIdentifier>{8d6c89a6-6e1a-465f-9ad4-378029ca983d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Events">
+      <UniqueIdentifier>{e2e616c1-5c3e-4e11-aa79-5b6ea88acffc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Events\Event">
+      <UniqueIdentifier>{890de256-31ab-4510-b84c-785fa23f5099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Events\CoreEvents">
+      <UniqueIdentifier>{e81fb4ea-3721-4fbd-84d2-6d9021a719cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -61,7 +64,7 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\CoreEvents.cpp">
-      <Filter>Engine\CoreEvents</Filter>
+      <Filter>Engine\Events\CoreEvents</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Math\Vector2.cpp">
       <Filter>Engine\Math\Vector2</Filter>
@@ -88,13 +91,13 @@
       <Filter>Engine\Logger</Filter>
     </ClCompile>
     <ClCompile Include="ColorShader.cpp">
-      <Filter>Engine\Shaders</Filter>
+      <Filter>Engine\Graphics\Shaders</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
-      <Filter>Engine\Instance\Model</Filter>
+      <Filter>Engine\Graphics\Instance\Model</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Engine\Instance\Camera</Filter>
+      <Filter>Engine\Graphics\Instance\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -105,13 +108,13 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\CoreEvents.h">
-      <Filter>Engine\CoreEvents</Filter>
+      <Filter>Engine\Events\CoreEvents</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Event.h">
-      <Filter>Engine\Event</Filter>
+      <Filter>Engine\Events\Event</Filter>
     </ClInclude>
     <ClInclude Include="Engine\IEvent.h">
-      <Filter>Engine\Event</Filter>
+      <Filter>Engine\Events\Event</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Math\Vector3.h">
       <Filter>Engine\Math\Vector3</Filter>
@@ -138,21 +141,21 @@
       <Filter>Engine\Logger</Filter>
     </ClInclude>
     <ClInclude Include="ColorShader.h">
-      <Filter>Engine\Shaders</Filter>
+      <Filter>Engine\Graphics\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
-      <Filter>Engine\Instance\Model</Filter>
+      <Filter>Engine\Graphics\Instance\Model</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Engine\Instance\Camera</Filter>
+      <Filter>Engine\Graphics\Instance\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Color.vs">
-      <Filter>Engine\Shaders</Filter>
+      <Filter>Engine\Graphics\Shaders</Filter>
     </None>
     <None Include="Color.ps">
-      <Filter>Engine\Shaders</Filter>
+      <Filter>Engine\Graphics\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

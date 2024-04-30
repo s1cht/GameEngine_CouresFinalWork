@@ -4,7 +4,7 @@
 ModelClass::ModelClass()
 {
     m_vertexBuffer = nullptr;
-    m_pixelBuffer = nullptr;
+    m_indexBuffer = nullptr;
 }
 
 ModelClass::~ModelClass()

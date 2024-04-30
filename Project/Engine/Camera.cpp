@@ -42,11 +42,13 @@ void Camera::Render()
     up.y = 0.f;
     up.z = 0.f;
 
-    upVector = XMLoadFloat3(&position);
+    upVector = XMLoadFloat3(&up);
 
     position.x = m_position.X;
     position.y = m_position.Y;
     position.z = m_position.Z;
+
+    positionVector = XMLoadFloat3(&position);
 
     lookAt.x = 0.f;
     lookAt.y = 0.f;
@@ -54,18 +56,18 @@ void Camera::Render()
 
     lookAtVector = XMLoadFloat3(&lookAt);
 
-pitch = m_rotationX * 0.0174532925f;
-yaw   = m_rotationY * 0.0174532925f;
-roll  = m_rotationZ * 0.0174532925f;
+    pitch =             math::ToRadians(m_rotation.X);
+    yaw =               math::ToRadians(m_rotation.Y);
+    roll =              math::ToRadians(m_rotation.Z);
 
-rotationMatrix = XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
+    rotationMatrix =    XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
 
-lookAtVector = XMVector3TransformCoord(lookAtVector, rotationMatrix);
-	upVector = XMVector3TransformCoord(upVector, rotationMatrix);
+    lookAtVector =      XMVector3TransformCoord(lookAtVector, rotationMatrix);
+	upVector =          XMVector3TransformCoord(upVector, rotationMatrix);
 
-lookAtVector = XMVectorAdd(positionVector, lookAtVector);
+    lookAtVector =      XMVectorAdd(positionVector, lookAtVector);
 
-m_viewMatrix = XMMatrixLookAtLH(positionVector, lookAtVector, upVector);
+    m_viewMatrix =      XMMatrixLookAtLH(positionVector, lookAtVector, upVector);
 }
 
 void Camera::GetViewMatrix(XMMATRIX& viewMatrix)
