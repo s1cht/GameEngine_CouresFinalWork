@@ -4,7 +4,7 @@
 #include "Window.h"
 #include "Camera.h"
 #include "Model.h"
-#include "ColorShader.h"
+#include "TextureShader.h"
 #include "Engine/Math/EngineMath.h"
 
 const BOOL VSYNC_ENABLED = true;
@@ -30,7 +30,7 @@ private:
 private:
 	HWND m_hwnd;
 	std::unique_ptr<RenderClass> m_Render;
-	std::unique_ptr<ColorShader> m_ColorShader;
+	std::unique_ptr<TextureShader> m_TextureShader;
 	std::unique_ptr<Window> m_Window;
 	std::shared_ptr<ModelClass> m_Model;
 	std::shared_ptr<Camera> m_Camera;

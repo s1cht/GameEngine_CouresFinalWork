@@ -5,7 +5,7 @@ GraphicsEngine::GraphicsEngine()
 {
 	m_Window = nullptr;
 	m_Render = nullptr;
-	m_ColorShader = nullptr;
+	m_TextureShader = nullptr;
 	m_Camera = nullptr;
 	m_Model = nullptr;
 }
@@ -16,6 +16,8 @@ GraphicsEngine::~GraphicsEngine()
 
 bool GraphicsEngine::Initialize()
 {
+	char textureFileName[128];
+
 	m_Window = std::make_unique<Window>(WINDOW_SIZE);
 	if (!m_Window->Initialize(L"Window", m_hwnd))
 	{
@@ -30,17 +32,19 @@ bool GraphicsEngine::Initialize()
 		return false;
 	}
 	m_Camera = std::make_shared<Camera>();
-	m_Camera->SetPosition(Vector3{ 0.f, 0.f, -5.f });
+	m_Camera->SetPosition(Vector3{ 0.f, 0.f, -1.f });
+
+	strcpy_s(textureFileName, "../Engine/data/stone01.tga");
 
 	m_Model = std::make_shared<ModelClass>();
-	if (!m_Model->Initialize(m_Render->GetDevice()))
+	if (!m_Model->Initialize(m_Render->GetDevice(), m_Render->GetDeviceContext(), textureFileName))
 	{
 		MessageBox(m_hwnd, L"Model", L"Error", MB_OK);
 		return false;
 	}
 
-	m_ColorShader = std::make_unique<ColorShader>();
-	if (!m_ColorShader->Initialize(m_Render->GetDevice(), m_hwnd))
+	m_TextureShader = std::make_unique<TextureShader>();
+	if (!m_TextureShader->Initialize(m_Render->GetDevice(), m_hwnd))
 	{
 		MessageBox(m_hwnd, L"Shader", L"Error", MB_OK);
 		return false;
@@ -51,8 +55,8 @@ bool GraphicsEngine::Initialize()
 
 void GraphicsEngine::Shutdown()
 {
-	if (m_ColorShader)
-		m_ColorShader->Shutdown();
+	if (m_TextureShader)
+		m_TextureShader->Shutdown();
 	if (m_Model)
 		m_Model->Shutdown();
 	if (m_Render)
@@ -80,7 +84,7 @@ bool GraphicsEngine::Render()
 
 	m_Model->Render(m_Render->GetDeviceContext());
 
-	if (!m_ColorShader->Render(m_Render->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix))
+	if (!m_TextureShader->Render(m_Render->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture()))
 		return false;
 
 	m_Render->EndScene();

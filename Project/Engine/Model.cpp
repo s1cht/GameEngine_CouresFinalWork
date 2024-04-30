@@ -5,17 +5,22 @@ ModelClass::ModelClass()
 {
     m_vertexBuffer = nullptr;
     m_indexBuffer = nullptr;
+    m_Texture = nullptr;
 }
 
 ModelClass::~ModelClass()
 {
 }
 
-bool ModelClass::Initialize(ID3D11Device* device)
+bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName)
 {
     bool result;
 
     result = InitializeBuffers(device);
+    if (!result)
+        return false;
+
+    result = LoadTexture(device, deviceContext, fileName);
     if (!result)
         return false;
 
@@ -24,6 +29,7 @@ bool ModelClass::Initialize(ID3D11Device* device)
 
 void ModelClass::Shutdown()
 {
+    ReleaseTexture();
     ShutdownBuffers();
 }
 
@@ -35,6 +41,11 @@ void ModelClass::Render(ID3D11DeviceContext* deviceContext)
 INT ModelClass::GetIndexCount()
 {
     return m_indexCount;
+}
+
+ID3D11ShaderResourceView* ModelClass::GetTexture()
+{
+    return m_Texture->GetTexture();
 }
 
 bool ModelClass::InitializeBuffers(ID3D11Device* device)
@@ -57,17 +68,16 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
         return false;
 
     vertices[0].position =      XMFLOAT3(-1.f, -1.f, 0.f);
-    vertices[0].color =         XMFLOAT4(0.f, 1.f, 0.f, 0.5f);
+    vertices[0].texture =       XMFLOAT2(-1.f, -1.f);
 
     vertices[1].position =      XMFLOAT3(-1.f, 1.f, 0.f);
-    vertices[1].color =         XMFLOAT4(1.f, 1.f, 0.f, 1.f);
+    vertices[1].texture =       XMFLOAT2(-1.f, 1.f);
 
     vertices[2].position =      XMFLOAT3(1.f, 1.f, 0.f);
-    vertices[2].color =         XMFLOAT4(0.f, 1.f, 0.f, 0.5f);
+    vertices[2].texture =       XMFLOAT2(1.f, 1.f);
 
     vertices[3].position =      XMFLOAT3(1.f, -1.f, 0.f);
-    vertices[3].color =         XMFLOAT4(0.f, 1.f, 0.f, 1.f);
-
+    vertices[3].texture =       XMFLOAT2(1.f, -1.f);
 
 
     indices[0] =                0;
@@ -144,4 +154,27 @@ void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
     deviceContext->IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
     deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+}
+
+bool ModelClass::LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName)
+{
+    bool result;
+
+    m_Texture = new TextureClass;
+
+    result = m_Texture->Initialize(device, deviceContext, fileName);
+    if (!result)
+        return false;
+
+    return true;
+}
+
+void ModelClass::ReleaseTexture()
+{
+    if (m_Texture)
+    {
+        m_Texture->Shutdown();
+        delete m_Texture;
+        m_Texture = nullptr;
+    }
 }

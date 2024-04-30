@@ -55,6 +55,15 @@
     <Filter Include="Engine\Events\CoreEvents">
       <UniqueIdentifier>{e81fb4ea-3721-4fbd-84d2-6d9021a719cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Graphics\Shaders\Texture">
+      <UniqueIdentifier>{c521aa4d-60b1-467e-9413-2cbe55a69abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\Shaders\Color">
+      <UniqueIdentifier>{6f302016-9ce2-4178-b058-6943d349ebd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics\Instance\Model\Texture">
+      <UniqueIdentifier>{d0a4c29e-3f05-4538-8d2a-c6fe11c50c89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp">
@@ -90,14 +99,20 @@
     <ClCompile Include="Engine\Logger.cpp">
       <Filter>Engine\Logger</Filter>
     </ClCompile>
-    <ClCompile Include="ColorShader.cpp">
-      <Filter>Engine\Graphics\Shaders</Filter>
-    </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Engine\Graphics\Instance\Model</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Engine\Graphics\Instance\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorShader.cpp">
+      <Filter>Engine\Graphics\Shaders\Color</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureShader.cpp">
+      <Filter>Engine\Graphics\Shaders\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureClass.cpp">
+      <Filter>Engine\Graphics\Instance\Model\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,22 +155,34 @@
     <ClInclude Include="Engine\Logger.h">
       <Filter>Engine\Logger</Filter>
     </ClInclude>
-    <ClInclude Include="ColorShader.h">
-      <Filter>Engine\Graphics\Shaders</Filter>
-    </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Engine\Graphics\Instance\Model</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Engine\Graphics\Instance\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="ColorShader.h">
+      <Filter>Engine\Graphics\Shaders\Color</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureShader.h">
+      <Filter>Engine\Graphics\Shaders\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureClass.h">
+      <Filter>Engine\Graphics\Instance\Model\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Texture.ps">
+      <Filter>Engine\Graphics\Shaders\Texture</Filter>
+    </None>
+    <None Include="Texture.vs">
+      <Filter>Engine\Graphics\Shaders\Texture</Filter>
+    </None>
     <None Include="Color.vs">
-      <Filter>Engine\Graphics\Shaders</Filter>
+      <Filter>Engine\Graphics\Shaders\Color</Filter>
     </None>
     <None Include="Color.ps">
-      <Filter>Engine\Graphics\Shaders</Filter>
+      <Filter>Engine\Graphics\Shaders\Color</Filter>
     </None>
   </ItemGroup>
 </Project>
