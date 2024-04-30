@@ -60,7 +60,7 @@ bool Window::Initialize(LPCWSTR title, HWND& hwnd)
 	m_hwnd = CreateWindowExW(NULL,
 		winClass, title,
 		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP,
-		CW_USEDEFAULT, CW_USEDEFAULT,
+		GetSystemMetrics(SM_CXSCREEN) / 2 - (int)m_size.X / 2, GetSystemMetrics(SM_CYSCREEN) / 2 - (int)m_size.Y / 2,
 		(int)m_size.X, (int)m_size.Y,
 		NULL, NULL, NULL, NULL);
 

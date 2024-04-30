@@ -45,8 +45,8 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
     D3D11_SUBRESOURCE_DATA vertexData, indexData;
     HRESULT result;
 
-    m_vertexCount =     3;
-    m_indexCount =      3;
+    m_vertexCount =     4;
+    m_indexCount =      6;
 
     vertices = new VertexType[m_vertexCount];
     if (!vertices)
@@ -57,17 +57,26 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
         return false;
 
     vertices[0].position =      XMFLOAT3(-1.f, -1.f, 0.f);
-    vertices[0].color =         XMFLOAT4(0.f, 1.f, 0.f, 1.f);
+    vertices[0].color =         XMFLOAT4(0.f, 1.f, 0.f, 0.5f);
 
-    vertices[1].position =      XMFLOAT3(0.f, 1.f, 0.f);
-    vertices[1].color =         XMFLOAT4(0.f, 1.f, 0.f, 1.f);
+    vertices[1].position =      XMFLOAT3(-1.f, 1.f, 0.f);
+    vertices[1].color =         XMFLOAT4(1.f, 1.f, 0.f, 1.f);
 
-    vertices[2].position =      XMFLOAT3(1.f, -1.f, 0.f);
-    vertices[2].color =         XMFLOAT4(0.f, 1.f, 0.f, 1.f);
+    vertices[2].position =      XMFLOAT3(1.f, 1.f, 0.f);
+    vertices[2].color =         XMFLOAT4(0.f, 1.f, 0.f, 0.5f);
+
+    vertices[3].position =      XMFLOAT3(1.f, -1.f, 0.f);
+    vertices[3].color =         XMFLOAT4(0.f, 1.f, 0.f, 1.f);
+
+
 
     indices[0] =                0;
     indices[1] =                1;
     indices[2] =                2;
+
+    indices[3] =                0;
+    indices[4] =                2;
+    indices[5] =                3;
 
     vertexBufferDesc.Usage =                        D3D11_USAGE_DEFAULT;
     vertexBufferDesc.ByteWidth =                    sizeof(VertexType) * m_vertexCount;
@@ -76,7 +85,7 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
     vertexBufferDesc.MiscFlags =                    0;
     vertexBufferDesc.StructureByteStride =          0;
 
-    vertexData.pSysMem =                            indices;
+    vertexData.pSysMem =                            vertices;
     vertexData.SysMemPitch =                        0;
     vertexData.SysMemSlicePitch =                   0;
 
@@ -124,8 +133,8 @@ void ModelClass::ShutdownBuffers()
 
 void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
 {
-    size_t stride;
-    size_t offset;
+    unsigned int stride;
+    unsigned int offset;
 
     stride = sizeof(VertexType);
     offset = 0;
@@ -135,4 +144,6 @@ void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
     deviceContext->IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
     deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    return;
 }

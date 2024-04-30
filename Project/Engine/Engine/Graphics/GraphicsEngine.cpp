@@ -30,8 +30,7 @@ bool GraphicsEngine::Initialize()
 		return false;
 	}
 	m_Camera = std::make_shared<Camera>();
-	m_Camera->SetPosition(Vector3{ 0.f, 0.f, -10.f });
-	m_Camera->SetRotation(Vector3{ 0.f, 0.f, 0.f });
+	m_Camera->SetPosition(Vector3{ 0.f, 0.f, -5.f });
 
 	m_Model = std::make_shared<ModelClass>();
 	if (!m_Model->Initialize(m_Render->GetDevice()))
@@ -70,7 +69,7 @@ bool GraphicsEngine::Frame()
 bool GraphicsEngine::Render()
 {
 	XMMATRIX viewMatrix, projectionMatrix, worldMatrix;
-	Color4 color = { 0.27058825f, 0.48235294f, 0.94509804f, 0.f };
+	Color4 color = { 0.27058825f, 0.48235294f, 0.94509804f, 1.f };
 	m_Render->BeginScene(color);
 
 	m_Camera->Render();

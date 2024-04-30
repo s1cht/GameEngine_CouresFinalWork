@@ -131,7 +131,7 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 		NULL, 
 		D3D_DRIVER_TYPE_HARDWARE, 
 		NULL, 
-		NULL, 
+		D3D11_CREATE_DEVICE_DEBUG,
 		&featureLevel, 
 		1, 
 		D3D11_SDK_VERSION, 
@@ -206,14 +206,14 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 	depthStencilViewDesc.ViewDimension =		D3D11_DSV_DIMENSION_TEXTURE2D;
 	depthStencilViewDesc.Texture2D.MipSlice =	0;
 
-	result = m_device->CreateDepthStencilView(m_depthStencilBuffer , &depthStencilViewDesc, &m_depthStencilView);
+	result = m_device->CreateDepthStencilView(m_depthStencilBuffer, &depthStencilViewDesc, &m_depthStencilView);
 	if (error != 0)
 		return false;
 
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 
 	rasterizerDesc.AntialiasedLineEnable =		false;
-	rasterizerDesc.CullMode =					D3D11_CULL_BACK;
+	rasterizerDesc.CullMode =					D3D11_CULL_NONE;
 	rasterizerDesc.DepthBias =					0;
 	rasterizerDesc.DepthBiasClamp =				0;
 	rasterizerDesc.DepthClipEnable =			true;
