@@ -130,7 +130,7 @@ void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
     stride = sizeof(VertexType);
     offset = 0;
 
-    deviceContext->IAGetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+    deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
 
     deviceContext->IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 

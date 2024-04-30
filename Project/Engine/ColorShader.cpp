@@ -217,7 +217,7 @@ bool ColorShader::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATR
 
 	bufferNumber = 0;
 
-	deviceContext->VSGetConstantBuffers(bufferNumber, 1, &m_matrixBuffer);
+	deviceContext->VSSetConstantBuffers(bufferNumber, 1, &m_matrixBuffer);
 
 	return true;
 }
@@ -225,6 +225,7 @@ bool ColorShader::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATR
 void ColorShader::RenderShader(ID3D11DeviceContext* deviceContext, INT indexCount)
 {
 	deviceContext->IASetInputLayout(m_layout);
+
 	deviceContext->VSSetShader(m_vertexShader, NULL, 0);
 	deviceContext->PSSetShader(m_pixelShader, NULL, 0);
 
