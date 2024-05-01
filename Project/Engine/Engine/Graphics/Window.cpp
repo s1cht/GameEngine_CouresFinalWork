@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Window.h"
-#include "Engine/CoreEvents.h"
+#include "Engine/Core/Events/CoreEvents.h"
 
 
 LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)

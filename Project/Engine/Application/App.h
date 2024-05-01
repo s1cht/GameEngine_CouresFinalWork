@@ -2,8 +2,8 @@
 
 #include "pch.h"
 #include "Engine/Graphics/GraphicsEngine.h"
-#include "Engine/CoreEvents.h"
-#include "Engine/Logger.h"
+#include "Engine/Core/Events/CoreEvents.h"
+#include "Engine/Core/Logger.h"
 
 class App
 {

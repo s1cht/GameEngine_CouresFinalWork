@@ -5,7 +5,7 @@ GraphicsEngine::GraphicsEngine()
 {
 	m_Window = nullptr;
 	m_Render = nullptr;
-	m_TextureShader = nullptr;
+	m_LightShader = nullptr;
 	m_Camera = nullptr;
 	m_Model = nullptr;
 }
@@ -17,6 +17,7 @@ GraphicsEngine::~GraphicsEngine()
 bool GraphicsEngine::Initialize()
 {
 	char textureFileName[128];
+	char modelFileName[128];
 
 	m_Window = std::make_unique<Window>(WINDOW_SIZE);
 	if (!m_Window->Initialize(L"Window", m_hwnd))
@@ -32,19 +33,24 @@ bool GraphicsEngine::Initialize()
 		return false;
 	}
 	m_Camera = std::make_shared<Camera>();
-	m_Camera->SetPosition(Vector3{ 0.f, 0.f, -1.f });
-
-	strcpy_s(textureFileName, "../Engine/data/stone01.tga");
+	m_Camera->SetPosition(Vector3{ 0.f, 0.f, -3.f });
+	
+	strcpy_s(textureFileName, "../Engine/Assets/Textures/stone01.tga");
+	strcpy_s(modelFileName, "../Engine/Assets/Models/cube.txt");
 
 	m_Model = std::make_shared<ModelClass>();
-	if (!m_Model->Initialize(m_Render->GetDevice(), m_Render->GetDeviceContext(), textureFileName))
+	if (!m_Model->Initialize(m_Render->GetDevice(), m_Render->GetDeviceContext(), textureFileName, modelFileName))
 	{
 		MessageBox(m_hwnd, L"Model", L"Error", MB_OK);
 		return false;
 	}
 
-	m_TextureShader = std::make_unique<TextureShader>();
-	if (!m_TextureShader->Initialize(m_Render->GetDevice(), m_hwnd))
+	m_Light = std::make_shared<Light>();
+	m_Light->SetDiffuseColor(Color4{ 1.f, 1.f, 1.f, 1.f });
+	m_Light->SetDirection(Vector3{ 0.f, 0.f, 1.f });
+
+	m_LightShader = std::make_unique<LightShader>();
+	if (!m_LightShader->Initialize(m_Render->GetDevice(), m_hwnd))
 	{
 		MessageBox(m_hwnd, L"Shader", L"Error", MB_OK);
 		return false;
@@ -55,8 +61,8 @@ bool GraphicsEngine::Initialize()
 
 void GraphicsEngine::Shutdown()
 {
-	if (m_TextureShader)
-		m_TextureShader->Shutdown();
+	if (m_LightShader)
+		m_LightShader->Shutdown();
 	if (m_Model)
 		m_Model->Shutdown();
 	if (m_Render)
@@ -65,15 +71,22 @@ void GraphicsEngine::Shutdown()
 
 bool GraphicsEngine::Frame()
 {
-	if (!Render())
+	static FLOAT rotation = 0.f;
+	rotation -= math::ToRadians(1.f);
+
+	if (!(rotation < 0.f))
+		rotation += 360.f;
+
+	if (!Render(rotation))
 		return false;
+
 	return true;
 }
 
-bool GraphicsEngine::Render()
+bool GraphicsEngine::Render(FLOAT rotation)
 {
 	XMMATRIX viewMatrix, projectionMatrix, worldMatrix;
-	Color4 color = { 0.27058825f, 0.48235294f, 0.94509804f, 1.f };
+	Color4 color = { 0.f, 0.f, 0.f, 1.f };
 	m_Render->BeginScene(color);
 
 	m_Camera->Render();
@@ -84,7 +97,14 @@ bool GraphicsEngine::Render()
 
 	m_Model->Render(m_Render->GetDeviceContext());
 
-	if (!m_TextureShader->Render(m_Render->GetDeviceContext(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture()))
+	worldMatrix = XMMatrixRotationRollPitchYaw(0.f, rotation, math::ToRadians(0.f));
+
+	if (!m_LightShader->Render(
+		m_Render->GetDeviceContext(), 
+		m_Model->GetIndexCount(), 
+		worldMatrix, viewMatrix, projectionMatrix, 
+		m_Model->GetTexture(), 
+		m_Light->GetDirection(), m_Light->GetDiffuseColor()))
 		return false;
 
 	m_Render->EndScene();

@@ -11,48 +11,44 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="App.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="ColorShader.cpp" />
-    <ClCompile Include="Engine\CoreEvents.cpp" />
+    <ClCompile Include="Application\App.cpp" />
+    <ClCompile Include="Application\Main.cpp" />
+    <ClCompile Include="Engine\Core\Events\CoreEvents.cpp" />
+    <ClCompile Include="Engine\Core\Logger.cpp" />
+    <ClCompile Include="Engine\Core\Math\Color4.cpp" />
+    <ClCompile Include="Engine\Core\Math\Vector2.cpp" />
+    <ClCompile Include="Engine\Core\Math\Vector3.cpp" />
     <ClCompile Include="Engine\Graphics\GraphicsEngine.cpp" />
+    <ClCompile Include="Engine\Graphics\LightShader.cpp" />
     <ClCompile Include="Engine\Graphics\Render.cpp" />
     <ClCompile Include="Engine\Graphics\Window.cpp" />
-    <ClCompile Include="Engine\Logger.cpp" />
-    <ClCompile Include="Engine\Math\Color4.cpp" />
-    <ClCompile Include="Engine\Math\Vector2.cpp" />
-    <ClCompile Include="Engine\Math\Vector3.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Engine\Resources\Camera.cpp" />
+    <ClCompile Include="Engine\Resources\Instance.cpp" />
+    <ClCompile Include="Engine\Resources\Light.cpp" />
+    <ClCompile Include="Engine\Resources\Model.cpp" />
+    <ClCompile Include="Engine\Resources\TextureClass.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="TextureClass.cpp" />
-    <ClCompile Include="TextureShader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="App.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="ColorShader.h" />
-    <ClInclude Include="Engine\CoreEvents.h" />
-    <ClInclude Include="Engine\Event.h" />
+    <ClInclude Include="Application\App.h" />
+    <ClInclude Include="Engine\Core\Events\CoreEvents.h" />
+    <ClInclude Include="Engine\Core\Events\Event.h" />
+    <ClInclude Include="Engine\Core\Events\IEvent.h" />
+    <ClInclude Include="Engine\Core\Logger.h" />
+    <ClInclude Include="Engine\Core\Math\Color4.h" />
+    <ClInclude Include="Engine\Core\Math\EngineMath.h" />
+    <ClInclude Include="Engine\Core\Math\Vector2.h" />
+    <ClInclude Include="Engine\Core\Math\Vector3.h" />
     <ClInclude Include="Engine\Graphics\GraphicsEngine.h" />
+    <ClInclude Include="Engine\Graphics\LightShader.h" />
     <ClInclude Include="Engine\Graphics\Render.h" />
     <ClInclude Include="Engine\Graphics\Window.h" />
-    <ClInclude Include="Engine\IEvent.h" />
-    <ClInclude Include="Engine\Logger.h" />
-    <ClInclude Include="Engine\Math\Color4.h" />
-    <ClInclude Include="Engine\Math\EngineMath.h" />
-    <ClInclude Include="Engine\Math\Vector2.h" />
-    <ClInclude Include="Engine\Math\Vector3.h" />
-    <ClInclude Include="Model.h" />
+    <ClInclude Include="Engine\Resources\Camera.h" />
+    <ClInclude Include="Engine\Resources\Instance.h" />
+    <ClInclude Include="Engine\Resources\Light.h" />
+    <ClInclude Include="Engine\Resources\Model.h" />
+    <ClInclude Include="Engine\Resources\TextureClass.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="TextureClass.h" />
-    <ClInclude Include="TextureShader.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Color.ps" />
-    <None Include="Color.vs" />
-    <None Include="Texture.ps" />
-    <None Include="Texture.vs" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

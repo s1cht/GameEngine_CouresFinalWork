@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
-#include "Engine/Event.h"
-#include "Engine/Math/EngineMath.h"
+#include "Engine/Core/Events/Event.h"
+#include "Engine/Core/Math/EngineMath.h"
 
 const LPCWSTR winClass = L"EngineA‡Î‡Ê";
 

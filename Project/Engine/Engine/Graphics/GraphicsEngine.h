@@ -2,10 +2,11 @@
 #include "pch.h"
 #include "Render.h"
 #include "Window.h"
-#include "Camera.h"
-#include "Model.h"
-#include "TextureShader.h"
-#include "Engine/Math/EngineMath.h"
+#include "Engine/Resources/Camera.h"
+#include "Engine/Resources/Model.h"
+#include "Engine/Resources/Light.h"
+#include "LightShader.h"
+#include "Engine/Core/Math/EngineMath.h"
 
 const BOOL VSYNC_ENABLED = true;
 const BOOL FULLSCREEN = false;
@@ -25,13 +26,14 @@ public:
 	bool Frame();
 
 private:
-	bool Render();
+	bool Render(FLOAT);
 
 private:
 	HWND m_hwnd;
 	std::unique_ptr<RenderClass> m_Render;
-	std::unique_ptr<TextureShader> m_TextureShader;
 	std::unique_ptr<Window> m_Window;
+	std::unique_ptr<LightShader> m_LightShader;
 	std::shared_ptr<ModelClass> m_Model;
 	std::shared_ptr<Camera> m_Camera;
+	std::shared_ptr<Light> m_Light;
 };

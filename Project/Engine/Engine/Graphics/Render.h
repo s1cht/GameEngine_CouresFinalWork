@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-#include "Engine/Math/EngineMath.h"
+#include "Engine/Core/Math/EngineMath.h"
 
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "dxgi.lib")

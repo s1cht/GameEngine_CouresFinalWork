@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-#include "Engine/Math/EngineMath.h"
+#include "Engine/Core/Math/EngineMath.h"
 
 class TextureClass
 {
