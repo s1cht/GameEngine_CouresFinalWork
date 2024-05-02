@@ -2,13 +2,14 @@
 
 #include "pch.h"
 #include "Instance.h"
-#include "TextureClass.h"
+#include "Texture.h"
 #include "Engine/Core/Math/EngineMath.h"
 #include "ResourceManager.h"
 
 using namespace std;
 using namespace DirectX;
 
+/*
 class Part : Instance
 {
 public:
@@ -66,3 +67,4 @@ protected:
 
 
 
+*/

@@ -3,9 +3,9 @@
 #include "Render.h"
 #include "Window.h"
 #include "Engine/Resources/Camera.h"
-#include "Engine/Resources/Model.h"
+#include "Engine/Resources/Mesh.h"
 #include "Engine/Resources/Light.h"
-#include "LightShader.h"
+#include "Engine/Resources/Shader.h"
 #include "Engine/Core/Math/EngineMath.h"
 
 const BOOL VSYNC_ENABLED = true;
@@ -23,17 +23,19 @@ public:
 	bool Initialize();
 	void Shutdown();
 
-	bool Frame();
+	bool Frame(Mesh***, Shader***, INT, INT);
+
+	HWND GetHWND();
+	ID3D11Device* GetDevice();
+	ID3D11DeviceContext* GetDeviceContext();
 
 private:
-	bool Render(FLOAT);
+	bool Render(FLOAT, Mesh***, Shader***, INT, INT);
 
 private:
 	HWND m_hwnd;
 	std::unique_ptr<RenderClass> m_Render;
 	std::unique_ptr<Window> m_Window;
-	std::unique_ptr<LightShader> m_LightShader;
-	std::shared_ptr<ModelClass> m_Model;
 	std::shared_ptr<Camera> m_Camera;
 	std::shared_ptr<Light> m_Light;
 };

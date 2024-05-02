@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "LightShader.h"
+#include "Shader.h"
 
-LightShader::LightShader()
+Shader::Shader()
 {
 	m_vertexShader = nullptr;
 	m_pixelShader = nullptr;
@@ -11,42 +11,31 @@ LightShader::LightShader()
 	m_lightBuffer = nullptr;
 }
 
-LightShader::LightShader(const LightShader&)
+Shader::Shader(const Shader&)
 {
 }
 
-LightShader::~LightShader()
+Shader::~Shader()
 {
 }
 
-bool LightShader::Initialize(ID3D11Device* device, HWND hwnd)
+bool Shader::Initialize(ID3D11Device* device, HWND hwnd, ID3D10Blob** vertexShaderBuffer, ID3D10Blob** pixelShaderBuffer)
 {
 	bool result;
-	wchar_t vsFilename[128];
-	wchar_t psFilename[128];
-	INT error;
 
-	error = wcscpy_s(psFilename, 128, L"../Engine/Assets/Shaders/PixelLightShader.hlsl");
-	if (error != 0)
-		return false;
-
-	error = wcscpy_s(vsFilename, 128, L"../Engine/Assets/Shaders/VertexLightShader.hlsl");
-	if (error != 0)
-		return false;
-
-	result = InitializeShader(device, hwnd, vsFilename, psFilename);
+	result = InitializeShader(device, hwnd, vertexShaderBuffer, pixelShaderBuffer);
 	if (!result)
 		return false;
 
 	return true;
 }
 
-void LightShader::Shutdown()
+void Shader::Shutdown()
 {
 	ShutdownShader();
 }
 
-bool LightShader::Render(ID3D11DeviceContext* deviceContext, INT indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture, XMFLOAT3 lightDirection, XMFLOAT4 diffuseColor)
+bool Shader::Render(ID3D11DeviceContext* deviceContext, INT indexCount, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture, XMFLOAT3 lightDirection, XMFLOAT4 diffuseColor)
 {
 	bool result;
 
@@ -59,49 +48,30 @@ bool LightShader::Render(ID3D11DeviceContext* deviceContext, INT indexCount, XMM
 	return true;
 }
 
-bool LightShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFilename, WCHAR* psFilename)
+void Shader::SetName(string Name)
+{
+	m_name = Name;
+}
+
+string Shader::GetName()
+{
+	return m_name;
+}
+
+bool Shader::InitializeShader(ID3D11Device* device, HWND hwnd, ID3D10Blob** vertexShaderBuffer, ID3D10Blob** pixelShaderBuffer)
 {
 	HRESULT result;
-	ID3D10Blob* errorMessage;
-	ID3D10Blob* vertexShaderBuffer;
-	ID3D10Blob* pixelShaderBuffer;
 	D3D11_INPUT_ELEMENT_DESC polygonLayout[3];
 	D3D11_SAMPLER_DESC samplerDesc;
 	D3D11_BUFFER_DESC matrixBufferDesc;
 	D3D11_BUFFER_DESC lightBufferDesc;
 	UINT numElements;
 
-	errorMessage = nullptr;
-	vertexShaderBuffer = nullptr;
-	pixelShaderBuffer = nullptr;
-
-	result = D3DCompileFromFile(vsFilename, NULL, NULL, "LightVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &vertexShaderBuffer, &errorMessage);
-	if (FAILED(result))
-	{
-		if (errorMessage)
-			OutputShaderErrorMessage(errorMessage, hwnd, vsFilename);
-		else
-			MessageBox(hwnd, vsFilename, L"MissingShaderFile", MB_OK);
-
-		return false;
-	}
-
-	result = D3DCompileFromFile(psFilename, NULL, NULL, "LightPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &pixelShaderBuffer, &errorMessage);
-	if (FAILED(result))
-	{
-		if (errorMessage)
-			OutputShaderErrorMessage(errorMessage, hwnd, vsFilename);
-		else
-			MessageBox(hwnd, vsFilename, L"MissingShaderFile", MB_OK);
-
-		return false;
-	}
-
-	result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_vertexShader);
+	result = device->CreateVertexShader((*vertexShaderBuffer)->GetBufferPointer(), (*vertexShaderBuffer)->GetBufferSize(), NULL, &m_vertexShader);
 	if (FAILED(result))
 		return false;
 
-	result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL, &m_pixelShader);
+	result = device->CreatePixelShader((*pixelShaderBuffer)->GetBufferPointer(), (*pixelShaderBuffer)->GetBufferSize(), NULL, &m_pixelShader);
 	if (FAILED(result))
 		return false;
 
@@ -131,14 +101,14 @@ bool LightShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFil
 
 	numElements = sizeof(polygonLayout) / sizeof(polygonLayout[0]);
 
-	result = device->CreateInputLayout(polygonLayout, numElements, vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), &m_layout);
+	result = device->CreateInputLayout(polygonLayout, numElements, (*vertexShaderBuffer)->GetBufferPointer(), (*vertexShaderBuffer)->GetBufferSize(), &m_layout);
 	if (FAILED(result))
 		return false;
 
-	vertexShaderBuffer->Release();
+	(*vertexShaderBuffer)->Release();
 	vertexShaderBuffer = nullptr;
 
-	pixelShaderBuffer->Release();
+	(*pixelShaderBuffer)->Release();
 	pixelShaderBuffer = nullptr;
 
 	matrixBufferDesc.Usage =				D3D11_USAGE_DYNAMIC;
@@ -184,7 +154,7 @@ bool LightShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFil
 	return true;
 }
 
-void LightShader::ShutdownShader()
+void Shader::ShutdownShader()
 {
 	if (m_lightBuffer)
 	{
@@ -218,7 +188,7 @@ void LightShader::ShutdownShader()
 	}
 }
 
-void LightShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFilename)
+void Shader::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFilename)
 {
 	char* compileErrors;
 	size_t bufferSize, i;
@@ -243,7 +213,7 @@ void LightShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, 
 	MessageBox(hwnd, L"Failed to compile shaders. Check shader_error.txt for information.", shaderFilename, MB_OK);
 }
 
-bool LightShader::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture, XMFLOAT3 lightDirection, XMFLOAT4 diffuseColor)
+bool Shader::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, ID3D11ShaderResourceView* texture, XMFLOAT3 lightDirection, XMFLOAT4 diffuseColor)
 {
 	HRESULT result;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -291,7 +261,7 @@ bool LightShader::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATR
 	return true;
 }
 
-void LightShader::RenderShader(ID3D11DeviceContext* deviceContext, INT indexCount)
+void Shader::RenderShader(ID3D11DeviceContext* deviceContext, INT indexCount)
 {
 	deviceContext->IASetInputLayout(m_layout);
 
@@ -301,4 +271,36 @@ void LightShader::RenderShader(ID3D11DeviceContext* deviceContext, INT indexCoun
 	deviceContext->PSSetSamplers(0, 1, &m_sampleState);
 
 	deviceContext->DrawIndexed(indexCount, 0, 0);
+}
+
+bool Shader::ReadShaderFile(const WCHAR* vsFileName, const WCHAR* psFileName, HWND hwnd, ID3D10Blob** vertexShaderBuffer, ID3D10Blob** pixelShaderBuffer)
+{
+	HRESULT result;
+	ID3D10Blob* errorMessage;
+
+	errorMessage = nullptr;
+
+	result = D3DCompileFromFile((WCHAR*)vsFileName, NULL, NULL, "LightVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, vertexShaderBuffer, &errorMessage);
+	if (FAILED(result))
+	{
+		if (errorMessage)
+			OutputShaderErrorMessage(errorMessage, hwnd, (WCHAR*)vsFileName);
+		else
+			MessageBox(hwnd, (WCHAR*)vsFileName, L"MissingShaderFile", MB_OK);
+
+		return false;
+	}
+
+	result = D3DCompileFromFile((WCHAR*)psFileName, NULL, NULL, "LightPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, pixelShaderBuffer, &errorMessage);
+	if (FAILED(result))
+	{
+		if (errorMessage)
+			OutputShaderErrorMessage(errorMessage, hwnd, (WCHAR*)psFileName);
+		else
+			MessageBox(hwnd, (WCHAR*)psFileName, L"MissingShaderFile", MB_OK);
+
+		return false;
+	}
+
+	return true;
 }

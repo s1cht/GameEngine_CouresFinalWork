@@ -8,7 +8,7 @@ class Instance
 {
 public:
 	Instance();
-	~Instance();
+
 public:
 	template<typename className> 
 	Instance* New();

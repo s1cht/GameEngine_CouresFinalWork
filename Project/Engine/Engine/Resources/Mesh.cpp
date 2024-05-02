@@ -1,59 +1,67 @@
 #include "pch.h"
-#include "Model.h"
+#include "Mesh.h"
 
-ModelClass::ModelClass()
+Mesh::Mesh()
 {
     m_vertexBuffer = nullptr;
     m_indexBuffer = nullptr;
     m_Texture = nullptr;
 }
 
-ModelClass::~ModelClass()
+Mesh::~Mesh()
 {
 }
 
-bool ModelClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName, char* modelFileName)
+bool Mesh::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, Texture** texture, INT vertexCount, INT indexCount, ModelType** objectData)
 {
     bool result;
 
-    result = LoadModel(modelFileName);
-    if (!result)
-        return false;
+    m_vertexCount = vertexCount;
+    m_indexCount = indexCount;
+    m_model = (*objectData);
+
+    LoadTexture(texture);
 
     result = InitializeBuffers(device);
-    if (!result)
-        return false;
-
-    result = LoadTexture(device, deviceContext, fileName);
     if (!result)
         return false;
 
     return true;
 }
 
-void ModelClass::Shutdown()
+void Mesh::Shutdown()
 {
     ReleaseTexture();
     ReleaseModel();
     ShutdownBuffers();
 }
 
-void ModelClass::Render(ID3D11DeviceContext* deviceContext)
+void Mesh::Render(ID3D11DeviceContext* deviceContext)
 {
     RenderBuffers(deviceContext);
 }
 
-INT ModelClass::GetIndexCount()
+void Mesh::SetName(std::string name)
+{
+    m_name = name;
+}
+
+INT Mesh::GetIndexCount()
 {
     return m_indexCount;
 }
 
-ID3D11ShaderResourceView* ModelClass::GetTexture()
+std::string Mesh::GetName()
+{
+    return m_name;
+}
+
+ID3D11ShaderResourceView* Mesh::GetTexture()
 {
     return m_Texture->GetTexture();
 }
 
-bool ModelClass::InitializeBuffers(ID3D11Device* device)
+bool Mesh::InitializeBuffers(ID3D11Device* device)
 {
     VertexType* vertices;
     size_t* indices;
@@ -117,7 +125,7 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device)
     return true;
 }
 
-void ModelClass::ShutdownBuffers()
+void Mesh::ShutdownBuffers()
 {
     if (m_indexBuffer)
     {
@@ -131,7 +139,7 @@ void ModelClass::ShutdownBuffers()
     }
 }
 
-void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
+void Mesh::RenderBuffers(ID3D11DeviceContext* deviceContext)
 {
     unsigned int stride;
     unsigned int offset;
@@ -146,20 +154,12 @@ void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext)
     deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-bool ModelClass::LoadTexture(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName)
+void Mesh::LoadTexture(Texture** texture)
 {
-    bool result;
+    m_Texture = (*texture);
+} 
 
-    m_Texture = new TextureClass;
-
-    result = m_Texture->Initialize(device, deviceContext, fileName);
-    if (!result)
-        return false;
-
-    return true;
-}
-
-void ModelClass::ReleaseTexture()
+void Mesh::ReleaseTexture()
 {
     if (m_Texture)
     {
@@ -169,11 +169,55 @@ void ModelClass::ReleaseTexture()
     }
 }
 
-void ModelClass::ReleaseModel()
+void Mesh::ReleaseModel()
 {
     if (m_model)
     {
         delete[] m_model;
         m_model = nullptr;
     }
+}
+
+bool Mesh::ReadObjectFile(const char* fileName, INT& vertexCount, INT& indexCount, ModelType** object)
+{
+    std::ifstream file;
+    char input;
+    int i;
+
+    file.open(fileName);
+
+    if (file.fail())
+        return false;
+
+    file.get(input);
+    while (input != ':')
+        file.get(input);
+
+    file >> vertexCount;
+
+    indexCount = vertexCount;
+
+    (*object) = new ModelType[vertexCount];
+
+    if (!object)
+        return false;
+
+    file.get(input);
+
+    while (input != ':')
+        file.get(input);
+
+    file.get(input);
+    file.get(input);
+
+    for (i = 0; i < vertexCount; i++)
+    {
+        file >> (*object)[i].x >> (*object)[i].y >> (*object)[i].z;
+        file >> (*object)[i].tu >> (*object)[i].tv;
+        file >> (*object)[i].nx >> (*object)[i].ny >> (*object)[i].nz;
+    }
+
+    file.close();
+
+    return true;
 }

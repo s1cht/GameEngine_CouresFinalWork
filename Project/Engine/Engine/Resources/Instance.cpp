@@ -5,10 +5,6 @@ Instance::Instance()
 {
 }
 
-Instance::~Instance()
-{
-}
-
 void Instance::Destroy()
 {
 }

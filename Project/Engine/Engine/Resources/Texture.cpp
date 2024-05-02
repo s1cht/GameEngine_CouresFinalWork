@@ -1,28 +1,26 @@
 #include "pch.h"
-#include "TextureClass.h"
+#include "Texture.h"
 
-TextureClass::TextureClass()
+Texture::Texture()
 {
     m_TargaData = nullptr;
     m_texture = nullptr;
     m_textureView = nullptr;
 }
 
-TextureClass::~TextureClass()
+Texture::~Texture()
 {
 }
 
-bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, char* fileName)
+bool Texture::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, UCHAR** targaData, Vector2 size)
 {
-    bool result;
     D3D11_TEXTURE2D_DESC textureDesc;
     HRESULT hResult;
     UINT rowPitch;
     D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
 
-    result = LoadTarga32B(fileName);
-    if (!result)
-        return false;
+    m_size = size;
+    m_TargaData = (*targaData);
 
     textureDesc.Height = (UINT)m_size.X;
     textureDesc.Width = (UINT)m_size.Y;
@@ -61,7 +59,7 @@ bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
     return true;
 }
 
-void TextureClass::Shutdown()
+void Texture::Shutdown()
 {
     if (m_textureView)
     {
@@ -80,22 +78,32 @@ void TextureClass::Shutdown()
     }
 }
 
-ID3D11ShaderResourceView* TextureClass::GetTexture()
+void Texture::SetName(std::string name)
+{
+    m_name = name;
+}
+
+ID3D11ShaderResourceView* Texture::GetTexture()
 {
     return m_textureView;
 }
 
-INT TextureClass::GetWidth()
+std::string Texture::GetName()
+{
+    return m_name;
+}
+
+INT Texture::GetWidth()
 {
     return (INT)m_size.X;
 }
 
-INT TextureClass::GetHeight()
+INT Texture::GetHeight()
 {
     return (INT)m_size.Y;
 }
 
-bool TextureClass::LoadTarga32B(char* fileName)
+bool Texture::ReadTargaFile(const char* fileName, UCHAR** targaData, Vector2& size)
 {
     INT error, bpp, imageSize, index, i, j, k;
     FILE* filePtr;
@@ -111,14 +119,14 @@ bool TextureClass::LoadTarga32B(char* fileName)
     if (count != 1)
         return false;
 
-    m_size.X = (FLOAT)targaFileHeader.width;
-    m_size.Y = (FLOAT)targaFileHeader.height;
+    size.X = (FLOAT)targaFileHeader.width;
+    size.Y = (FLOAT)targaFileHeader.height;
     bpp = (INT)targaFileHeader.bpp;
 
     if (bpp != 32)
         return false;
 
-    imageSize = (INT)m_size.X * (INT)m_size.Y * 4;
+    imageSize = (INT)size.X * (INT)size.Y * 4;
 
     targaImage = new UCHAR[imageSize];
 
@@ -130,26 +138,26 @@ bool TextureClass::LoadTarga32B(char* fileName)
     if (error != 0)
         return false;
 
-    m_TargaData = new UCHAR[imageSize];
+    (*targaData) = new UCHAR[imageSize];
 
     index = 0;
 
-    k = imageSize - ((INT)m_size.X * 4);
+    k = imageSize - ((INT)size.X * 4);
 
-    for (j = 0; j < (INT)m_size.Y; j++)
+    for (j = 0; j < (INT)size.Y; j++)
     {
-        for (i = 0; i < (INT)m_size.X; i++)
+        for (i = 0; i < (INT)size.X; i++)
         {
-            m_TargaData[index + 0] = targaImage[k + 2];
-            m_TargaData[index + 1] = targaImage[k + 1];
-            m_TargaData[index + 2] = targaImage[k + 0];
-            m_TargaData[index + 3] = targaImage[k + 3];
+            (*targaData)[index + 0] = targaImage[k + 2];
+            (*targaData)[index + 1] = targaImage[k + 1];
+            (*targaData)[index + 2] = targaImage[k + 0];
+            (*targaData)[index + 3] = targaImage[k + 3];
 
             k +=        4;
             index +=    4;
         }
         
-        k -= (INT)(m_size.X * 8);
+        k -= (INT)(size.X * 8);
     }
 
     delete[] targaImage;

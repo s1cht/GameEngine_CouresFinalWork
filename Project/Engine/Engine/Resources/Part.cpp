@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Part.h"
 
+/*
 void Part::Destroy()
 {
 }
@@ -191,3 +192,4 @@ void Part::ReleaseTexture()
 void Part::ReleaseModel()
 {
 }
+*/

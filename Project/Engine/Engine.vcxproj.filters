@@ -13,9 +13,6 @@
     <Filter Include="Engine\Graphics\Window">
       <UniqueIdentifier>{f22f0786-511f-4e26-ab28-367246553904}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Graphics\Shaders">
-      <UniqueIdentifier>{bea25f64-92ca-41a4-91aa-c751ebf51dda}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Core">
       <UniqueIdentifier>{933f2a36-db37-4981-a5ad-06112e541acc}</UniqueIdentifier>
     </Filter>
@@ -52,23 +49,32 @@
     <Filter Include="Engine\Core\Logger">
       <UniqueIdentifier>{bc4eca09-02a4-4df0-b790-88e757ec4de1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Resources\Instance">
-      <UniqueIdentifier>{1fad1374-93a3-48f5-bb66-01f0bc5d73e0}</UniqueIdentifier>
+    <Filter Include="Engine\Resources\Resources">
+      <UniqueIdentifier>{cda09f43-5917-4230-a8f1-672e11f95dc7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Resources\Instance\Model">
-      <UniqueIdentifier>{9ad05089-6427-47a2-b7cf-b275d3480846}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Resources\Instance\Model\Texture">
+    <Filter Include="Engine\Resources\Resources\Texture">
       <UniqueIdentifier>{d0a4c29e-3f05-4538-8d2a-c6fe11c50c89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Resources\Instance\Model\Light">
-      <UniqueIdentifier>{d4297883-0961-4f79-ad11-2d1c432dfb0d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Resources\Instance\Camera">
+    <Filter Include="Engine\Graphics\Camera">
       <UniqueIdentifier>{8d6c89a6-6e1a-465f-9ad4-378029ca983d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Resources\Instance\Part">
+    <Filter Include="Engine\Resources\Resources\Mesh">
+      <UniqueIdentifier>{28c3e0c8-7de2-4cd1-89d7-9aa6b347fc59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources\Resources\Shader">
+      <UniqueIdentifier>{ef0f4a5b-a670-4eab-9625-c3a03a995f33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Instance">
+      <UniqueIdentifier>{1fad1374-93a3-48f5-bb66-01f0bc5d73e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Instance\Model">
+      <UniqueIdentifier>{9ad05089-6427-47a2-b7cf-b275d3480846}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Instance\Part">
       <UniqueIdentifier>{5b9c1f5c-89ab-4b91-876d-74c51b4c49e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Instance\Light">
+      <UniqueIdentifier>{d4297883-0961-4f79-ad11-2d1c432dfb0d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -97,17 +103,14 @@
     <ClCompile Include="Engine\Core\Events\CoreEvents.cpp">
       <Filter>Engine\Core\Events\CoreEvents</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Resources\Model.cpp">
-      <Filter>Engine\Resources\Instance\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Resources\Light.cpp">
-      <Filter>Engine\Resources\Instance\Model\Light</Filter>
+      <Filter>Engine\Instance\Light</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Resources\Camera.cpp">
-      <Filter>Engine\Resources\Instance\Camera</Filter>
+      <Filter>Engine\Graphics\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Resources\TextureClass.cpp">
-      <Filter>Engine\Resources\Instance\Model\Texture</Filter>
+    <ClCompile Include="Engine\Resources\Texture.cpp">
+      <Filter>Engine\Resources\Resources\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Application\App.cpp">
       <Filter>UselessApp\App</Filter>
@@ -115,20 +118,23 @@
     <ClCompile Include="Application\Main.cpp">
       <Filter>UselessApp</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Graphics\LightShader.cpp">
-      <Filter>Engine\Graphics\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Resources\Instance.cpp">
-      <Filter>Engine\Resources\Instance</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Resources\Part.cpp">
-      <Filter>Engine\Resources\Instance\Part</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Resources\ResourceManager.cpp">
       <Filter>Engine\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Engine\GameEngine.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\Instance.cpp">
+      <Filter>Engine\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\Part.cpp">
+      <Filter>Engine\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\Mesh.cpp">
+      <Filter>Engine\Resources\Resources\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\Shader.cpp">
+      <Filter>Engine\Resources\Resources\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,35 +172,38 @@
     <ClInclude Include="Engine\Core\Math\EngineMath.h">
       <Filter>Engine\Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Resources\Model.h">
-      <Filter>Engine\Resources\Instance\Model</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Resources\Light.h">
-      <Filter>Engine\Resources\Instance\Model\Light</Filter>
+      <Filter>Engine\Instance\Light</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Resources\Camera.h">
-      <Filter>Engine\Resources\Instance\Camera</Filter>
+      <Filter>Engine\Graphics\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Resources\TextureClass.h">
-      <Filter>Engine\Resources\Instance\Model\Texture</Filter>
+    <ClInclude Include="Engine\Resources\Texture.h">
+      <Filter>Engine\Resources\Resources\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Application\App.h">
       <Filter>UselessApp\App</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Graphics\LightShader.h">
-      <Filter>Engine\Graphics\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Resources\Instance.h">
-      <Filter>Engine\Resources\Instance</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Resources\Part.h">
-      <Filter>Engine\Resources\Instance\Part</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Resources\ResourceManager.h">
       <Filter>Engine\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Engine\GameEngine.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\Instance.h">
+      <Filter>Engine\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\Part.h">
+      <Filter>Engine\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\Mesh.h">
+      <Filter>Engine\Resources\Resources\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="FilesToLoad.h">
+      <Filter>Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\Shader.h">
+      <Filter>Engine\Resources\Resources\Shader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

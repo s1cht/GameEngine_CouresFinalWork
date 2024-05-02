@@ -2,7 +2,7 @@
 #include "pch.h"
 #include "Engine/Core/Math/EngineMath.h"
 
-class TextureClass
+class Texture
 {
 private:
 	struct TargaHeader
@@ -15,24 +15,32 @@ private:
 	};
 
 public:
-	TextureClass();
-	~TextureClass();
+	Texture();
+	~Texture();
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, UCHAR**, Vector2);
 	void Shutdown();
 
-	ID3D11ShaderResourceView* GetTexture();
+	void SetName(std::string);
 
+	std::string GetName();
 	INT GetWidth();
 	INT GetHeight();
+	ID3D11ShaderResourceView* GetTexture();
 
 private:
-	bool LoadTarga32B(char*);
+	static bool ReadTargaFile(const char*, UCHAR**, Vector2&);
 
 private:
+	std::string m_name;
+
 	UCHAR* m_TargaData;
 	ID3D11Texture2D* m_texture;
 	ID3D11ShaderResourceView* m_textureView;
 	Vector2 m_size;
+
+private:
+	friend class ResourceManager;
+
 };
 

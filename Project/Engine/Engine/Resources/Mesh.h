@@ -1,11 +1,11 @@
 #pragma once
 
 #include "pch.h"
-#include "TextureClass.h"
+#include "Texture.h"
 
 using namespace DirectX;
 
-class ModelClass
+class Mesh
 {
 private:
 	struct VertexType 
@@ -22,16 +22,18 @@ private:
 	};
 
 public:
-	ModelClass();
-	~ModelClass();
+	Mesh();
+	~Mesh();
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, char*);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, Texture**, INT, INT, ModelType**);
 	void Shutdown();
 
 	void Render(ID3D11DeviceContext*);
 
-	INT GetIndexCount();
+	void SetName(std::string);
 
+	INT GetIndexCount();
+	std::string GetName();
 	ID3D11ShaderResourceView* GetTexture();
 
 private:
@@ -39,16 +41,23 @@ private:
 	void ShutdownBuffers();
 	void RenderBuffers(ID3D11DeviceContext*);
 
-	bool LoadTexture(ID3D11Device*, ID3D11DeviceContext*, char*);
+	void LoadTexture(Texture**);
 	void ReleaseTexture();
 
 	void ReleaseModel();
 
+	static bool ReadObjectFile(const char* fileName, INT& vertexCount, INT& indexCount, ModelType** object);
+
 private:
+	std::string m_name;
+
 	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
 	INT m_vertexCount, m_indexCount;
 
-	TextureClass* m_Texture;
+	Texture* m_Texture;
 	ModelType* m_model;
+
+private:
+	friend class ResourceManager;
 };
 

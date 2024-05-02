@@ -20,16 +20,16 @@
     <ClCompile Include="Engine\Core\Math\Vector3.cpp" />
     <ClCompile Include="Engine\GameEngine.cpp" />
     <ClCompile Include="Engine\Graphics\GraphicsEngine.cpp" />
-    <ClCompile Include="Engine\Graphics\LightShader.cpp" />
     <ClCompile Include="Engine\Graphics\Render.cpp" />
     <ClCompile Include="Engine\Graphics\Window.cpp" />
     <ClCompile Include="Engine\Resources\Camera.cpp" />
     <ClCompile Include="Engine\Resources\Instance.cpp" />
     <ClCompile Include="Engine\Resources\Light.cpp" />
-    <ClCompile Include="Engine\Resources\Model.cpp" />
+    <ClCompile Include="Engine\Resources\Mesh.cpp" />
     <ClCompile Include="Engine\Resources\Part.cpp" />
     <ClCompile Include="Engine\Resources\ResourceManager.cpp" />
-    <ClCompile Include="Engine\Resources\TextureClass.cpp" />
+    <ClCompile Include="Engine\Resources\Shader.cpp" />
+    <ClCompile Include="Engine\Resources\Texture.cpp" />
     <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -44,16 +44,17 @@
     <ClInclude Include="Engine\Core\Math\Vector3.h" />
     <ClInclude Include="Engine\GameEngine.h" />
     <ClInclude Include="Engine\Graphics\GraphicsEngine.h" />
-    <ClInclude Include="Engine\Graphics\LightShader.h" />
     <ClInclude Include="Engine\Graphics\Render.h" />
     <ClInclude Include="Engine\Graphics\Window.h" />
     <ClInclude Include="Engine\Resources\Camera.h" />
     <ClInclude Include="Engine\Resources\Instance.h" />
     <ClInclude Include="Engine\Resources\Light.h" />
-    <ClInclude Include="Engine\Resources\Model.h" />
+    <ClInclude Include="Engine\Resources\Mesh.h" />
     <ClInclude Include="Engine\Resources\Part.h" />
     <ClInclude Include="Engine\Resources\ResourceManager.h" />
-    <ClInclude Include="Engine\Resources\TextureClass.h" />
+    <ClInclude Include="Engine\Resources\Shader.h" />
+    <ClInclude Include="Engine\Resources\Texture.h" />
+    <ClInclude Include="FilesToLoad.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
