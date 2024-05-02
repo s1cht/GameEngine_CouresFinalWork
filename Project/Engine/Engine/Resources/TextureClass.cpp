@@ -24,8 +24,8 @@ bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
     if (!result)
         return false;
 
-    textureDesc.Height = m_size.X;
-    textureDesc.Width = m_size.Y;
+    textureDesc.Height = (UINT)m_size.X;
+    textureDesc.Width = (UINT)m_size.Y;
     textureDesc.MipLevels = 0;
     textureDesc.ArraySize = 1;
     textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -40,7 +40,7 @@ bool TextureClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
     if (FAILED(hResult))
         return false;
 
-    rowPitch = (m_size.X * 4) * sizeof(UCHAR);
+    rowPitch = ((UINT)m_size.X * 4) * sizeof(UCHAR);
 
     deviceContext->UpdateSubresource(m_texture, 0, NULL, m_TargaData, rowPitch, 0);
 
@@ -118,7 +118,7 @@ bool TextureClass::LoadTarga32B(char* fileName)
     if (bpp != 32)
         return false;
 
-    imageSize = m_size.X * m_size.Y * 4;
+    imageSize = (INT)m_size.X * (INT)m_size.Y * 4;
 
     targaImage = new UCHAR[imageSize];
 
@@ -149,7 +149,7 @@ bool TextureClass::LoadTarga32B(char* fileName)
             index +=    4;
         }
         
-        k -= (m_size.X * 8);
+        k -= (INT)(m_size.X * 8);
     }
 
     delete[] targaImage;

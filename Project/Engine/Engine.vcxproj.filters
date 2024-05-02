@@ -16,15 +16,6 @@
     <Filter Include="Engine\Graphics\Shaders">
       <UniqueIdentifier>{bea25f64-92ca-41a4-91aa-c751ebf51dda}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Graphics\Shaders\Texture">
-      <UniqueIdentifier>{c521aa4d-60b1-467e-9413-2cbe55a69abb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Graphics\Shaders\Color">
-      <UniqueIdentifier>{6f302016-9ce2-4178-b058-6943d349ebd6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Graphics\Shaders\Light">
-      <UniqueIdentifier>{4f781ce5-72ad-41b6-9406-f2fccd924b8b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Core">
       <UniqueIdentifier>{933f2a36-db37-4981-a5ad-06112e541acc}</UniqueIdentifier>
     </Filter>
@@ -61,41 +52,26 @@
     <Filter Include="Engine\Core\Logger">
       <UniqueIdentifier>{bc4eca09-02a4-4df0-b790-88e757ec4de1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Resources\Model">
-      <UniqueIdentifier>{9ad05089-6427-47a2-b7cf-b275d3480846}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Resources\Model\Texture">
-      <UniqueIdentifier>{d0a4c29e-3f05-4538-8d2a-c6fe11c50c89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Resources\Model\Light">
-      <UniqueIdentifier>{d4297883-0961-4f79-ad11-2d1c432dfb0d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Resources\Instance">
       <UniqueIdentifier>{1fad1374-93a3-48f5-bb66-01f0bc5d73e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Graphics\Camera">
+    <Filter Include="Engine\Resources\Instance\Model">
+      <UniqueIdentifier>{9ad05089-6427-47a2-b7cf-b275d3480846}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources\Instance\Model\Texture">
+      <UniqueIdentifier>{d0a4c29e-3f05-4538-8d2a-c6fe11c50c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources\Instance\Model\Light">
+      <UniqueIdentifier>{d4297883-0961-4f79-ad11-2d1c432dfb0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources\Instance\Camera">
       <UniqueIdentifier>{8d6c89a6-6e1a-465f-9ad4-378029ca983d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources\Instance\Part">
+      <UniqueIdentifier>{5b9c1f5c-89ab-4b91-876d-74c51b4c49e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="App.cpp">
-      <Filter>UselessApp\App</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\CoreEvents.cpp">
-      <Filter>Engine\Core\Events\CoreEvents</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Math\Vector2.cpp">
-      <Filter>Engine\Core\Math\Vector2</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Math\Vector3.cpp">
-      <Filter>Engine\Core\Math\Vector3</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Math\Color4.cpp">
-      <Filter>Engine\Core\Math\Color4</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>UselessApp</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Graphics\Render.cpp">
       <Filter>Engine\Graphics\Render</Filter>
     </ClCompile>
@@ -105,58 +81,57 @@
     <ClCompile Include="Engine\Graphics\Window.cpp">
       <Filter>Engine\Graphics\Window</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Logger.cpp">
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Engine\Core\Math\Vector3.cpp">
+      <Filter>Engine\Core\Math\Vector3</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Math\Vector2.cpp">
+      <Filter>Engine\Core\Math\Vector2</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Math\Color4.cpp">
+      <Filter>Engine\Core\Math\Color4</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Logger.cpp">
       <Filter>Engine\Core\Logger</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Engine\Resources\Model</Filter>
+    <ClCompile Include="Engine\Core\Events\CoreEvents.cpp">
+      <Filter>Engine\Core\Events\CoreEvents</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Engine\Graphics\Camera</Filter>
+    <ClCompile Include="Engine\Resources\Model.cpp">
+      <Filter>Engine\Resources\Instance\Model</Filter>
     </ClCompile>
-    <ClCompile Include="ColorShader.cpp">
-      <Filter>Engine\Graphics\Shaders\Color</Filter>
+    <ClCompile Include="Engine\Resources\Light.cpp">
+      <Filter>Engine\Resources\Instance\Model\Light</Filter>
     </ClCompile>
-    <ClCompile Include="TextureShader.cpp">
-      <Filter>Engine\Graphics\Shaders\Texture</Filter>
+    <ClCompile Include="Engine\Resources\Camera.cpp">
+      <Filter>Engine\Resources\Instance\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="TextureClass.cpp">
-      <Filter>Engine\Resources\Model\Texture</Filter>
+    <ClCompile Include="Engine\Resources\TextureClass.cpp">
+      <Filter>Engine\Resources\Instance\Model\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="LightShader.cpp">
-      <Filter>Engine\Graphics\Shaders\Light</Filter>
+    <ClCompile Include="Application\App.cpp">
+      <Filter>UselessApp\App</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Engine\Resources\Model\Light</Filter>
+    <ClCompile Include="Application\Main.cpp">
+      <Filter>UselessApp</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Instance.cpp" />
+    <ClCompile Include="Engine\Graphics\LightShader.cpp">
+      <Filter>Engine\Graphics\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\Instance.cpp">
+      <Filter>Engine\Resources\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\Part.cpp">
+      <Filter>Engine\Resources\Instance\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\ResourceManager.cpp">
+      <Filter>Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameEngine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="App.h">
-      <Filter>UselessApp\App</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\CoreEvents.h">
-      <Filter>Engine\Core\Events\CoreEvents</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Event.h">
-      <Filter>Engine\Core\Events\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\IEvent.h">
-      <Filter>Engine\Core\Events\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Vector3.h">
-      <Filter>Engine\Core\Math\Vector3</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Vector2.h">
-      <Filter>Engine\Core\Math\Vector2</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Color4.h">
-      <Filter>Engine\Core\Math\Color4</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\EngineMath.h">
-      <Filter>Engine\Core\Math</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Graphics\Render.h">
       <Filter>Engine\Graphics\Render</Filter>
     </ClInclude>
@@ -166,51 +141,60 @@
     <ClInclude Include="Engine\Graphics\Window.h">
       <Filter>Engine\Graphics\Window</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Logger.h">
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Engine\Core\Math\Vector3.h">
+      <Filter>Engine\Core\Math\Vector3</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Math\Vector2.h">
+      <Filter>Engine\Core\Math\Vector2</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Math\Color4.h">
+      <Filter>Engine\Core\Math\Color4</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Events\IEvent.h">
+      <Filter>Engine\Core\Events\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Events\Event.h">
+      <Filter>Engine\Core\Events\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Logger.h">
       <Filter>Engine\Core\Logger</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Engine\Resources\Model</Filter>
+    <ClInclude Include="Engine\Core\Events\CoreEvents.h">
+      <Filter>Engine\Core\Events\CoreEvents</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Engine\Graphics\Camera</Filter>
+    <ClInclude Include="Engine\Core\Math\EngineMath.h">
+      <Filter>Engine\Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="ColorShader.h">
-      <Filter>Engine\Graphics\Shaders\Color</Filter>
+    <ClInclude Include="Engine\Resources\Model.h">
+      <Filter>Engine\Resources\Instance\Model</Filter>
     </ClInclude>
-    <ClInclude Include="TextureShader.h">
-      <Filter>Engine\Graphics\Shaders\Texture</Filter>
+    <ClInclude Include="Engine\Resources\Light.h">
+      <Filter>Engine\Resources\Instance\Model\Light</Filter>
     </ClInclude>
-    <ClInclude Include="TextureClass.h">
-      <Filter>Engine\Resources\Model\Texture</Filter>
+    <ClInclude Include="Engine\Resources\Camera.h">
+      <Filter>Engine\Resources\Instance\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="LightShader.h">
-      <Filter>Engine\Graphics\Shaders\Light</Filter>
+    <ClInclude Include="Engine\Resources\TextureClass.h">
+      <Filter>Engine\Resources\Instance\Model\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Engine\Resources\Model\Light</Filter>
+    <ClInclude Include="Application\App.h">
+      <Filter>UselessApp\App</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="Instance.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Texture.ps">
-      <Filter>Engine\Graphics\Shaders\Texture</Filter>
-    </None>
-    <None Include="Texture.vs">
-      <Filter>Engine\Graphics\Shaders\Texture</Filter>
-    </None>
-    <None Include="Color.vs">
-      <Filter>Engine\Graphics\Shaders\Color</Filter>
-    </None>
-    <None Include="Color.ps">
-      <Filter>Engine\Graphics\Shaders\Color</Filter>
-    </None>
-    <None Include="PixelLightShader.hlsl">
-      <Filter>Engine\Graphics\Shaders\Light</Filter>
-    </None>
-    <None Include="VertexLightShader.hlsl">
-      <Filter>Engine\Graphics\Shaders\Light</Filter>
-    </None>
+    <ClInclude Include="Engine\Graphics\LightShader.h">
+      <Filter>Engine\Graphics\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\Instance.h">
+      <Filter>Engine\Resources\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\Part.h">
+      <Filter>Engine\Resources\Instance\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\ResourceManager.h">
+      <Filter>Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameEngine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

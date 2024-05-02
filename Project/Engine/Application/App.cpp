@@ -3,8 +3,7 @@
 
 App::App()
 {
-	m_Logger = std::make_shared<Logger>();
-	m_Graphics = std::make_unique<GraphicsEngine>();
+	m_ = std::make_unique<GraphicsEngine>();
 }
 
 
@@ -35,7 +34,7 @@ bool App::Runs()
 	return isRunning;
 }
 
-App::~App()
+App::~GameEngine()
 {
 }
 

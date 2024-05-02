@@ -169,48 +169,6 @@ void ModelClass::ReleaseTexture()
     }
 }
 
-bool ModelClass::LoadModel(char* fileName)
-{
-    std::ifstream file;
-    char input;
-    int i;
-
-    file.open(fileName);
-
-    if (file.fail())
-        return false;
-        
-    file.get(input);
-    while (input != ':')
-        file.get(input);
-
-    file >> m_vertexCount;
-
-    m_indexCount = m_vertexCount;
-
-    m_model = new ModelType[m_vertexCount];
-
-    if (!m_model)
-        return false;
-
-    file.get(input);
-    while (input != ':')
-        file.get(input);
-    file.get(input);
-    file.get(input);
-
-    for (i = 0; i < m_vertexCount; i++)
-    {
-        file >> m_model[i].x >> m_model[i].y >> m_model[i].z;
-        file >> m_model[i].tu >> m_model[i].tv;
-        file >> m_model[i].nx >> m_model[i].ny >> m_model[i].nz;
-    }
-
-    file.close();
-
-    return true;
-}
-
 void ModelClass::ReleaseModel()
 {
     if (m_model)

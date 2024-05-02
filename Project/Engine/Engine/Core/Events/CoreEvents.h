@@ -44,7 +44,7 @@ private:
     void DeleteListener(std::string, size_t);
 public:
     friend class Window;
-    friend class App;
+    friend class GameEngine;
 };
 
 extern std::unique_ptr<CoreEvents> EngineCoreEvents;

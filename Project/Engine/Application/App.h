@@ -1,9 +1,7 @@
 #pragma once
 
 #include "pch.h"
-#include "Engine/Graphics/GraphicsEngine.h"
-#include "Engine/Core/Events/CoreEvents.h"
-#include "Engine/Core/Logger.h"
+#include "Engine/GameEngine.h"
 
 class App
 {
@@ -18,9 +16,7 @@ public:
 	bool Runs(); 
 
 private:
-	//std::unique_ptr<Window> m_Window;
-	std::shared_ptr<Logger> m_Logger;
-	std::unique_ptr<GraphicsEngine> m_Graphics;
+	std::unique_ptr<GameEngine> m_Engine;
 
 private:
 	bool isRunning = false;

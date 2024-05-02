@@ -3,7 +3,7 @@
 
 INT APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nShowCmd)
 {
-	App NewWindow;
+	GameEngine NewWindow;
 
 	if (!NewWindow.Initialize())
 		return 1;
