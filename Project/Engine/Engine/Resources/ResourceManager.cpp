@@ -9,25 +9,47 @@ ResourceManager::~ResourceManager()
 {
 }
 
-bool ResourceManager::Initialize()
+bool ResourceManager::Initialize(INT startID, INT endID)
 {
+    HINSTANCE hInstance = GetModuleHandle(NULL);
+    WCHAR buffer[256];
+
+    for (int id = startID; id <= endID; ++id) {
+        int result = LoadString(hInstance, id, buffer, sizeof(buffer) / sizeof(buffer[0]));
+        if (result > 0) {
+            m_LoadedStrings[id] = buffer;
+        }
+        else {
+            return false;
+        }
+    }
+
     return true;
 }
 
 void ResourceManager::Shutdown()
 {
-    for (auto object : m_Meshes)
-        if (object)
-            object->Shutdown();
     for (auto shader : m_Shaders)
         if (shader)
+        {
             shader->Shutdown();
+            shader = nullptr;
+        }
     for (auto texture : m_Textures)
         if (texture)
+        {
             texture->Shutdown();
+            texture = nullptr;
+        }
+    for (auto object : m_Meshes)
+        if (object)
+        {
+            object->Shutdown();
+            object = nullptr;
+        }
 }
 
-bool ResourceManager::LoadObject(ID3D11Device* device, ID3D11DeviceContext* deviceContext, Texture** texture, std::string objectName, const WCHAR* fileName)
+bool ResourceManager::LoadObject(ID3D11Device* device, ID3D11DeviceContext* deviceContext, Texture* texture, std::string objectName, const WCHAR* fileName)
 {
     Mesh* object;
     bool result;
@@ -41,7 +63,7 @@ bool ResourceManager::LoadObject(ID3D11Device* device, ID3D11DeviceContext* devi
 
     wcstombs_s(&charsConverted, charFileName, 256, fileName, 256);
 
-    result = Mesh::ReadObjectFile(charFileName, vertexCount, indexCount, &objectData);
+    result = Mesh::ReadObjectFile(charFileName, vertexCount, indexCount, objectData);
     if (!result)
         return false;
 
@@ -49,7 +71,7 @@ bool ResourceManager::LoadObject(ID3D11Device* device, ID3D11DeviceContext* devi
     if (!object)
         return false;
 
-    result = object->Initialize(device, deviceContext, texture, vertexCount, indexCount, &objectData);
+    result = object->Initialize(device, deviceContext, texture, vertexCount, indexCount, objectData);
     if (!result)
         return false;
 
@@ -73,17 +95,15 @@ bool ResourceManager::LoadTexture(ID3D11Device* device, ID3D11DeviceContext* dev
 
     wcstombs_s(&charsConverted, charFileName, 256, fileName, 256);
 
-    result = Texture::ReadTargaFile(charFileName, &targaData, size);
+    result = Texture::ReadTargaFile(charFileName, targaData, size);
     if (!result)
         return false;
-
-    delete[] fileName;
 
     texture = new Texture;
     if (!texture)
         return false;
 
-    result = texture->Initialize(device, deviceContext, &targaData, size);
+    result = texture->Initialize(device, deviceContext, targaData, size);
 
     texture->SetName(textureName);
 
@@ -181,4 +201,13 @@ Shader** ResourceManager::GetShaders(UINT& size)
     size = m_Shaders.size();
     return shaders;
     shaders = nullptr;
+}
+
+std::wstring ResourceManager::GetLoadedStringByID(INT id)
+{
+    auto it = m_LoadedStrings.find(id);
+    if (it != m_LoadedStrings.end())
+        return it->second;
+    else
+        return L"";
 }

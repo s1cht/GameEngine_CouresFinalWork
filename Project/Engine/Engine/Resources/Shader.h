@@ -14,11 +14,19 @@ private:
 		XMMATRIX projection;
 	};
 
+	struct CameraBufferType
+	{
+		XMFLOAT3 cameraPosition;
+		FLOAT padding;
+	};
+
 	struct LightBufferType
 	{
+		XMFLOAT4 ambientColor;
 		XMFLOAT4 diffuseColor;
 		XMFLOAT3 lightDirection;
-		FLOAT padding;
+		FLOAT specularPower;
+		XMFLOAT4 specularColor;
 	};
 
 public:
@@ -29,7 +37,7 @@ public:
 	bool Initialize(ID3D11Device*, HWND, ID3D10Blob**, ID3D10Blob**);
 	void Shutdown();
 
-	bool Render(ID3D11DeviceContext*, INT, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, XMFLOAT3, XMFLOAT4);
+	bool Render(ID3D11DeviceContext*, INT, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, XMFLOAT3, XMFLOAT4, XMFLOAT4, XMFLOAT3, XMFLOAT4, FLOAT);
 
 	void SetName(string);
 
@@ -39,7 +47,7 @@ private:
 	bool InitializeShader(ID3D11Device*, HWND, ID3D10Blob**, ID3D10Blob**);
 	void ShutdownShader();
 
-	bool SetShaderParameters(ID3D11DeviceContext*, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, XMFLOAT3, XMFLOAT4);
+	bool SetShaderParameters(ID3D11DeviceContext*, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, XMFLOAT3, XMFLOAT4, XMFLOAT4, XMFLOAT3, XMFLOAT4, FLOAT);
 	void RenderShader(ID3D11DeviceContext*, INT);
 
 	static bool ReadShaderFile(const WCHAR*, const WCHAR*, HWND, ID3D10Blob**, ID3D10Blob**);
@@ -54,6 +62,7 @@ private:
 	ID3D11SamplerState* m_sampleState;
 	ID3D11Buffer* m_matrixBuffer;
 	ID3D11Buffer* m_lightBuffer;
+	ID3D11Buffer* m_cameraBuffer;
 
 private:
 	friend class ResourceManager;

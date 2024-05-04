@@ -3,14 +3,14 @@
 
 INT APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nShowCmd)
 {
-	GameEngine NewWindow;
+	App Game;
 
-	if (!NewWindow.Initialize())
+	if (!Game.Initialize())
 		return 1;
 
-	NewWindow.Run();
+	Game.Run();
 
-	NewWindow.Shutdown();
+	Game.Shutdown();
 
 	return 0;
 }

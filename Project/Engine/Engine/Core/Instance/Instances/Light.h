@@ -5,20 +5,23 @@
 
 using namespace DirectX;
 
-class Camera : public Instance
+class Light : public Instance
 {
 public:
-	Camera();
-	~Camera() override;
+	Light();
+	~Light() override;
 
-	void SetPosition(Vector3);
-	void SetRotation(Vector3);
+	void SetDiffuseColor(Color4);
+	void SetAmbientColor(Color4);
+	void SetDirection(Vector3);
+	void SetSpecularColor(Color4);
+	void SetSpecularPower(FLOAT);
 
-	Vector3 GetPosition();
-	Vector3 GetRotation();
-
-	void Render();
-	void GetViewMatrix(XMMATRIX&);
+	XMFLOAT4 GetDiffuseColor();
+	XMFLOAT4 GetAmbientColor();
+	XMFLOAT4 GetSpecularColor();
+	XMFLOAT3 GetDirection();
+	FLOAT GetSpecularPower();
 
 	void SetParent(Instance*) override;
 	void SetName(wstring) override;
@@ -36,15 +39,17 @@ public:
 	void Destroy() override;
 
 private:
+	XMFLOAT4 m_ambientColor;
+	XMFLOAT4 m_diffuseColor;
+	XMFLOAT3 m_direction;
+	XMFLOAT4 m_specularColor;
+	FLOAT m_specularPower;
+
 	using ClassName = Instance;
 
 	wstring m_Name;
 	Instance* m_Parent;
 
 	std::vector<Instance*> m_Children;
-
-	Vector3 m_position;
-	Vector3 m_rotation;
-	XMMATRIX m_viewMatrix;
 
 };

@@ -74,3 +74,57 @@ void Camera::GetViewMatrix(XMMATRIX& viewMatrix)
 {
     viewMatrix = m_viewMatrix;
 }
+
+inline void Camera::SetParent(Instance* parent)
+{
+	m_Parent = parent;
+}
+
+inline void Camera::SetName(wstring name)
+{
+	m_Name = name;
+}
+
+void Camera::AddChild(Instance* child)
+{
+	m_Children.push_back(child);
+}
+
+void Camera::DeleteChild(std::wstring childName)
+{
+	for (auto it = m_Children.begin(); it != m_Children.end(); it++)
+		if ((*it)->GetName() == childName)
+			m_Children.erase(it);
+}
+
+
+Instance*& Camera::GetParent()
+{
+	return m_Parent;
+}
+
+wstring Camera::GetName()
+{
+	return m_Name;
+}
+
+std::vector<Instance*>& Camera::GetChildren()
+{
+	return m_Children;
+}
+
+Instance*& Camera::operator[](const wstring childName)
+{
+	for (auto& child : m_Children)
+		if (child->GetName() == childName)
+			return child;
+}
+
+Instance*& Camera::operator[](size_t child)
+{
+	return m_Children[child];
+}
+
+void Camera::Destroy()
+{
+}

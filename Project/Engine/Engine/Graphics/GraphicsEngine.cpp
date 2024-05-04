@@ -5,7 +5,7 @@ GraphicsEngine::GraphicsEngine()
 {
 	m_Window = nullptr;
 	m_Render = nullptr;
-	m_Camera = nullptr;
+	m_hwnd = nullptr;
 }
 
 GraphicsEngine::~GraphicsEngine()
@@ -27,12 +27,6 @@ bool GraphicsEngine::Initialize()
 		MessageBox(m_hwnd, L"Render", L"Error", MB_OK);
 		return false;
 	}
-	m_Camera = std::make_shared<Camera>();
-	m_Camera->SetPosition(Vector3{ 0.f, 0.f, -3.f });
-
-	m_Light = std::make_shared<Light>();
-	m_Light->SetDiffuseColor(Color4{ 1.f, 1.f, 1.f, 1.f });
-	m_Light->SetDirection(Vector3{ 0.f, 0.f, 1.f });
 
 	return true;
 }
@@ -43,15 +37,9 @@ void GraphicsEngine::Shutdown()
 		m_Render->Shutdown();
 }
 
-bool GraphicsEngine::Frame(Mesh*** meshes, Shader*** shaders, INT meshCount, INT shaderCount)
+bool GraphicsEngine::Frame(World*& world, Shader**& shaders, INT meshCount, INT shaderCount)
 {
-	static FLOAT rotation = 0.f;
-	rotation -= math::ToRadians(1.f);
-
-	if (!(rotation < 0.f))
-		rotation += 360.f;
-
-	if (!Render(rotation, meshes, shaders, meshCount, shaderCount))
+	if (!Render(world, shaders, meshCount, shaderCount))
 		return false;
 
 	return true;
@@ -72,29 +60,46 @@ ID3D11DeviceContext* GraphicsEngine::GetDeviceContext()
 	return m_Render->GetDeviceContext();
 }
 
-bool GraphicsEngine::Render(FLOAT rotation, Mesh*** meshes, Shader*** shaders, INT meshCount, INT shaderCount)
+bool GraphicsEngine::Render(World*& world, Shader**& shaders, INT meshCount, INT shaderCount)
 {
-	XMMATRIX viewMatrix, projectionMatrix, worldMatrix;
+	XMMATRIX viewMatrix, projectionMatrix, worldMatrix, rotateMatrix, translateMatrix, scaleMatrix, srMatrix;
 	Color4 color = { 0.f, 0.f, 0.f, 1.f };
-	m_Render->BeginScene(color);
 
-	m_Camera->Render();
+	Camera* camera =	dynamic_cast<Camera*>(world->operator[](L"Camera"));
+	Light* light =		dynamic_cast<Light*>(world->operator[](L"SunLight"));
 
 	m_Render->GetWorldMatrix(worldMatrix);
-	m_Camera->GetViewMatrix(viewMatrix);
+	camera->GetViewMatrix(viewMatrix);
 	m_Render->GetProjectionMatrix(projectionMatrix);
 
-	(*meshes)[meshCount - 1]->Render(m_Render->GetDeviceContext());
+	m_Render->BeginScene(color);
 
-	worldMatrix = XMMatrixRotationRollPitchYaw(0.f, rotation, math::ToRadians(0.f));
+	camera->Render();
 
-	if (!(*shaders)[shaderCount - 1]->Render(
-		m_Render->GetDeviceContext(), 
-		(*meshes)[meshCount - 1]->GetIndexCount(),
-		worldMatrix, viewMatrix, projectionMatrix, 
-		(*meshes)[meshCount - 1]->GetTexture(),
-		m_Light->GetDirection(), m_Light->GetDiffuseColor()))
-		return false;
+	for (auto& object : world->GetChildren())
+	{
+		Part* part = dynamic_cast<Part*>(object);
+		if (part)
+		{
+			rotateMatrix = XMMatrixRotationRollPitchYaw(part->GetRotation().X, part->GetRotation().Y, part->GetRotation().Z);
+			translateMatrix = XMMatrixTranslation(part->GetPosition().X, part->GetPosition().Y, part->GetPosition().Z);
+			scaleMatrix = XMMatrixScaling(part->GetSize().X, part->GetSize().Y, part->GetSize().Z);
+
+			worldMatrix = XMMatrixMultiply(rotateMatrix, translateMatrix);
+
+			part->GetMesh()->Render(m_Render->GetDeviceContext());
+
+			if (!shaders[shaderCount - 1]->Render(
+				m_Render->GetDeviceContext(),
+				part->GetMesh()->GetIndexCount(),
+				worldMatrix, viewMatrix, projectionMatrix,
+				part->GetMesh()->GetTexture(),
+				light->GetDirection(), light->GetDiffuseColor(), light->GetAmbientColor(),
+				XMFLOAT3(camera->GetPosition().X, camera->GetPosition().Y, camera->GetPosition().Z),
+				light->GetSpecularColor(), light->GetSpecularPower()))
+				return false;
+		}
+	}
 
 	m_Render->EndScene();
 

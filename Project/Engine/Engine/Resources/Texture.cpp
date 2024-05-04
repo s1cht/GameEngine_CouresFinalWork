@@ -3,7 +3,6 @@
 
 Texture::Texture()
 {
-    m_TargaData = nullptr;
     m_texture = nullptr;
     m_textureView = nullptr;
 }
@@ -12,7 +11,7 @@ Texture::~Texture()
 {
 }
 
-bool Texture::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, UCHAR** targaData, Vector2 size)
+bool Texture::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, UCHAR* targaData, Vector2 size)
 {
     D3D11_TEXTURE2D_DESC textureDesc;
     HRESULT hResult;
@@ -20,7 +19,6 @@ bool Texture::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContex
     D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
 
     m_size = size;
-    m_TargaData = (*targaData);
 
     textureDesc.Height = (UINT)m_size.X;
     textureDesc.Width = (UINT)m_size.Y;
@@ -40,7 +38,7 @@ bool Texture::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContex
 
     rowPitch = ((UINT)m_size.X * 4) * sizeof(UCHAR);
 
-    deviceContext->UpdateSubresource(m_texture, 0, NULL, m_TargaData, rowPitch, 0);
+    deviceContext->UpdateSubresource(m_texture, 0, NULL, targaData, rowPitch, 0);
 
     srvDesc.Format = textureDesc.Format;
     srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
@@ -52,9 +50,6 @@ bool Texture::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContex
         return false;
 
     deviceContext->GenerateMips(m_textureView);
-
-    delete[] m_TargaData;
-    m_TargaData = nullptr;
 
     return true;
 }
@@ -70,11 +65,6 @@ void Texture::Shutdown()
     {
         m_texture->Release();
         m_texture = nullptr;
-    }
-    if (m_TargaData)
-    {
-        delete[] m_TargaData;
-        m_TargaData = nullptr;
     }
 }
 
@@ -103,7 +93,7 @@ INT Texture::GetHeight()
     return (INT)m_size.Y;
 }
 
-bool Texture::ReadTargaFile(const char* fileName, UCHAR** targaData, Vector2& size)
+bool Texture::ReadTargaFile(const char* fileName, UCHAR*& targaData, Vector2& size)
 {
     INT error, bpp, imageSize, index, i, j, k;
     FILE* filePtr;
@@ -138,7 +128,7 @@ bool Texture::ReadTargaFile(const char* fileName, UCHAR** targaData, Vector2& si
     if (error != 0)
         return false;
 
-    (*targaData) = new UCHAR[imageSize];
+    targaData = new UCHAR[imageSize];
 
     index = 0;
 
@@ -148,10 +138,10 @@ bool Texture::ReadTargaFile(const char* fileName, UCHAR** targaData, Vector2& si
     {
         for (i = 0; i < (INT)size.X; i++)
         {
-            (*targaData)[index + 0] = targaImage[k + 2];
-            (*targaData)[index + 1] = targaImage[k + 1];
-            (*targaData)[index + 2] = targaImage[k + 0];
-            (*targaData)[index + 3] = targaImage[k + 3];
+            targaData[index + 0] = targaImage[k + 2];
+            targaData[index + 1] = targaImage[k + 1];
+            targaData[index + 2] = targaImage[k + 0];
+            targaData[index + 3] = targaImage[k + 3];
 
             k +=        4;
             index +=    4;

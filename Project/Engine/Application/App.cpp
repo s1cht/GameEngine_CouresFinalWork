@@ -3,7 +3,7 @@
 
 App::App()
 {
-	m_Engine = nullptr;
+	m_Engine = std::make_unique<GameEngine>();
 }
 
 App::~App()
@@ -28,6 +28,7 @@ bool App::Initialize()
 	{
 		return false;
 	}
+
 
 	return true;
 }

@@ -4,11 +4,14 @@
 #include "Window.h"
 #include "Engine/Resources/Camera.h"
 #include "Engine/Resources/Mesh.h"
-#include "Engine/Resources/Light.h"
 #include "Engine/Resources/Shader.h"
 #include "Engine/Core/Math/EngineMath.h"
+#include "Engine/Core/Instance/Instance.h"
+#include "Engine/Core/World/World.h"
+#include "Engine/Core/Instance/Instances/Light.h"
+#include "Engine/Core/Instance/Instances/Part.h"
 
-const BOOL VSYNC_ENABLED = true;
+const BOOL VSYNC_ENABLED = false;
 const BOOL FULLSCREEN = false;
 const FLOAT SCREEN_DEPTH = 1000.f;
 const FLOAT SCREEN_NEAR = 0.3f;
@@ -23,19 +26,17 @@ public:
 	bool Initialize();
 	void Shutdown();
 
-	bool Frame(Mesh***, Shader***, INT, INT);
+	bool Frame(World*&, Shader**&, INT, INT);
 
 	HWND GetHWND();
 	ID3D11Device* GetDevice();
 	ID3D11DeviceContext* GetDeviceContext();
 
 private:
-	bool Render(FLOAT, Mesh***, Shader***, INT, INT);
+	bool Render(World*&, Shader**&, INT, INT);
 
 private:
 	HWND m_hwnd;
 	std::unique_ptr<RenderClass> m_Render;
 	std::unique_ptr<Window> m_Window;
-	std::shared_ptr<Camera> m_Camera;
-	std::shared_ptr<Light> m_Light;
 };

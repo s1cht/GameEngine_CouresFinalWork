@@ -14,19 +14,20 @@
     <ClCompile Include="Application\App.cpp" />
     <ClCompile Include="Application\Main.cpp" />
     <ClCompile Include="Engine\Core\Events\CoreEvents.cpp" />
+    <ClCompile Include="Engine\Core\Instance\Instance.cpp" />
+    <ClCompile Include="Engine\Core\Instance\Instances\Light.cpp" />
+    <ClCompile Include="Engine\Core\Instance\Instances\Part.cpp" />
     <ClCompile Include="Engine\Core\Logger.cpp" />
     <ClCompile Include="Engine\Core\Math\Color4.cpp" />
     <ClCompile Include="Engine\Core\Math\Vector2.cpp" />
     <ClCompile Include="Engine\Core\Math\Vector3.cpp" />
+    <ClCompile Include="Engine\Core\World\World.cpp" />
     <ClCompile Include="Engine\GameEngine.cpp" />
     <ClCompile Include="Engine\Graphics\GraphicsEngine.cpp" />
     <ClCompile Include="Engine\Graphics\Render.cpp" />
     <ClCompile Include="Engine\Graphics\Window.cpp" />
     <ClCompile Include="Engine\Resources\Camera.cpp" />
-    <ClCompile Include="Engine\Resources\Instance.cpp" />
-    <ClCompile Include="Engine\Resources\Light.cpp" />
     <ClCompile Include="Engine\Resources\Mesh.cpp" />
-    <ClCompile Include="Engine\Resources\Part.cpp" />
     <ClCompile Include="Engine\Resources\ResourceManager.cpp" />
     <ClCompile Include="Engine\Resources\Shader.cpp" />
     <ClCompile Include="Engine\Resources\Texture.cpp" />
@@ -37,25 +38,37 @@
     <ClInclude Include="Engine\Core\Events\CoreEvents.h" />
     <ClInclude Include="Engine\Core\Events\Event.h" />
     <ClInclude Include="Engine\Core\Events\IEvent.h" />
+    <ClInclude Include="Engine\Core\Instance\Instance.h" />
+    <ClInclude Include="Engine\Core\Instance\Instances\Light.h" />
+    <ClInclude Include="Engine\Core\Instance\Instances\Part.h" />
     <ClInclude Include="Engine\Core\Logger.h" />
     <ClInclude Include="Engine\Core\Math\Color4.h" />
     <ClInclude Include="Engine\Core\Math\EngineMath.h" />
     <ClInclude Include="Engine\Core\Math\Vector2.h" />
     <ClInclude Include="Engine\Core\Math\Vector3.h" />
+    <ClInclude Include="Engine\Core\World\World.h" />
     <ClInclude Include="Engine\GameEngine.h" />
     <ClInclude Include="Engine\Graphics\GraphicsEngine.h" />
     <ClInclude Include="Engine\Graphics\Render.h" />
     <ClInclude Include="Engine\Graphics\Window.h" />
     <ClInclude Include="Engine\Resources\Camera.h" />
-    <ClInclude Include="Engine\Resources\Instance.h" />
-    <ClInclude Include="Engine\Resources\Light.h" />
     <ClInclude Include="Engine\Resources\Mesh.h" />
-    <ClInclude Include="Engine\Resources\Part.h" />
+    <ClInclude Include="Engine\Resources\ResourceList.h" />
     <ClInclude Include="Engine\Resources\ResourceManager.h" />
     <ClInclude Include="Engine\Resources\Shader.h" />
     <ClInclude Include="Engine\Resources\Texture.h" />
-    <ClInclude Include="FilesToLoad.h" />
     <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Assets\Shaders\PixelShader.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Assets\Shaders\VertexShader.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine\Resources\Engine.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -105,6 +118,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%WindowsSdkDir\Lib%WindowsSDKVersion%\\um\arch;%WINDIR%\System32</AdditionalLibraryDirectories>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
     <PreBuildEvent>
       <Command>

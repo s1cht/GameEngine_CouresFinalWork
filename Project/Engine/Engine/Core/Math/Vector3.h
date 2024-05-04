@@ -4,5 +4,7 @@
 struct Vector3
 {
 	FLOAT X, Y, Z;
+
+	static Vector3 Zero();
 };
 

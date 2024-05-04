@@ -64,17 +64,17 @@
     <Filter Include="Engine\Resources\Resources\Shader">
       <UniqueIdentifier>{ef0f4a5b-a670-4eab-9625-c3a03a995f33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Instance">
+    <Filter Include="Engine\Core\Instance">
       <UniqueIdentifier>{1fad1374-93a3-48f5-bb66-01f0bc5d73e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Instance\Model">
-      <UniqueIdentifier>{9ad05089-6427-47a2-b7cf-b275d3480846}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Instance\Part">
+    <Filter Include="Engine\Core\Instance\Part">
       <UniqueIdentifier>{5b9c1f5c-89ab-4b91-876d-74c51b4c49e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Instance\Light">
+    <Filter Include="Engine\Core\Instance\Light">
       <UniqueIdentifier>{d4297883-0961-4f79-ad11-2d1c432dfb0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\World">
+      <UniqueIdentifier>{cd79adbf-3eb3-4449-ba00-e5470c170eba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,9 +103,6 @@
     <ClCompile Include="Engine\Core\Events\CoreEvents.cpp">
       <Filter>Engine\Core\Events\CoreEvents</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Resources\Light.cpp">
-      <Filter>Engine\Instance\Light</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Resources\Camera.cpp">
       <Filter>Engine\Graphics\Camera</Filter>
     </ClCompile>
@@ -124,17 +121,23 @@
     <ClCompile Include="Engine\GameEngine.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Resources\Instance.cpp">
-      <Filter>Engine\Instance</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Resources\Part.cpp">
-      <Filter>Engine\Instance</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Resources\Mesh.cpp">
       <Filter>Engine\Resources\Resources\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Resources\Shader.cpp">
       <Filter>Engine\Resources\Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Instance\Instance.cpp">
+      <Filter>Engine\Core\Instance</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Instance\Instances\Part.cpp">
+      <Filter>Engine\Core\Instance\Part</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Instance\Instances\Light.cpp">
+      <Filter>Engine\Core\Instance\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\World\World.cpp">
+      <Filter>Engine\Core\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,9 +175,6 @@
     <ClInclude Include="Engine\Core\Math\EngineMath.h">
       <Filter>Engine\Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Resources\Light.h">
-      <Filter>Engine\Instance\Light</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Resources\Camera.h">
       <Filter>Engine\Graphics\Camera</Filter>
     </ClInclude>
@@ -190,20 +190,39 @@
     <ClInclude Include="Engine\GameEngine.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Resources\Instance.h">
-      <Filter>Engine\Instance</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Resources\Part.h">
-      <Filter>Engine\Instance</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Resources\Mesh.h">
       <Filter>Engine\Resources\Resources\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="FilesToLoad.h">
-      <Filter>Engine\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Resources\Shader.h">
       <Filter>Engine\Resources\Resources\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Core\Instance\Instance.h">
+      <Filter>Engine\Core\Instance</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Instance\Instances\Part.h">
+      <Filter>Engine\Core\Instance\Part</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Instance\Instances\Light.h">
+      <Filter>Engine\Core\Instance\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\ResourceList.h">
+      <Filter>Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\World\World.h">
+      <Filter>Engine\Core\World</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Assets\Shaders\PixelShader.hlsl">
+      <Filter>Engine\Resources\Resources\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Assets\Shaders\VertexShader.hlsl">
+      <Filter>Engine\Resources\Resources\Shader</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine\Resources\Engine.rc">
+      <Filter>Engine\Resources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

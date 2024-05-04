@@ -18,7 +18,7 @@ public:
 	Texture();
 	~Texture();
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, UCHAR**, Vector2);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, UCHAR*, Vector2);
 	void Shutdown();
 
 	void SetName(std::string);
@@ -29,12 +29,11 @@ public:
 	ID3D11ShaderResourceView* GetTexture();
 
 private:
-	static bool ReadTargaFile(const char*, UCHAR**, Vector2&);
+	static bool ReadTargaFile(const char*, UCHAR*&, Vector2&);
 
 private:
 	std::string m_name;
 
-	UCHAR* m_TargaData;
 	ID3D11Texture2D* m_texture;
 	ID3D11ShaderResourceView* m_textureView;
 	Vector2 m_size;

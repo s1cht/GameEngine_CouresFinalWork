@@ -6,19 +6,20 @@ Mesh::Mesh()
     m_vertexBuffer = nullptr;
     m_indexBuffer = nullptr;
     m_Texture = nullptr;
+    m_model = nullptr;
 }
 
 Mesh::~Mesh()
 {
 }
 
-bool Mesh::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, Texture** texture, INT vertexCount, INT indexCount, ModelType** objectData)
+bool Mesh::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, Texture* texture, INT vertexCount, INT indexCount, ModelType* objectData)
 {
     bool result;
 
     m_vertexCount = vertexCount;
     m_indexCount = indexCount;
-    m_model = (*objectData);
+    m_model = objectData;
 
     LoadTexture(texture);
 
@@ -44,6 +45,11 @@ void Mesh::Render(ID3D11DeviceContext* deviceContext)
 void Mesh::SetName(std::string name)
 {
     m_name = name;
+}
+
+void Mesh::SetTexture(Texture* texture)
+{
+    m_Texture = texture;
 }
 
 INT Mesh::GetIndexCount()
@@ -154,19 +160,14 @@ void Mesh::RenderBuffers(ID3D11DeviceContext* deviceContext)
     deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void Mesh::LoadTexture(Texture** texture)
+void Mesh::LoadTexture(Texture* texture)
 {
-    m_Texture = (*texture);
+    m_Texture = texture;
 } 
 
 void Mesh::ReleaseTexture()
 {
-    if (m_Texture)
-    {
-        m_Texture->Shutdown();
-        delete m_Texture;
-        m_Texture = nullptr;
-    }
+    //m_Texture = nullptr;
 }
 
 void Mesh::ReleaseModel()
@@ -178,7 +179,7 @@ void Mesh::ReleaseModel()
     }
 }
 
-bool Mesh::ReadObjectFile(const char* fileName, INT& vertexCount, INT& indexCount, ModelType** object)
+bool Mesh::ReadObjectFile(const char* fileName, INT& vertexCount, INT& indexCount, ModelType*& object)
 {
     std::ifstream file;
     char input;
@@ -197,7 +198,7 @@ bool Mesh::ReadObjectFile(const char* fileName, INT& vertexCount, INT& indexCoun
 
     indexCount = vertexCount;
 
-    (*object) = new ModelType[vertexCount];
+    object = new ModelType[vertexCount];
 
     if (!object)
         return false;
@@ -212,9 +213,9 @@ bool Mesh::ReadObjectFile(const char* fileName, INT& vertexCount, INT& indexCoun
 
     for (i = 0; i < vertexCount; i++)
     {
-        file >> (*object)[i].x >> (*object)[i].y >> (*object)[i].z;
-        file >> (*object)[i].tu >> (*object)[i].tv;
-        file >> (*object)[i].nx >> (*object)[i].ny >> (*object)[i].nz;
+        file >> object[i].x >> object[i].y >> object[i].z;
+        file >> object[i].tu >> object[i].tv;
+        file >> object[i].nx >> object[i].ny >> object[i].nz;
     }
 
     file.close();
