@@ -49,7 +49,7 @@ void ResourceManager::Shutdown()
         }
 }
 
-bool ResourceManager::LoadObject(ID3D11Device* device, ID3D11DeviceContext* deviceContext, Texture* texture, std::string objectName, const WCHAR* fileName)
+bool ResourceManager::LoadObject(ID3D11Device* device, ID3D11DeviceContext* deviceContext, std::string objectName, const WCHAR* fileName)
 {
     Mesh* object;
     bool result;
@@ -71,7 +71,7 @@ bool ResourceManager::LoadObject(ID3D11Device* device, ID3D11DeviceContext* devi
     if (!object)
         return false;
 
-    result = object->Initialize(device, deviceContext, texture, vertexCount, indexCount, objectData);
+    result = object->Initialize(device, deviceContext, vertexCount, indexCount, objectData);
     if (!result)
         return false;
 

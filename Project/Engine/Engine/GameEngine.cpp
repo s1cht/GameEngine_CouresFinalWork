@@ -50,14 +50,14 @@ bool GameEngine::Initialize()
 		return false;
 	}
 
-	result = m_ResourceManager->LoadObject(m_Graphics->GetDevice(), m_Graphics->GetDeviceContext(), m_ResourceManager->GetTexture("stone01"), "DefaultCube", m_ResourceManager->GetLoadedStringByID(MESH_DEFAULTCUBE).c_str());
+	result = m_ResourceManager->LoadObject(m_Graphics->GetDevice(), m_Graphics->GetDeviceContext(), "DefaultCube", m_ResourceManager->GetLoadedStringByID(MESH_DEFAULTCUBE).c_str());
 	if (!result)
 	{
 		isRunning = false;
 		return false;
 	}
 
-	result = m_ResourceManager->LoadObject(m_Graphics->GetDevice(), m_Graphics->GetDeviceContext(), m_ResourceManager->GetTexture("dirt01"), "Sphere", m_ResourceManager->GetLoadedStringByID(MESH_SPHERE).c_str());
+	result = m_ResourceManager->LoadObject(m_Graphics->GetDevice(), m_Graphics->GetDeviceContext(), "Sphere", m_ResourceManager->GetLoadedStringByID(MESH_SPHERE).c_str());
 	if (!result)
 	{
 		isRunning = false;

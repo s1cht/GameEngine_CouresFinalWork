@@ -5,9 +5,11 @@ Part::Part()
 {
 	m_Mesh =		nullptr;
 	m_Parent =		nullptr;
+	m_Texture =		nullptr;
 	m_Size =		Vector3::Zero();
 	m_Position =	Vector3::Zero();
 	m_Rotation =	Vector3::Zero();
+	m_Color =		Color4{ 0.5f, 0.5f, 0.5f, 1.f};
 }
 
 Part::~Part()
@@ -73,6 +75,11 @@ void Part::SetSize(FLOAT x, FLOAT y, FLOAT z)
 	m_Size =		Vector3{ x, y, z };
 }
 
+void Part::SetColor(Color4 color)
+{
+	m_Color =		color;
+}
+
 Mesh* Part::GetMesh()
 {
 	return m_Mesh;
@@ -91,6 +98,11 @@ Vector3 Part::GetRotation()
 Vector3 Part::GetSize()
 {
 	return m_Size;
+}
+
+Color4 Part::GetColor()
+{
+	return m_Color;
 }
 
 inline void Part::SetParent(Instance* parent)
@@ -122,7 +134,7 @@ void Part::SetMesh(Mesh* mesh)
 
 void Part::SetChangeTexture(Texture* texture)
 {
-	m_Mesh->SetTexture(texture);
+	m_Texture =		texture;
 }
 
 Instance*& Part::GetParent()
@@ -143,6 +155,11 @@ inline wstring Part::GetName()
 std::string Part::GetMeshName()
 {
 	return m_Mesh->GetName();
+}
+
+Texture* Part::GetTexture()
+{
+	return m_Texture;
 }
 
 Instance*& Part::operator[](const wstring childName)

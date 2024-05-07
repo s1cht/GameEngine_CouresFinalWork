@@ -5,7 +5,6 @@ Mesh::Mesh()
 {
     m_vertexBuffer = nullptr;
     m_indexBuffer = nullptr;
-    m_Texture = nullptr;
     m_model = nullptr;
 }
 
@@ -13,15 +12,13 @@ Mesh::~Mesh()
 {
 }
 
-bool Mesh::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, Texture* texture, INT vertexCount, INT indexCount, ModelType* objectData)
+bool Mesh::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, INT vertexCount, INT indexCount, ModelType* objectData)
 {
     bool result;
 
     m_vertexCount = vertexCount;
     m_indexCount = indexCount;
     m_model = objectData;
-
-    LoadTexture(texture);
 
     result = InitializeBuffers(device);
     if (!result)
@@ -47,11 +44,6 @@ void Mesh::SetName(std::string name)
     m_name = name;
 }
 
-void Mesh::SetTexture(Texture* texture)
-{
-    m_Texture = texture;
-}
-
 INT Mesh::GetIndexCount()
 {
     return m_indexCount;
@@ -60,11 +52,6 @@ INT Mesh::GetIndexCount()
 std::string Mesh::GetName()
 {
     return m_name;
-}
-
-ID3D11ShaderResourceView* Mesh::GetTexture()
-{
-    return m_Texture->GetTexture();
 }
 
 bool Mesh::InitializeBuffers(ID3D11Device* device)
@@ -159,11 +146,6 @@ void Mesh::RenderBuffers(ID3D11DeviceContext* deviceContext)
 
     deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
-
-void Mesh::LoadTexture(Texture* texture)
-{
-    m_Texture = texture;
-} 
 
 void Mesh::ReleaseTexture()
 {

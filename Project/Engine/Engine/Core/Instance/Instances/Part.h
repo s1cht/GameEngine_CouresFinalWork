@@ -26,6 +26,8 @@ public:
     void SetRotation(FLOAT, FLOAT, FLOAT);
     void SetSize(FLOAT, FLOAT, FLOAT);
 
+    void SetColor(Color4);
+
     void SetMesh(Mesh*);
     void SetChangeTexture(Texture*);
 
@@ -36,15 +38,19 @@ public:
     void DeleteChild(std::wstring) override;
 
     Mesh* GetMesh();
+
     Vector3 GetPosition();
     Vector3 GetRotation();
     Vector3 GetSize();
+
+    Color4 GetColor();
 
     std::wstring GetName() override;
     Instance*& GetParent() override;
     std::vector<Instance*>& GetChildren() override;
 
     std::string GetMeshName();
+    Texture* GetTexture();
 
     Instance*& operator[] (const wstring) override;
     Instance*& operator[] (size_t) override;
@@ -54,11 +60,15 @@ private:
 
     std::wstring m_Name;
     Instance* m_Parent;
+
     Mesh* m_Mesh;
+    Texture* m_Texture;
 
     Vector3 m_Position;
     Vector3 m_Rotation;
     Vector3 m_Size;
+
+    Color4 m_Color;
 
     std::vector<Instance*> m_Children;
 

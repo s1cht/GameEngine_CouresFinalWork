@@ -1,5 +1,7 @@
 #pragma once
 #include "pch.h"
+#include "Engine/Core/Instance/Instances/Light.h"
+#include "Engine/Core/Instance/Instances/Part.h"
 
 using namespace DirectX;
 using namespace std;
@@ -37,7 +39,7 @@ public:
 	bool Initialize(ID3D11Device*, HWND, ID3D10Blob**, ID3D10Blob**);
 	void Shutdown();
 
-	bool Render(ID3D11DeviceContext*, INT, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, XMFLOAT3, XMFLOAT4, XMFLOAT4, XMFLOAT3, XMFLOAT4, FLOAT);
+	bool Render(ID3D11DeviceContext*, XMMATRIX, XMMATRIX, XMMATRIX, Part*, Light*, XMFLOAT3);
 
 	void SetName(string);
 
@@ -47,7 +49,7 @@ private:
 	bool InitializeShader(ID3D11Device*, HWND, ID3D10Blob**, ID3D10Blob**);
 	void ShutdownShader();
 
-	bool SetShaderParameters(ID3D11DeviceContext*, XMMATRIX, XMMATRIX, XMMATRIX, ID3D11ShaderResourceView*, XMFLOAT3, XMFLOAT4, XMFLOAT4, XMFLOAT3, XMFLOAT4, FLOAT);
+	bool SetShaderParameters(ID3D11DeviceContext*, XMMATRIX, XMMATRIX, XMMATRIX, Part*, Light*, XMFLOAT3);
 	void RenderShader(ID3D11DeviceContext*, INT);
 
 	static bool ReadShaderFile(const WCHAR*, const WCHAR*, HWND, ID3D10Blob**, ID3D10Blob**);

@@ -25,24 +25,21 @@ public:
 	Mesh();
 	~Mesh();
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, Texture*, INT, INT, ModelType*);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, INT, INT, ModelType*);
 	void Shutdown();
 
 	void Render(ID3D11DeviceContext*);
 
 	void SetName(std::string);
-	void SetTexture(Texture*);
 
 	INT GetIndexCount();
 	std::string GetName();
-	ID3D11ShaderResourceView* GetTexture();
 
 private:
 	bool InitializeBuffers(ID3D11Device*);
 	void ShutdownBuffers();
 	void RenderBuffers(ID3D11DeviceContext*);
 
-	void LoadTexture(Texture*);
 	void ReleaseTexture();
 
 	void ReleaseModel();
@@ -55,7 +52,6 @@ private:
 	ID3D11Buffer* m_vertexBuffer, * m_indexBuffer;
 	INT m_vertexCount, m_indexCount;
 
-	Texture* m_Texture;
 	ModelType* m_model;
 
 private:

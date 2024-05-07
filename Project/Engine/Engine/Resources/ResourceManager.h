@@ -17,7 +17,7 @@ public:
 
 	//bool LoadAllResourceExcludingObjects(ID3D11Device*, ID3D11DeviceContext*, HWND, INT*, INT*, size_t, size_t);
 
-	bool LoadObject(ID3D11Device*, ID3D11DeviceContext*, Texture*, std::string, const WCHAR*);
+	bool LoadObject(ID3D11Device*, ID3D11DeviceContext*, std::string, const WCHAR*);
 	bool LoadTexture(ID3D11Device*, ID3D11DeviceContext*, std::string, const WCHAR*);
 	bool LoadShader(ID3D11Device*, HWND, std::string, const WCHAR*, const WCHAR*);
 
