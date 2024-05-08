@@ -3,7 +3,7 @@
 #include "Engine/Core/Instance/Instance.h"
 #include "Engine/Core/Math/EngineMath.h"
 #include "Engine/Resources/Texture.h"
-#include "Engine/Resources/ResourceManager.h"
+#include "Engine/Resources/Mesh.h"
 
 using namespace DirectX;
 

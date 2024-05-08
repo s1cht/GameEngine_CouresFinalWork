@@ -69,6 +69,7 @@ bool Shader::InitializeShader(ID3D11Device* device, HWND hwnd, ID3D10Blob** vert
 	D3D11_BUFFER_DESC matrixBufferDesc;
 	D3D11_BUFFER_DESC lightBufferDesc;
 	D3D11_BUFFER_DESC cameraBufferDesc;
+	D3D11_BUFFER_DESC partBufferDesc;
 	UINT numElements;
 
 	result = device->CreateVertexShader((*vertexShaderBuffer)->GetBufferPointer(), (*vertexShaderBuffer)->GetBufferSize(), NULL, &m_vertexShader);
@@ -244,7 +245,6 @@ bool Shader::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 	CameraBufferType* dataPtr3;
 	UINT bufferNumber;
 
-	ID3D11ShaderResourceView* texture = part->GetTexture()->GetTexture();
 
 	worldMatrix =		XMMatrixTranspose(worldMatrix);
 	viewMatrix =		XMMatrixTranspose(viewMatrix);
@@ -265,8 +265,17 @@ bool Shader::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 	bufferNumber = 0;
 
 	deviceContext->VSSetConstantBuffers(bufferNumber, 1, &m_matrixBuffer);
-	if (texture)
+	if (part->GetTexture())
+	{
+		ID3D11ShaderResourceView* texture = part->GetTexture()->GetTexture();
 		deviceContext->PSSetShaderResources(0, 1, &texture);
+		texture = nullptr;
+	}
+	else
+	{
+		ID3D11ShaderResourceView* nullViews[] = { nullptr };
+		deviceContext->PSSetShaderResources(0, 1, nullViews);
+	}
 
 	result = deviceContext->Map(m_cameraBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 	if (FAILED(result))
@@ -296,12 +305,14 @@ bool Shader::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 	dataPtr2->lightDirection = light->GetDirection();
 	dataPtr2->specularColor = light->GetSpecularColor();
 	dataPtr2->specularPower = light->GetSpecularPower();
+	dataPtr2->partColor = XMFLOAT4(part->GetColor().R, part->GetColor().G, part->GetColor().B, part->GetColor().A);
 
 	deviceContext->Unmap(m_lightBuffer, 0);
 
 	bufferNumber = 0;
 
 	deviceContext->PSSetConstantBuffers(bufferNumber, 1, &m_lightBuffer);
+
 
 	return true;
 }
@@ -325,7 +336,7 @@ bool Shader::ReadShaderFile(const WCHAR* vsFileName, const WCHAR* psFileName, HW
 
 	errorMessage = nullptr;
 
-	result = D3DCompileFromFile((WCHAR*)vsFileName, NULL, NULL, "LightVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, vertexShaderBuffer, &errorMessage);
+	result = D3DCompileFromFile((WCHAR*)vsFileName, NULL, NULL, "LightVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG, 0, vertexShaderBuffer, &errorMessage);
 	if (FAILED(result))
 	{
 		if (errorMessage)
@@ -336,7 +347,7 @@ bool Shader::ReadShaderFile(const WCHAR* vsFileName, const WCHAR* psFileName, HW
 		return false;
 	}
 
-	result = D3DCompileFromFile((WCHAR*)psFileName, NULL, NULL, "LightPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, pixelShaderBuffer, &errorMessage);
+	result = D3DCompileFromFile((WCHAR*)psFileName, NULL, NULL, "LightPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG, 0, pixelShaderBuffer, &errorMessage);
 	if (FAILED(result))
 	{
 		if (errorMessage)

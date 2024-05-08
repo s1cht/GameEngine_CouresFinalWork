@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
-#include "Engine/Core/Instance/Instances/Light.h"
 #include "Engine/Core/Instance/Instances/Part.h"
+#include "Engine/Core/Instance/Instances/Light.h"
 
 using namespace DirectX;
 using namespace std;
@@ -29,6 +29,7 @@ private:
 		XMFLOAT3 lightDirection;
 		FLOAT specularPower;
 		XMFLOAT4 specularColor;
+		XMFLOAT4 partColor;
 	};
 
 public:

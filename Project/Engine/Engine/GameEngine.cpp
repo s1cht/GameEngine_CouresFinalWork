@@ -65,7 +65,6 @@ bool GameEngine::Initialize()
 	}
 
 	Light* sunLight = Instance::New<Light>(m_World.get());
-	sunLight->SetName(L"SunLight");
 	sunLight->SetAmbientColor(Color4{ 0.15f, 0.15f,0.15f ,1.f });
 	sunLight->SetDiffuseColor(Color4{ 1.f, 1.f , 1.f, 1.f });
 	sunLight->SetDirection(Vector3{ 1.f,0.f,0.f });
@@ -74,20 +73,19 @@ bool GameEngine::Initialize()
 
 	Camera* camera = Instance::New<Camera>(m_World.get());
 	camera->SetPosition(Vector3{ 0.f, 0.f, -2.5f });
-	camera->SetName(L"Camera");
 
 	Part* part = Instance::New<Part>(m_World.get());
-	part->SetName(L"Part");
 	part->SetMesh(m_ResourceManager->GetMesh("DefaultCube"));
 	part->SetSize(Vector3{ 1.f, 1.f, 1.f });
 	part->SetRotation(Vector3{ 0.f, 45.f, 0.f });
 
 	Part* part1 = Instance::New<Part>(m_World.get());
-	part1->SetName(L"Part");
 	part1->SetMesh(m_ResourceManager->GetMesh("Sphere"));
 	part1->SetSize(Vector3{ 1.f, 1.f, 1.f });
 	part1->SetRotation(Vector3{ 0.f, 45.f, 0.f });
 	part1->SetPosition(Vector3{ 0.f, 3.f, 0.f });
+	part1->SetColor(Color4(1.f, 0.1f, 0.5f));
+	part1->SetChangeTexture(m_ResourceManager->GetTexture("dirt01"));
 
 	return true;
 }

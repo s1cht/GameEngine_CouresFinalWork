@@ -8,6 +8,7 @@ cbuffer LightBuffer
 	float3 lightDirection;
     float specularPower;
     float4 specularColor;
+    float4 partColor;
 };
 
 struct PixelInputType
@@ -46,7 +47,16 @@ float4 LightPixelShader(PixelInputType input) : SV_TARGET
         specular = pow(saturate(dot(reflection, input.viewDirection)), specularPower);
     }
 
-    color = color * textureColor;
+    if (textureColor.r == 0.f && textureColor.g == 0.f && textureColor.b == 0.f && textureColor.a == 0.f)
+    {
+        color = color * partColor;
+        printf("My color is %f %f %f %f", color.r, color.g, color.b, color.a);
+
+    }
+    else
+    {
+        color = color * partColor * textureColor;
+    }
     color = saturate(color + specular);
 
     return color;

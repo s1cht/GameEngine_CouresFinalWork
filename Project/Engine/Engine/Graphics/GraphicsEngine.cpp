@@ -89,12 +89,12 @@ bool GraphicsEngine::Render(World*& world, Shader**& shaders, INT meshCount, INT
 
 			part->GetMesh()->Render(m_Render->GetDeviceContext());
 
-				if (!shaders[shaderCount - 1]->Render(
-					m_Render->GetDeviceContext(),
-					worldMatrix, viewMatrix, projectionMatrix,
-					part,
-					light, XMFLOAT3{ camera->GetPosition().X, camera->GetPosition().Y, camera->GetPosition().Z }))
-					return false;
+			if (!shaders[shaderCount - 1]->Render(
+				m_Render->GetDeviceContext(),
+				worldMatrix, viewMatrix, projectionMatrix,
+				part,
+				light, XMFLOAT3{ camera->GetPosition().X, camera->GetPosition().Y, camera->GetPosition().Z }))
+				return false;
 
 		}
 	}

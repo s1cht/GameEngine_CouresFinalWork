@@ -5,6 +5,7 @@ Camera::Camera()
 {
     m_position = { 0.f, 0.f, 0.f };
     m_rotation = { 0.f, 0.f, 0.f };
+	m_Name = L"Camera";
 }
 
 Camera::~Camera()
@@ -60,7 +61,7 @@ void Camera::Render()
 	yaw =				math::ToRadians(m_rotation.Y);
 	roll =				math::ToRadians(m_rotation.Z);
 
-	rotationMatrix =	 XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
+	rotationMatrix =	XMMatrixRotationRollPitchYaw(pitch, yaw, roll);
 
 	lookAtVector =		XMVector3TransformCoord(lookAtVector, rotationMatrix);
 	upVector =			XMVector3TransformCoord(upVector, rotationMatrix);

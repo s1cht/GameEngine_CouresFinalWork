@@ -9,7 +9,8 @@ Part::Part()
 	m_Size =		Vector3::Zero();
 	m_Position =	Vector3::Zero();
 	m_Rotation =	Vector3::Zero();
-	m_Color =		Color4{ 0.5f, 0.5f, 0.5f, 1.f};
+	m_Color =		Color4{ 0.5f, 0.5f, 0.5f, 1.f };
+	m_Name =		L"Part";
 }
 
 Part::~Part()

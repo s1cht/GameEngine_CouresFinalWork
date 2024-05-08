@@ -3,6 +3,12 @@
 
 Light::Light()
 {
+	m_ambientColor = XMFLOAT4(0.15f, 0.15f, 0.15f, 1.f);
+	m_diffuseColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
+	m_specularColor = XMFLOAT4(1.f, 1.f, 1.f, 1.f);
+	m_direction = XMFLOAT3( 1.f,0.f,0.f );
+	m_specularPower = 32.f;
+	m_Name = L"SunLight";
 }
 
 Light::~Light()
