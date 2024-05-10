@@ -12,15 +12,18 @@ Shader::Shader()
 	m_cameraBuffer = nullptr;
 }
 
-Shader::Shader(const Shader&)
-{
-}
-
 Shader::~Shader()
 {
+	m_vertexShader = nullptr;
+	m_pixelShader = nullptr;
+	m_layout = nullptr;
+	m_matrixBuffer = nullptr;
+	m_sampleState = nullptr;
+	m_lightBuffer = nullptr;
+	m_cameraBuffer = nullptr;
 }
 
-bool Shader::Initialize(ID3D11Device* device, HWND hwnd, ID3D10Blob** vertexShaderBuffer, ID3D10Blob** pixelShaderBuffer)
+bool Shader::Initialize(ID3D11Device* device, HWND hwnd, ID3D10Blob* vertexShaderBuffer, ID3D10Blob* pixelShaderBuffer)
 {
 	bool result;
 
@@ -61,7 +64,7 @@ string Shader::GetName()
 	return m_name;
 }
 
-bool Shader::InitializeShader(ID3D11Device* device, HWND hwnd, ID3D10Blob** vertexShaderBuffer, ID3D10Blob** pixelShaderBuffer)
+bool Shader::InitializeShader(ID3D11Device* device, HWND hwnd, ID3D10Blob* vertexShaderBuffer, ID3D10Blob* pixelShaderBuffer) 
 {
 	HRESULT result;
 	D3D11_INPUT_ELEMENT_DESC polygonLayout[3];
@@ -69,14 +72,13 @@ bool Shader::InitializeShader(ID3D11Device* device, HWND hwnd, ID3D10Blob** vert
 	D3D11_BUFFER_DESC matrixBufferDesc;
 	D3D11_BUFFER_DESC lightBufferDesc;
 	D3D11_BUFFER_DESC cameraBufferDesc;
-	D3D11_BUFFER_DESC partBufferDesc;
 	UINT numElements;
 
-	result = device->CreateVertexShader((*vertexShaderBuffer)->GetBufferPointer(), (*vertexShaderBuffer)->GetBufferSize(), NULL, &m_vertexShader);
+	result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_vertexShader);
 	if (FAILED(result))
 		return false;
 
-	result = device->CreatePixelShader((*pixelShaderBuffer)->GetBufferPointer(), (*pixelShaderBuffer)->GetBufferSize(), NULL, &m_pixelShader);
+	result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL, &m_pixelShader);
 	if (FAILED(result))
 		return false;
 
@@ -106,15 +108,12 @@ bool Shader::InitializeShader(ID3D11Device* device, HWND hwnd, ID3D10Blob** vert
 
 	numElements = sizeof(polygonLayout) / sizeof(polygonLayout[0]);
 
-	result = device->CreateInputLayout(polygonLayout, numElements, (*vertexShaderBuffer)->GetBufferPointer(), (*vertexShaderBuffer)->GetBufferSize(), &m_layout);
+	result = device->CreateInputLayout(polygonLayout, numElements, vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), &m_layout);
 	if (FAILED(result))
 		return false;
 
-	(*vertexShaderBuffer)->Release();
-	vertexShaderBuffer = nullptr;
-
-	(*pixelShaderBuffer)->Release();
-	pixelShaderBuffer = nullptr;
+	vertexShaderBuffer->Release();
+	pixelShaderBuffer->Release();
 
 	matrixBufferDesc.Usage =				D3D11_USAGE_DYNAMIC;
 	matrixBufferDesc.ByteWidth =			sizeof(MatrixBufferType);
@@ -236,7 +235,7 @@ void Shader::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR
 
 bool Shader::SetShaderParameters(ID3D11DeviceContext* deviceContext, 
 	XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, 
-	Part* part, Light* light, XMFLOAT3 cameraPosition)
+	Part* part, Light* light, XMFLOAT3 cameraPosition) const
 {
 	HRESULT result;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -317,7 +316,7 @@ bool Shader::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 	return true;
 }
 
-void Shader::RenderShader(ID3D11DeviceContext* deviceContext, INT indexCount)
+void Shader::RenderShader(ID3D11DeviceContext* deviceContext, INT indexCount) const
 {
 	deviceContext->IASetInputLayout(m_layout);
 

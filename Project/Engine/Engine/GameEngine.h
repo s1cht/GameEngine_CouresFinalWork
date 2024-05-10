@@ -23,7 +23,7 @@ public:
 	void Run();
 	bool Runs();
 
-	std::unique_ptr<World>& GetWorld();
+	World* GetWorld();
 
 	Texture* GetTexture(std::string);
 	Mesh* GetMesh(std::string);

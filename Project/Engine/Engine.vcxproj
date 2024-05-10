@@ -14,14 +14,16 @@
     <ClCompile Include="Application\App.cpp" />
     <ClCompile Include="Application\Main.cpp" />
     <ClCompile Include="Engine\Core\Events\CoreEvents.cpp" />
+    <ClCompile Include="Engine\Core\Game\GUI.cpp" />
+    <ClCompile Include="Engine\Core\Game\World.cpp" />
     <ClCompile Include="Engine\Core\Instance\Instance.cpp" />
+    <ClCompile Include="Engine\Core\Instance\Instances\TextureFrame.cpp" />
     <ClCompile Include="Engine\Core\Instance\Instances\Light.cpp" />
     <ClCompile Include="Engine\Core\Instance\Instances\Part.cpp" />
     <ClCompile Include="Engine\Core\Logger.cpp" />
     <ClCompile Include="Engine\Core\Math\Color4.cpp" />
     <ClCompile Include="Engine\Core\Math\Vector2.cpp" />
     <ClCompile Include="Engine\Core\Math\Vector3.cpp" />
-    <ClCompile Include="Engine\Core\World\World.cpp" />
     <ClCompile Include="Engine\GameEngine.cpp" />
     <ClCompile Include="Engine\Graphics\GraphicsEngine.cpp" />
     <ClCompile Include="Engine\Graphics\Render.cpp" />
@@ -38,7 +40,10 @@
     <ClInclude Include="Engine\Core\Events\CoreEvents.h" />
     <ClInclude Include="Engine\Core\Events\Event.h" />
     <ClInclude Include="Engine\Core\Events\IEvent.h" />
+    <ClInclude Include="Engine\Core\Game\GUI.h" />
+    <ClInclude Include="Engine\Core\Game\World.h" />
     <ClInclude Include="Engine\Core\Instance\Instance.h" />
+    <ClInclude Include="Engine\Core\Instance\Instances\TextureFrame.h" />
     <ClInclude Include="Engine\Core\Instance\Instances\Light.h" />
     <ClInclude Include="Engine\Core\Instance\Instances\Part.h" />
     <ClInclude Include="Engine\Core\Logger.h" />
@@ -46,7 +51,6 @@
     <ClInclude Include="Engine\Core\Math\EngineMath.h" />
     <ClInclude Include="Engine\Core\Math\Vector2.h" />
     <ClInclude Include="Engine\Core\Math\Vector3.h" />
-    <ClInclude Include="Engine\Core\World\World.h" />
     <ClInclude Include="Engine\GameEngine.h" />
     <ClInclude Include="Engine\Graphics\GraphicsEngine.h" />
     <ClInclude Include="Engine\Graphics\Render.h" />

@@ -40,8 +40,6 @@ private:
 	void ShutdownBuffers();
 	void RenderBuffers(ID3D11DeviceContext*);
 
-	void ReleaseTexture();
-
 	void ReleaseModel();
 
 	static bool ReadObjectFile(const char* fileName, INT& vertexCount, INT& indexCount, ModelType*& object);

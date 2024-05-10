@@ -2,18 +2,18 @@
 #include "pch.h"
 #include "Engine/Core/Events/Event.h"
 
+
 using namespace std;
+
+class TextureFrame;
 
 class Instance
 {
 public:
-    Instance();
-
-public:
     template<typename className>
-    static className*& New();
+    static className* New();
     template<typename className>
-    static className*& New(Instance* parent);
+    static className* New(Instance* parent);
 
 public:
     virtual ~Instance() = default;
@@ -24,12 +24,12 @@ public:
     virtual void AddChild(Instance*) = 0;
     virtual void DeleteChild(std::wstring) = 0;
 
-    virtual Instance*& GetParent() = 0;
+    virtual Instance* GetParent() = 0;
     virtual wstring GetName() = 0;
-    virtual std::vector<Instance*>& GetChildren() = 0;
+    virtual std::vector<Instance*> GetChildren() = 0;
 
-    virtual Instance*& operator[] (const wstring) = 0;
-    virtual Instance*& operator[] (size_t) = 0;
+    virtual Instance* operator[] (const wstring) = 0;
+    virtual Instance* operator[] (size_t) = 0;
 
     virtual void Destroy() = 0;
 
@@ -43,15 +43,17 @@ protected:
 };
 
 template<typename className>
-className*& Instance::New()
+className* Instance::New()
 {
     className* instance = new className;
+    if (typeof(instance) == TextureFrame)
+        instance 
 
     return instance;
 }
 
 template<typename className>
-className*& Instance::New(Instance* parent)
+className* Instance::New(Instance* parent)
 {
     className* instance = new className;
 

@@ -114,16 +114,19 @@ std::vector<Instance*>& Camera::GetChildren()
 	return m_Children;
 }
 
-Instance*& Camera::operator[](const wstring childName)
+Instance* Camera::operator[](const wstring childName)
 {
 	for (auto& child : m_Children)
 		if (child->GetName() == childName)
 			return child;
+	return nullptr;
 }
 
-Instance*& Camera::operator[](size_t child)
+Instance* Camera::operator[](size_t child)
 {
-	return m_Children[child];
+	if (m_Children[child])
+		return m_Children[child];
+	return nullptr;
 }
 
 void Camera::Destroy()

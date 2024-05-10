@@ -131,11 +131,14 @@ bool ResourceManager::LoadShader(ID3D11Device* device, HWND hwnd, std::string sh
     if (!shader)
         return false;
 
-    result = shader->Initialize(device, hwnd, &vertexShaderBuffer, &pixelShaderBuffer);
+    result = shader->Initialize(device, hwnd, vertexShaderBuffer, pixelShaderBuffer);
     if (!result)
         return false;
 
     m_Shaders.push_back(shader);
+
+    vertexShaderBuffer = nullptr;
+    pixelShaderBuffer = nullptr;
 
     return true;
 }

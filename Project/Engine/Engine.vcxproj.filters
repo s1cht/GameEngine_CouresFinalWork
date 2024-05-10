@@ -73,8 +73,17 @@
     <Filter Include="Engine\Core\Instance\Light">
       <UniqueIdentifier>{d4297883-0961-4f79-ad11-2d1c432dfb0d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Core\World">
+    <Filter Include="Engine\Core\Instance\Frame">
+      <UniqueIdentifier>{ce83408d-813a-467d-a4d6-d8a3b8c97806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Game">
       <UniqueIdentifier>{cd79adbf-3eb3-4449-ba00-e5470c170eba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Game\World">
+      <UniqueIdentifier>{86356da3-788a-4094-bc90-b4766ad414b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Game\GUI">
+      <UniqueIdentifier>{db18410e-aa48-49e9-9f57-00e396398c00}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -136,8 +145,14 @@
     <ClCompile Include="Engine\Core\Instance\Instances\Light.cpp">
       <Filter>Engine\Core\Instance\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Core\World\World.cpp">
-      <Filter>Engine\Core\World</Filter>
+    <ClCompile Include="Engine\Core\Instance\Instances\TextureFrame.cpp">
+      <Filter>Engine\Core\Instance\Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Game\GUI.cpp">
+      <Filter>Engine\Core\Game\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Game\World.cpp">
+      <Filter>Engine\Core\Game\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,8 +223,14 @@
     <ClInclude Include="Engine\Resources\ResourceList.h">
       <Filter>Engine\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Core\World\World.h">
-      <Filter>Engine\Core\World</Filter>
+    <ClInclude Include="Engine\Core\Instance\Instances\TextureFrame.h">
+      <Filter>Engine\Core\Instance\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Game\GUI.h">
+      <Filter>Engine\Core\Game\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Game\World.h">
+      <Filter>Engine\Core\Game\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

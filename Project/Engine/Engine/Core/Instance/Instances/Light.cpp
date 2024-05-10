@@ -9,6 +9,7 @@ Light::Light()
 	m_direction = XMFLOAT3( 1.f,0.f,0.f );
 	m_specularPower = 32.f;
 	m_Name = L"SunLight";
+	m_Parent = nullptr;
 }
 
 Light::~Light()
@@ -91,7 +92,7 @@ void Light::DeleteChild(std::wstring childName)
 			m_Children.erase(it);
 }
 
-Instance*& Light::GetParent()
+Instance* Light::GetParent()
 {
 	return m_Parent;
 }
@@ -101,19 +102,22 @@ wstring Light::GetName()
 	return m_Name;
 }
 
-std::vector<Instance*>& Light::GetChildren()
+std::vector<Instance*> Light::GetChildren()
 {
 	return m_Children;
 }
 
-Instance*& Light::operator[](const wstring childName)
+Instance* Light::operator[](const wstring childName)
 {
 	for (auto& child : m_Children)
 		if (child->GetName() == childName)
 			return child;
+	return nullptr;
 }
 
-Instance*& Light::operator[](size_t child)
+Instance* Light::operator[](size_t child)
 {
-	return m_Children[child];
+	if (m_Children[child])
+		return m_Children[child];
+	return nullptr;
 }

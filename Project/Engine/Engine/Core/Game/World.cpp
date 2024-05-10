@@ -3,6 +3,8 @@
 
 World::World()
 {
+    m_Name = L"World";
+    m_Parent = nullptr;
 }
 
 World::~World()
@@ -14,9 +16,7 @@ void World::SetParent(Instance* parent)
 }
 
 inline void World::SetName(wstring name)
-{
-    m_Name = name;
-}
+{}
 
 void World::AddChild(Instance* child)
 {
@@ -30,35 +30,34 @@ void World::DeleteChild(std::wstring childName)
             m_Children.erase(it);
 }
 
-inline Instance*& World::GetParent()
-{
-    return m_Parent;
-}
+Instance* World::GetParent()
+{}
 
 inline wstring World::GetName()
 {
     return m_Name;
 }
 
-std::vector<Instance*>& World::GetChildren()
+std::vector<Instance*> World::GetChildren()
 {
     return m_Children;
 }
 
-Instance*& World::operator[](const wstring childName)
+Instance* World::operator[](const wstring childName)
 {
     for (auto& child : m_Children)
         if (child->GetName() == childName)
             return child;
+    return nullptr;
 }
 
-Instance*& World::operator[](size_t child)
+Instance* World::operator[](size_t child)
 {
-    return m_Children[child];
+    if (m_Children[child])
+        return m_Children[child];
+    return nullptr;
 }
 
 
 void World::Destroy()
-{
-
-}
+{}

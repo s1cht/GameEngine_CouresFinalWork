@@ -133,17 +133,17 @@ void Part::SetMesh(Mesh* mesh)
 	m_Mesh =		mesh;
 }
 
-void Part::SetChangeTexture(Texture* texture)
+void Part::SetTexture(Texture* texture)
 {
 	m_Texture =		texture;
 }
 
-Instance*& Part::GetParent()
+Instance* Part::GetParent()
 {
 	return m_Parent;
 }
 
-inline std::vector<Instance*>& Part::GetChildren()
+inline std::vector<Instance*> Part::GetChildren()
 {
 	return m_Children;
 }
@@ -163,14 +163,17 @@ Texture* Part::GetTexture()
 	return m_Texture;
 }
 
-Instance*& Part::operator[](const wstring childName)
+Instance* Part::operator[](const wstring childName)
 {
 	for (auto& child : m_Children)
 		if (child->GetName() == childName)
 			return child;
+	return nullptr;
 }
 
-Instance*& Part::operator[](size_t child)
+Instance* Part::operator[](size_t child)
 {
-	return m_Children[child];
+	if (m_Children[child])
+		return m_Children[child];
+	return nullptr;
 }

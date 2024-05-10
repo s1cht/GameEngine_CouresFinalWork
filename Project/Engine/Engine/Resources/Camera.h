@@ -30,8 +30,8 @@ public:
 	wstring GetName() override;
 	std::vector<Instance*>& GetChildren() override;
 
-	Instance*& operator[] (const wstring) override;
-	Instance*& operator[] (size_t) override;
+	Instance* operator[] (const wstring) override;
+	Instance* operator[] (size_t) override;
 
 	void Destroy() override;
 

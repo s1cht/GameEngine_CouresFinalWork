@@ -29,7 +29,6 @@ bool Mesh::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext, 
 
 void Mesh::Shutdown()
 {
-    ReleaseTexture();
     ReleaseModel();
     ShutdownBuffers();
 }
@@ -145,11 +144,6 @@ void Mesh::RenderBuffers(ID3D11DeviceContext* deviceContext)
     deviceContext->IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
     deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-}
-
-void Mesh::ReleaseTexture()
-{
-    //m_Texture = nullptr;
 }
 
 void Mesh::ReleaseModel()

@@ -29,13 +29,6 @@ bool GameEngine::Initialize()
 		return false;
 	}
 
-	result = m_ResourceManager->LoadShader(m_Graphics->GetDevice(), m_Graphics->GetHWND(), "shader", m_ResourceManager->GetLoadedStringByID(SHADER_VERTEX).c_str(), m_ResourceManager->GetLoadedStringByID(SHADER_PIXEL).c_str());
-	if (!result)
-	{
-		isRunning = false;
-		return false;
-	}
-
 	result = m_ResourceManager->LoadTexture(m_Graphics->GetDevice(), m_Graphics->GetDeviceContext(), "stone01", m_ResourceManager->GetLoadedStringByID(TEXTURE_STONE01).c_str());
 	if (!result)
 	{
@@ -64,28 +57,12 @@ bool GameEngine::Initialize()
 		return false;
 	}
 
-	Light* sunLight = Instance::New<Light>(m_World.get());
-	sunLight->SetAmbientColor(Color4{ 0.15f, 0.15f,0.15f ,1.f });
-	sunLight->SetDiffuseColor(Color4{ 1.f, 1.f , 1.f, 1.f });
-	sunLight->SetDirection(Vector3{ 1.f,0.f,0.f });
-	sunLight->SetSpecularColor(Color4{ 1.f, 1.f, 1.f, 1.f });
-	sunLight->SetSpecularPower(32.f);
-
-	Camera* camera = Instance::New<Camera>(m_World.get());
-	camera->SetPosition(Vector3{ 0.f, 0.f, -2.5f });
-
-	Part* part = Instance::New<Part>(m_World.get());
-	part->SetMesh(m_ResourceManager->GetMesh("DefaultCube"));
-	part->SetSize(Vector3{ 1.f, 1.f, 1.f });
-	part->SetRotation(Vector3{ 0.f, 45.f, 0.f });
-
-	Part* part1 = Instance::New<Part>(m_World.get());
-	part1->SetMesh(m_ResourceManager->GetMesh("Sphere"));
-	part1->SetSize(Vector3{ 1.f, 1.f, 1.f });
-	part1->SetRotation(Vector3{ 0.f, 45.f, 0.f });
-	part1->SetPosition(Vector3{ 0.f, 3.f, 0.f });
-	part1->SetColor(Color4(1.f, 0.1f, 0.5f));
-	part1->SetChangeTexture(m_ResourceManager->GetTexture("dirt01"));
+	result = m_ResourceManager->LoadShader(m_Graphics->GetDevice(), m_Graphics->GetHWND(), "shader", m_ResourceManager->GetLoadedStringByID(SHADER_VERTEX).c_str(), m_ResourceManager->GetLoadedStringByID(SHADER_PIXEL).c_str());
+	if (!result)
+	{
+		isRunning = false;
+		return false;
+	}
 
 	return true;
 }
@@ -138,12 +115,12 @@ void GameEngine::Run()
 
 bool GameEngine::Runs()
 {
-	return true;
+	return isRunning;
 }
 
-std::unique_ptr<World>& GameEngine::GetWorld()
+World* GameEngine::GetWorld()
 {
-	return m_World;
+	return m_World.get();
 }
 
 Texture* GameEngine::GetTexture(std::string resource)

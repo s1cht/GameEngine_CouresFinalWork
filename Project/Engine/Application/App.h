@@ -13,7 +13,6 @@ public:
 	void Shutdown();
 
 	void Run();
-	bool Runs(); 
 
 private:
 	std::unique_ptr<GameEngine> m_Engine;

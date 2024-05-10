@@ -45,7 +45,7 @@ bool GraphicsEngine::Frame(World*& world, Shader**& shaders, INT meshCount, INT 
 	return true;
 }
 
-HWND GraphicsEngine::GetHWND()
+HWND GraphicsEngine::GetHWND() const
 {
 	return m_hwnd;
 }
@@ -85,7 +85,8 @@ bool GraphicsEngine::Render(World*& world, Shader**& shaders, INT meshCount, INT
 			translateMatrix = XMMatrixTranslation(part->GetPosition().X, part->GetPosition().Y, part->GetPosition().Z);
 			scaleMatrix = XMMatrixScaling(part->GetSize().X, part->GetSize().Y, part->GetSize().Z);
 
-			worldMatrix = XMMatrixMultiply(rotateMatrix, translateMatrix);
+			srMatrix = XMMatrixMultiply(scaleMatrix, rotateMatrix);
+			worldMatrix = XMMatrixMultiply(srMatrix, translateMatrix);
 
 			part->GetMesh()->Render(m_Render->GetDeviceContext());
 

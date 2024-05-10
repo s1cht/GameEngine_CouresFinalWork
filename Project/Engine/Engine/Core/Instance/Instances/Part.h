@@ -29,7 +29,7 @@ public:
     void SetColor(Color4);
 
     void SetMesh(Mesh*);
-    void SetChangeTexture(Texture*);
+    void SetTexture(Texture*);
 
     void SetParent(Instance*) override;
     void SetName(std::wstring) override;
@@ -46,14 +46,14 @@ public:
     Color4 GetColor();
 
     std::wstring GetName() override;
-    Instance*& GetParent() override;
-    std::vector<Instance*>& GetChildren() override;
+    Instance* GetParent() override;
+    std::vector<Instance*> GetChildren() override;
 
     std::string GetMeshName();
     Texture* GetTexture();
 
-    Instance*& operator[] (const wstring) override;
-    Instance*& operator[] (size_t) override;
+    Instance* operator[] (const wstring) override;
+    Instance* operator[] (size_t) override;
 
 private:
     std::string m_ClassName = "Part";
