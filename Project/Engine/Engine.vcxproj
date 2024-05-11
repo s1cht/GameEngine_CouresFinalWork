@@ -17,7 +17,6 @@
     <ClCompile Include="Engine\Core\Game\GUI.cpp" />
     <ClCompile Include="Engine\Core\Game\World.cpp" />
     <ClCompile Include="Engine\Core\Instance\Instance.cpp" />
-    <ClCompile Include="Engine\Core\Instance\Instances\TextureFrame.cpp" />
     <ClCompile Include="Engine\Core\Instance\Instances\Light.cpp" />
     <ClCompile Include="Engine\Core\Instance\Instances\Part.cpp" />
     <ClCompile Include="Engine\Core\Logger.cpp" />
@@ -27,6 +26,7 @@
     <ClCompile Include="Engine\GameEngine.cpp" />
     <ClCompile Include="Engine\Graphics\GraphicsEngine.cpp" />
     <ClCompile Include="Engine\Graphics\Render.cpp" />
+    <ClCompile Include="Engine\Graphics\UIRender.cpp" />
     <ClCompile Include="Engine\Graphics\Window.cpp" />
     <ClCompile Include="Engine\Resources\Camera.cpp" />
     <ClCompile Include="Engine\Resources\Mesh.cpp" />
@@ -43,7 +43,6 @@
     <ClInclude Include="Engine\Core\Game\GUI.h" />
     <ClInclude Include="Engine\Core\Game\World.h" />
     <ClInclude Include="Engine\Core\Instance\Instance.h" />
-    <ClInclude Include="Engine\Core\Instance\Instances\TextureFrame.h" />
     <ClInclude Include="Engine\Core\Instance\Instances\Light.h" />
     <ClInclude Include="Engine\Core\Instance\Instances\Part.h" />
     <ClInclude Include="Engine\Core\Logger.h" />
@@ -54,6 +53,7 @@
     <ClInclude Include="Engine\GameEngine.h" />
     <ClInclude Include="Engine\Graphics\GraphicsEngine.h" />
     <ClInclude Include="Engine\Graphics\Render.h" />
+    <ClInclude Include="Engine\Graphics\UIRender.h" />
     <ClInclude Include="Engine\Graphics\Window.h" />
     <ClInclude Include="Engine\Resources\Camera.h" />
     <ClInclude Include="Engine\Resources\Mesh.h" />

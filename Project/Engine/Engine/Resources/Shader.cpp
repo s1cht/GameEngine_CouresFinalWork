@@ -328,14 +328,14 @@ void Shader::RenderShader(ID3D11DeviceContext* deviceContext, INT indexCount) co
 	deviceContext->DrawIndexed(indexCount, 0, 0);
 }
 
-bool Shader::ReadShaderFile(const WCHAR* vsFileName, const WCHAR* psFileName, HWND hwnd, ID3D10Blob** vertexShaderBuffer, ID3D10Blob** pixelShaderBuffer)
+bool Shader::ReadShaderFile(const WCHAR* vsFileName, const WCHAR* psFileName, HWND hwnd, ID3D10Blob*& vertexShaderBuffer, ID3D10Blob*& pixelShaderBuffer)
 {
 	HRESULT result;
 	ID3D10Blob* errorMessage;
 
 	errorMessage = nullptr;
 
-	result = D3DCompileFromFile((WCHAR*)vsFileName, NULL, NULL, "LightVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG, 0, vertexShaderBuffer, &errorMessage);
+	result = D3DCompileFromFile((WCHAR*)vsFileName, NULL, NULL, "LightVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG, 0, &vertexShaderBuffer, &errorMessage);
 	if (FAILED(result))
 	{
 		if (errorMessage)
@@ -346,7 +346,7 @@ bool Shader::ReadShaderFile(const WCHAR* vsFileName, const WCHAR* psFileName, HW
 		return false;
 	}
 
-	result = D3DCompileFromFile((WCHAR*)psFileName, NULL, NULL, "LightPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG, 0, pixelShaderBuffer, &errorMessage);
+	result = D3DCompileFromFile((WCHAR*)psFileName, NULL, NULL, "LightPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG, 0, &pixelShaderBuffer, &errorMessage);
 	if (FAILED(result))
 	{
 		if (errorMessage)

@@ -31,7 +31,9 @@ void World::DeleteChild(std::wstring childName)
 }
 
 Instance* World::GetParent()
-{}
+{
+    return nullptr;
+}
 
 inline wstring World::GetName()
 {

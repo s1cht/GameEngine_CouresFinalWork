@@ -50,8 +50,6 @@ float4 LightPixelShader(PixelInputType input) : SV_TARGET
     if (textureColor.r == 0.f && textureColor.g == 0.f && textureColor.b == 0.f && textureColor.a == 0.f)
     {
         color = color * partColor;
-        printf("My color is %f %f %f %f", color.r, color.g, color.b, color.a);
-
     }
     else
     {

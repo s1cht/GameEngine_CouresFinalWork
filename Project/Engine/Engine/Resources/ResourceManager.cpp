@@ -122,7 +122,7 @@ bool ResourceManager::LoadShader(ID3D11Device* device, HWND hwnd, std::string sh
     vertexShaderBuffer = nullptr;
     pixelShaderBuffer = nullptr;
 
-    result = Shader::ReadShaderFile(fileName, fileName2, hwnd, &vertexShaderBuffer, &pixelShaderBuffer);
+    result = Shader::ReadShaderFile(fileName, fileName2, hwnd, vertexShaderBuffer, pixelShaderBuffer);
     if (!result)
         return false;
 

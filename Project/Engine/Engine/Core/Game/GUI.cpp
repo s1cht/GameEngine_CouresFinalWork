@@ -27,7 +27,10 @@ void GUI::DeleteChild(std::wstring childName)
             m_Children.erase(it);
 }
 
-inline Instance* GUI::GetParent() {}
+inline Instance* GUI::GetParent() 
+{
+    return nullptr;
+}
 
 inline wstring GUI::GetName()
 {

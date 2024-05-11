@@ -26,9 +26,9 @@ public:
 	void AddChild(Instance*) override;
 	void DeleteChild(std::wstring) override;
 
-	Instance*& GetParent() override;
+	Instance* GetParent() override;
 	wstring GetName() override;
-	std::vector<Instance*>& GetChildren() override;
+	std::vector<Instance*> GetChildren() override;
 
 	Instance* operator[] (const wstring) override;
 	Instance* operator[] (size_t) override;

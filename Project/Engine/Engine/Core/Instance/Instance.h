@@ -46,8 +46,6 @@ template<typename className>
 className* Instance::New()
 {
     className* instance = new className;
-    if (typeof(instance) == TextureFrame)
-        instance 
 
     return instance;
 }

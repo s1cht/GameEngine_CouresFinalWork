@@ -99,7 +99,7 @@ void Camera::DeleteChild(std::wstring childName)
 }
 
 
-Instance*& Camera::GetParent()
+Instance* Camera::GetParent()
 {
 	return m_Parent;
 }
@@ -109,7 +109,7 @@ wstring Camera::GetName()
 	return m_Name;
 }
 
-std::vector<Instance*>& Camera::GetChildren()
+std::vector<Instance*> Camera::GetChildren()
 {
 	return m_Children;
 }

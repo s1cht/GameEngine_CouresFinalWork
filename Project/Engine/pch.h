@@ -20,6 +20,7 @@
 #include <d3d11.h>
 #include <D3Dcompiler.h>
 #include <DirectXMath.h>
+#include <d2d1.h>
 
 typedef unsigned short USHORT;
 typedef unsigned char UCHAR;

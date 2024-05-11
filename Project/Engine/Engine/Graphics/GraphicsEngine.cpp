@@ -5,6 +5,7 @@ GraphicsEngine::GraphicsEngine()
 {
 	m_Window = nullptr;
 	m_Render = nullptr;
+	m_UIRender = nullptr;
 	m_hwnd = nullptr;
 }
 
@@ -25,6 +26,13 @@ bool GraphicsEngine::Initialize()
 	if (!m_Render->Initialize(m_Window->GetSize(), VSYNC_ENABLED, m_hwnd, FULLSCREEN, SCREEN_DEPTH, SCREEN_NEAR))
 	{
 		MessageBox(m_hwnd, L"Render", L"Error", MB_OK);
+		return false;
+	}
+
+	m_UIRender = std::make_unique<UIRender>();
+	if (!m_UIRender->Initialize(m_hwnd))
+	{
+		MessageBox(m_hwnd, L"UIRender", L"Error", MB_OK);
 		return false;
 	}
 
@@ -79,7 +87,8 @@ bool GraphicsEngine::Render(World*& world, Shader**& shaders, INT meshCount, INT
 	for (auto& object : world->GetChildren())
 	{
 		Part* part = dynamic_cast<Part*>(object);
-		if (part)
+
+	if (part)
 		{
 			rotateMatrix = XMMatrixRotationRollPitchYaw(part->GetRotation().X, part->GetRotation().Y, part->GetRotation().Z);
 			translateMatrix = XMMatrixTranslation(part->GetPosition().X, part->GetPosition().Y, part->GetPosition().Z);
@@ -101,6 +110,8 @@ bool GraphicsEngine::Render(World*& world, Shader**& shaders, INT meshCount, INT
 	}
 
 	m_Render->EndScene();
+
+	//m_UIRender->Frame();
 
 	return true;
 }

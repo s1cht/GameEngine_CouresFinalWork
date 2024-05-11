@@ -52,7 +52,7 @@ private:
 	bool SetShaderParameters(ID3D11DeviceContext*, XMMATRIX, XMMATRIX, XMMATRIX, Part*, Light*, XMFLOAT3) const;
 	void RenderShader(ID3D11DeviceContext*, INT) const;
 
-	static bool ReadShaderFile(const WCHAR*, const WCHAR*, HWND, ID3D10Blob**, ID3D10Blob**);
+	static bool ReadShaderFile(const WCHAR*, const WCHAR*, HWND, ID3D10Blob*&, ID3D10Blob*&);
 	static void OutputShaderErrorMessage(ID3D10Blob*, HWND, WCHAR*);
 
 private:

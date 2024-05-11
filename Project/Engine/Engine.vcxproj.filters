@@ -85,6 +85,9 @@
     <Filter Include="Engine\Core\Game\GUI">
       <UniqueIdentifier>{db18410e-aa48-49e9-9f57-00e396398c00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Graphics\UIRender">
+      <UniqueIdentifier>{dbde0d46-8cd8-4dbb-b7cd-68834a09d853}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Graphics\Render.cpp">
@@ -145,14 +148,14 @@
     <ClCompile Include="Engine\Core\Instance\Instances\Light.cpp">
       <Filter>Engine\Core\Instance\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Core\Instance\Instances\TextureFrame.cpp">
-      <Filter>Engine\Core\Instance\Frame</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Core\Game\GUI.cpp">
       <Filter>Engine\Core\Game\GUI</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Core\Game\World.cpp">
       <Filter>Engine\Core\Game\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\UIRender.cpp">
+      <Filter>Engine\Graphics\UIRender</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,14 +226,14 @@
     <ClInclude Include="Engine\Resources\ResourceList.h">
       <Filter>Engine\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Core\Instance\Instances\TextureFrame.h">
-      <Filter>Engine\Core\Instance\Frame</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Core\Game\GUI.h">
       <Filter>Engine\Core\Game\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Core\Game\World.h">
       <Filter>Engine\Core\Game\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\UIRender.h">
+      <Filter>Engine\Graphics\UIRender</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
