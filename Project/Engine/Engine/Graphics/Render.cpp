@@ -64,7 +64,7 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 		return false;
 
 	result = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numModes, displayModeList);
-	if (!displayModeList)
+	if (FAILED(result))
 		return false;
 
 	for (i = 0; i < numModes; i++)
@@ -76,7 +76,7 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 			}
 
 	result = adapter->GetDesc(&adapterDesc);
-	if (!displayModeList)
+	if (FAILED(result))
 		return false;
 
 	m_videoCardMemory = (INT)(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
@@ -130,11 +130,11 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 	result = D3D11CreateDeviceAndSwapChain(
 		NULL, 
 		D3D_DRIVER_TYPE_HARDWARE, 
-		NULL, 
-		D3D11_CREATE_DEVICE_DEBUG,
+		NULL,
+		D3D11_CREATE_DEVICE_DEBUG | D3D11_CREATE_DEVICE_BGRA_SUPPORT,
 		//NULL,
 		&featureLevel, 
-		1, 
+		1,
 		D3D11_SDK_VERSION, 
 		&swapChainDesc, 
 		&m_swapChain,
@@ -142,16 +142,15 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 		NULL, 
 		&m_deviceContext
 	);
-
-	if (error != 0)
+	if (FAILED(result))
 		return false;
 
 	result = m_swapChain->GetBuffer(NULL, __uuidof(ID3D11Texture2D), (LPVOID*)&backBufferPtr);
-	if (error != 0)
+	if (FAILED(result))
 		return false;
 
 	result = m_device->CreateRenderTargetView(backBufferPtr, NULL, &m_renderTargetView);
-	if (error != 0)
+	if (FAILED(result))
 		return false;
 
 	backBufferPtr->Release();
@@ -172,7 +171,7 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 	depthBufferDesc.MiscFlags =				0;
 
 	result = m_device->CreateTexture2D(&depthBufferDesc, NULL, &m_depthStencilBuffer);
-	if (error != 0)
+	if (FAILED(result))
 		return false;
 
 	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
@@ -196,7 +195,7 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 	depthStencilDesc.BackFace.StencilFunc =			D3D11_COMPARISON_ALWAYS;
 
 	result = m_device->CreateDepthStencilState(&depthStencilDesc, &m_depthStencilState);
-	if (error != 0)
+	if (FAILED(result))
 		return false;
 
 	m_deviceContext->OMSetDepthStencilState(m_depthStencilState , 1);
@@ -208,7 +207,7 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 	depthStencilViewDesc.Texture2D.MipSlice =	0;
 
 	result = m_device->CreateDepthStencilView(m_depthStencilBuffer, &depthStencilViewDesc, &m_depthStencilView);
-	if (error != 0)
+	if (FAILED(result))
 		return false;
 
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
@@ -225,7 +224,7 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 	rasterizerDesc.SlopeScaledDepthBias =		0.0f;
 
 	result = m_device->CreateRasterizerState(&rasterizerDesc, &m_rasterizerState);
-	if (error != 0)
+	if (FAILED(result))
 		return false;
 
 	m_deviceContext->RSSetState(m_rasterizerState);

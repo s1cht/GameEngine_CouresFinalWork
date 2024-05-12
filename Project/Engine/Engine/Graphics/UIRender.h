@@ -14,17 +14,17 @@ public:
 	~UIRender();
 
 public:
-	bool Initialize(HWND);
+	bool Initialize(HWND, IDXGISurface*);
 	void Shutdown();
 
-	bool Frame();
+	ID2D1RenderTarget* GetRenderTarget();
 
-private:
-	bool Render();
+	void BeginScene();
+	bool EndScene();
 
 private:
 	HWND m_hwnd;
-	ID2D1HwndRenderTarget* m_RenderTarget;
+	ID2D1RenderTarget* m_RenderTarget;
 
 };
 

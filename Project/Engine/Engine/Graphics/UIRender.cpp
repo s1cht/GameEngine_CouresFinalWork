@@ -11,7 +11,7 @@ UIRender::~UIRender()
 {
 }
 
-bool UIRender::Initialize(HWND hwnd)
+bool UIRender::Initialize(HWND hwnd, IDXGISurface* dxgiSurface)
 {
 	HRESULT result;
 	ID2D1Factory* factory;
@@ -26,20 +26,17 @@ bool UIRender::Initialize(HWND hwnd)
 		return false;
 
 	RECT rc;
-	GetClientRect(m_hwnd, &rc);
+	FLOAT dpi = GetDpiForWindow(m_hwnd);
+	GetWindowRect(m_hwnd, &rc);
 
 	renderTargetProperties.type =				D2D1_RENDER_TARGET_TYPE_DEFAULT;
 	renderTargetProperties.pixelFormat =		D2D1_PIXEL_FORMAT(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_IGNORE);
-	renderTargetProperties.dpiX =				0;
-	renderTargetProperties.dpiY =				0;
+	renderTargetProperties.dpiX =				static_cast<int>(ceil((rc.right - rc.left) * dpi / 96.f));
+	renderTargetProperties.dpiY =				static_cast<int>(ceil((rc.bottom - rc.top) * dpi / 96.f));
 	renderTargetProperties.usage =				D2D1_RENDER_TARGET_USAGE_NONE;
 	renderTargetProperties.minLevel =			D2D1_FEATURE_LEVEL_10;
 
-	hwndRenderTargetProperties.hwnd =			hwnd;
-	hwndRenderTargetProperties.pixelSize =		D2D1_SIZE_U(rc.right - rc.left, rc.bottom - rc.top);
-	hwndRenderTargetProperties.presentOptions = D2D1_PRESENT_OPTIONS_IMMEDIATELY;
-
-	result = factory->CreateHwndRenderTarget(renderTargetProperties, hwndRenderTargetProperties, &m_RenderTarget);
+	result = factory->CreateDxgiSurfaceRenderTarget(dxgiSurface, &renderTargetProperties, &m_RenderTarget);
 	if (FAILED(result))
 		return false;
 
@@ -58,37 +55,20 @@ void UIRender::Shutdown()
 	}
 }
 
-bool UIRender::Frame()
+ID2D1RenderTarget* UIRender::GetRenderTarget()
 {
-	if (!Render())
-		return false;
-
-	return true;
+	return m_RenderTarget;
 }
 
-bool UIRender::Render()
+void UIRender::BeginScene()
 {
-	HRESULT result;
-	ID2D1SolidColorBrush* brush;
-	RECT rc;
-
-	m_RenderTarget->CreateSolidColorBrush(D2D1_COLOR_F(D2D1::ColorF::White), &brush);
-
-	GetClientRect(m_hwnd, &rc);
-
 	m_RenderTarget->BeginDraw();
-	
-	m_RenderTarget->DrawRectangle(
-		D2D1::RectF(
-			rc.left + 100.0f,
-			rc.top + 100.0f,
-			rc.right - 100.0f,
-			rc.bottom - 100.0f),
-		brush);
+}
 
-	result = m_RenderTarget->EndDraw();
+bool UIRender::EndScene()
+{
+	HRESULT result = m_RenderTarget->EndDraw();
 	if (FAILED(result))
 		return false;
-
 	return true;
 }
