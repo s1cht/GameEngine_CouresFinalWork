@@ -1,7 +1,6 @@
 #pragma once
 #include "pch.h"
 #include "Render.h"
-#include "UIRender.h"
 #include "Window.h"
 #include "Engine/Resources/Camera.h"
 #include "Engine/Resources/Mesh.h"
@@ -38,7 +37,6 @@ private:
 
 private:
 	HWND m_hwnd;
-	std::unique_ptr<UIRender> m_UIRender;
 	std::unique_ptr<RenderClass> m_Render;
 	std::unique_ptr<Window> m_Window;
 };

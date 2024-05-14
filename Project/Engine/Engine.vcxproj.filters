@@ -85,8 +85,8 @@
     <Filter Include="Engine\Core\Game\GUI">
       <UniqueIdentifier>{db18410e-aa48-49e9-9f57-00e396398c00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Graphics\UIRender">
-      <UniqueIdentifier>{dbde0d46-8cd8-4dbb-b7cd-68834a09d853}</UniqueIdentifier>
+    <Filter Include="Engine\ScriptService">
+      <UniqueIdentifier>{154a5f30-9bef-436e-8799-c3e620c2f64d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -154,9 +154,7 @@
     <ClCompile Include="Engine\Core\Game\World.cpp">
       <Filter>Engine\Core\Game\World</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Graphics\UIRender.cpp">
-      <Filter>Engine\Graphics\UIRender</Filter>
-    </ClCompile>
+    <ClCompile Include="ScriptService.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Graphics\Render.h">
@@ -232,9 +230,7 @@
     <ClInclude Include="Engine\Core\Game\World.h">
       <Filter>Engine\Core\Game\World</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Graphics\UIRender.h">
-      <Filter>Engine\Graphics\UIRender</Filter>
-    </ClInclude>
+    <ClInclude Include="ScriptService.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\PixelShader.hlsl">

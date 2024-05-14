@@ -84,9 +84,12 @@ void GameEngine::Run()
 
 	Part* part = dynamic_cast<Part*>(m_World->operator[](L"Part"));
 	Light* sunLight = dynamic_cast<Light*>(m_World->operator[](L"SunLight"));
-	float rotation = 0;
-	float rez = 0.0005f;
+	float rotation = 0.f;
+	float rez = 0.005f;
+	float angle = 0.f;
+
 	Vector3 vector = Vector3::Zero();
+
 
 	while (isRunning)
 	{
@@ -98,14 +101,17 @@ void GameEngine::Run()
 
 		part->SetRotation(0, rotation, 0);
 		sunLight->SetDirection(vector);
-		rotation += 0.000005f;
-		vector.X += rez;
+		rotation += 0.0005f;
+		angle += rez;
 
-		if (vector.X > 10)
+		if (angle > 90.f)
 			rez = -0.0005f;
-		else if (vector.X < -10)
+		else if (angle < -90.f)
 			rez = 0.0005f;
 
+		vector.X = cos(angle);
+		vector.Y = 0.f;
+		vector.Z = sin(angle);
 
 		m_Graphics->Frame(world, shaders, world->GetChildren().size(), shaderCount);
 	}

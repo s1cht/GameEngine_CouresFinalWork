@@ -16,6 +16,10 @@
 #include <utility>
 #include <algorithm>
 
+// Lib
+#include "DirectXTK/Inc/SpriteFont.h"
+#include "DirectXTK/Inc/SpriteBatch.h"
+
 // DirectX directories
 #include <d3d11.h>
 #include <D3Dcompiler.h>

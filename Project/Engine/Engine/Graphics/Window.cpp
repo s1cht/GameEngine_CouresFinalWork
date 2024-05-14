@@ -53,12 +53,12 @@ bool Window::Initialize(LPCWSTR title, HWND& hwnd)
 	wcex.cbSize = sizeof(WNDCLASSEX);
 	wcex.lpfnWndProc = WndProc;
 	wcex.hInstance = NULL;
-	wcex.lpszClassName = winClass;
+	wcex.lpszClassName = title;
 
 	RegisterClassEx(&wcex);
 
 	m_hwnd = CreateWindowExW(NULL,
-		winClass, title,
+		title, title,
 		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP,
 		GetSystemMetrics(SM_CXSCREEN) / 2 - (int)m_size.X / 2, GetSystemMetrics(SM_CYSCREEN) / 2 - (int)m_size.Y / 2,
 		(int)m_size.X, (int)m_size.Y,

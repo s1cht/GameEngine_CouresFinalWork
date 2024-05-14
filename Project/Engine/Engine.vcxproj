@@ -26,7 +26,6 @@
     <ClCompile Include="Engine\GameEngine.cpp" />
     <ClCompile Include="Engine\Graphics\GraphicsEngine.cpp" />
     <ClCompile Include="Engine\Graphics\Render.cpp" />
-    <ClCompile Include="Engine\Graphics\UIRender.cpp" />
     <ClCompile Include="Engine\Graphics\Window.cpp" />
     <ClCompile Include="Engine\Resources\Camera.cpp" />
     <ClCompile Include="Engine\Resources\Mesh.cpp" />
@@ -34,6 +33,7 @@
     <ClCompile Include="Engine\Resources\Shader.cpp" />
     <ClCompile Include="Engine\Resources\Texture.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ScriptService.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\App.h" />
@@ -53,7 +53,6 @@
     <ClInclude Include="Engine\GameEngine.h" />
     <ClInclude Include="Engine\Graphics\GraphicsEngine.h" />
     <ClInclude Include="Engine\Graphics\Render.h" />
-    <ClInclude Include="Engine\Graphics\UIRender.h" />
     <ClInclude Include="Engine\Graphics\Window.h" />
     <ClInclude Include="Engine\Resources\Camera.h" />
     <ClInclude Include="Engine\Resources\Mesh.h" />
@@ -62,6 +61,7 @@
     <ClInclude Include="Engine\Resources\Shader.h" />
     <ClInclude Include="Engine\Resources\Texture.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="ScriptService.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\PixelShader.hlsl">
@@ -114,7 +114,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Create</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(ProjectDir);%WindowsSdkDir\Include%WindowsSDKVersion%\\um</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);%WindowsSdkDir\Include%WindowsSDKVersion%\\um;C:\Users\Mok\Desktop\Baigiamasis_JKM_PI2-2V\Project\Engine\lib</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>

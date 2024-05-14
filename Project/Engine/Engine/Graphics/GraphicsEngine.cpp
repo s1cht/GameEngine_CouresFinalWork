@@ -5,7 +5,6 @@ GraphicsEngine::GraphicsEngine()
 {
 	m_Window = nullptr;
 	m_Render = nullptr;
-	m_UIRender = nullptr;
 	m_hwnd = nullptr;
 }
 
@@ -16,7 +15,7 @@ GraphicsEngine::~GraphicsEngine()
 bool GraphicsEngine::Initialize()
 {
 	m_Window = std::make_unique<Window>(WINDOW_SIZE);
-	if (!m_Window->Initialize(L"Window", m_hwnd))
+	if (!m_Window->Initialize(L"Window123", m_hwnd))
 	{
 		MessageBox(m_hwnd, L"Window", L"Error", MB_OK);
 		return false;
@@ -28,32 +27,6 @@ bool GraphicsEngine::Initialize()
 		MessageBox(m_hwnd, L"Render", L"Error", MB_OK);
 		return false;
 	}
-
-	m_UIRender = std::make_unique<UIRender>();
-	if (!m_UIRender->Initialize(m_hwnd))
-	{
-		MessageBox(m_hwnd, L"UIRender", L"Error", MB_OK);
-		return false;
-	}
-
-	m_UIRender->BeginScene();
-
-	ID2D1SolidColorBrush* brush;
-	RECT rc;
-
-	m_UIRender->GetRenderTarget()->CreateSolidColorBrush(D2D1_COLOR_F(D2D1::ColorF::White), &brush);
-
-	GetClientRect(m_hwnd, &rc);
-
-	m_UIRender->GetRenderTarget()->DrawRectangle(
-		D2D1::RectF(
-			rc.left + 100.0f,
-			rc.top + 100.0f,
-			rc.right - 100.0f,
-			rc.bottom - 100.0f),
-		brush);
-
-	m_UIRender->EndScene();
 
 	return true;
 }
