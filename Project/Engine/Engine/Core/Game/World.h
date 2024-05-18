@@ -10,6 +10,7 @@ public:
 
     void SetParent(Instance*) override;
     void SetName(wstring) override;
+    void SetDevices(ID3D11Device*, ID3D11DeviceContext*) override;
 
     void AddChild(Instance*) override;
     void DeleteChild(std::wstring) override;

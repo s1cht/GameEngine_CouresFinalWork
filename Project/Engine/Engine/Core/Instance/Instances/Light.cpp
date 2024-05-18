@@ -80,6 +80,10 @@ inline void Light::SetName(wstring name)
 	m_Name = name;
 }
 
+inline void Light::SetDevices(ID3D11Device*, ID3D11DeviceContext*)
+{
+}
+
 void Light::AddChild(Instance* child)
 {
 	m_Children.push_back(child);

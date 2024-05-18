@@ -116,6 +116,10 @@ inline void Part::SetName(wstring name)
 	m_Name =		name;
 }
 
+inline void Part::SetDevices(ID3D11Device*, ID3D11DeviceContext*)
+{
+}
+
 void Part::AddChild(Instance* child)
 {
 	m_Children.push_back(child);

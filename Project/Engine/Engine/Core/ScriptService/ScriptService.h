@@ -1,6 +1,10 @@
 #pragma once
 #include "pch.h"
 
+using namespace LuaCpp;
+using namespace LuaCpp::Registry;
+using namespace LuaCpp::Engine;
+
 class ScriptService
 {
 public:
@@ -12,7 +16,9 @@ public:
 	void Shutdown();
 
 private:
-	std::map<std::string, std::ifstream> scripts;
+	LuaContext lua;
+
+	std::map<std::string, std::wstring> scripts;
 
 };
 

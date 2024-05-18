@@ -8,6 +8,10 @@
 #include "Engine/Core/Instance/Instance.h"
 #include "Engine/Core/Game/World.h"
 #include "Engine/Resources/Camera.h"
+#include "lib/ImGUI/imgui.h"
+#include "lib/ImGUI/imgui_impl_dx11.h"
+#include "lib/ImGUI/imgui_impl_dx9.h"
+#include "lib/ImGUI/imgui_impl_win32.h"
 //#include "Engine/Core/Instance/Instances/Camera.h"
 
 
@@ -24,6 +28,7 @@ public:
 	bool Runs();
 
 	World* GetWorld();
+	InstanceService* GetInstanceService();
 
 	Texture* GetTexture(std::string);
 	Mesh* GetMesh(std::string);
@@ -33,6 +38,7 @@ private:
 	std::unique_ptr<GraphicsEngine> m_Graphics;
 	std::unique_ptr<ResourceManager> m_ResourceManager;
 	std::unique_ptr<World> m_World;
+	std::unique_ptr<InstanceService> m_InstanceService;
 
 private:
 	bool isRunning = false;

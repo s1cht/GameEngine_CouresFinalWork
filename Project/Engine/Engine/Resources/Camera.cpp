@@ -86,6 +86,10 @@ inline void Camera::SetName(wstring name)
 	m_Name = name;
 }
 
+void Camera::SetDevices(ID3D11Device*, ID3D11DeviceContext*)
+{
+}
+
 void Camera::AddChild(Instance* child)
 {
 	m_Children.push_back(child);

@@ -85,8 +85,14 @@
     <Filter Include="Engine\Core\Game\GUI">
       <UniqueIdentifier>{db18410e-aa48-49e9-9f57-00e396398c00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\ScriptService">
+    <Filter Include="Engine\Core\ScriptService">
       <UniqueIdentifier>{154a5f30-9bef-436e-8799-c3e620c2f64d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Instance\Frame\Image">
+      <UniqueIdentifier>{0ee5eae7-2ccf-4377-a5d3-fee6d2c5f9ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGUI">
+      <UniqueIdentifier>{4e49d25e-889c-471b-ad92-fe8f253fceca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +136,6 @@
     <ClCompile Include="Engine\Resources\ResourceManager.cpp">
       <Filter>Engine\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\GameEngine.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Resources\Mesh.cpp">
       <Filter>Engine\Resources\Resources\Mesh</Filter>
     </ClCompile>
@@ -154,7 +157,42 @@
     <ClCompile Include="Engine\Core\Game\World.cpp">
       <Filter>Engine\Core\Game\World</Filter>
     </ClCompile>
-    <ClCompile Include="ScriptService.cpp" />
+    <ClCompile Include="Engine\Core\ScriptService\ScriptService.cpp">
+      <Filter>Engine\Core\ScriptService</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameEngine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Instance\Instances\Frame\ImageFrame.cpp">
+      <Filter>Engine\Core\Instance\Frame\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\ImGUI\imgui.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\ImGUI\imgui_demo.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\ImGUI\imgui_draw.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\ImGUI\imgui_impl_dx11.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\ImGUI\imgui_impl_win32.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\ImGUI\imgui_tables.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\ImGUI\imgui_widgets.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\ImGUI\imgui_impl_dx9.cpp">
+      <Filter>ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Graphics\EditorRender.cpp">
+      <Filter>Engine\Graphics\Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Graphics\Render.h">
@@ -203,9 +241,6 @@
     <ClInclude Include="Engine\Resources\ResourceManager.h">
       <Filter>Engine\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\GameEngine.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Resources\Mesh.h">
       <Filter>Engine\Resources\Resources\Mesh</Filter>
     </ClInclude>
@@ -230,7 +265,45 @@
     <ClInclude Include="Engine\Core\Game\World.h">
       <Filter>Engine\Core\Game\World</Filter>
     </ClInclude>
-    <ClInclude Include="ScriptService.h" />
+    <ClInclude Include="Engine\Core\ScriptService\ScriptService.h">
+      <Filter>Engine\Core\ScriptService</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameEngine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Instance\Instances\Frame\ImageFrame.h">
+      <Filter>Engine\Core\Instance\Frame\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\ImGUI\imconfig.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\ImGUI\imgui.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\ImGUI\imgui_impl_dx11.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\ImGUI\imgui_impl_win32.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\ImGUI\imgui_internal.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\ImGUI\imstb_rectpack.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\ImGUI\imstb_textedit.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\ImGUI\imstb_truetype.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\ImGUI\imgui_impl_dx9.h">
+      <Filter>ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics\EditorRender.h">
+      <Filter>Engine\Graphics\Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shaders\PixelShader.hlsl">

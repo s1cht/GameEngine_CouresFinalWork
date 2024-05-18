@@ -6,6 +6,9 @@ GraphicsEngine::GraphicsEngine()
 	m_Window = nullptr;
 	m_Render = nullptr;
 	m_hwnd = nullptr;
+#ifdef SL_ENGINE_EDITOR
+	m_hwndRender = nullptr;
+#endif
 }
 
 GraphicsEngine::~GraphicsEngine()
@@ -15,21 +18,65 @@ GraphicsEngine::~GraphicsEngine()
 bool GraphicsEngine::Initialize()
 {
 	m_Window = std::make_unique<Window>(WINDOW_SIZE);
-	if (!m_Window->Initialize(L"Window123", m_hwnd))
+
+#ifndef SL_ENGINE_EDITOR
+	if (!m_Window->Initialize(WINDOW_NAME, m_hwnd))
 	{
 		MessageBox(m_hwnd, L"Window", L"Error", MB_OK);
 		return false;
 	}
+#else
+	if (!m_Window->Initialize(WINDOW_NAME, m_hwnd, m_hwndRender))
+	{
+		MessageBox(m_hwnd, L"Window", L"Error", MB_OK);
+		return false;
+	}
+#endif
 
 	m_Render = std::make_unique<RenderClass>();
-	if (!m_Render->Initialize(m_Window->GetSize(), VSYNC_ENABLED, m_hwnd, FULLSCREEN, SCREEN_DEPTH, SCREEN_NEAR))
+	if (!m_Render->Initialize(
+#ifndef SL_ENGINE_EDITOR
+		m_Window->GetSize(),
+#else
+		m_Window->GetRenderSize(),
+#endif
+		VSYNC_ENABLED, m_hwnd, FULLSCREEN, SCREEN_DEPTH, SCREEN_NEAR))
 	{
 		MessageBox(m_hwnd, L"Render", L"Error", MB_OK);
 		return false;
 	}
 
+#ifdef SL_ENGINE_EDITOR
+	m_EditorRender = std::make_unique<EditorRender>();
+	if (!m_EditorRender->Initialize(m_hwnd))
+	{
+		MessageBox(m_hwnd, L"Editor render", L"Error", MB_OK);
+		return false;
+	}
+#endif
+
 	return true;
 }
+
+#ifdef SL_ENGINE_EDITOR
+
+bool GraphicsEngine::UpdateEditor(INT width, INT heigth)
+{
+	m_EditorRender->UpdateDevice(width, heigth);
+	return true;
+}
+
+bool GraphicsEngine::EditorFrame()
+{
+	m_EditorRender->EndScene();
+	return true;
+}
+
+IDirect3DDevice9* GraphicsEngine::GetEditorDevice()
+{
+	return m_EditorRender->GetDevice();
+}
+#endif
 
 void GraphicsEngine::Shutdown()
 {
@@ -97,7 +144,6 @@ bool GraphicsEngine::Render(World*& world, Shader**& shaders, INT meshCount, INT
 				part,
 				light, XMFLOAT3{ camera->GetPosition().X, camera->GetPosition().Y, camera->GetPosition().Z }))
 				return false;
-
 		}
 	}
 

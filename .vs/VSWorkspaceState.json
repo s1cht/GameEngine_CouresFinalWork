@@ -1,11 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Project",
-    "\\Project\\Engine",
-    "\\Project\\Engine\\Engine",
-    "\\Project\\Engine\\Engine\\Core"
+    ""
   ],
-  "SelectedNode": "\\Project\\Project.sln",
+  "SelectedNode": "\\Project.sln",
   "PreviewInSolutionExplorer": false
 }

@@ -18,6 +18,10 @@ void World::SetParent(Instance* parent)
 inline void World::SetName(wstring name)
 {}
 
+inline void World::SetDevices(ID3D11Device*, ID3D11DeviceContext*)
+{
+}
+
 void World::AddChild(Instance* child)
 {
     m_Children.push_back(child);

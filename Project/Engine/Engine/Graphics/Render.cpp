@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Render.h"
+#include "Engine/Core/Events/CoreEvents.h"
 
 RenderClass::RenderClass()
 {
@@ -40,6 +41,21 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 	size_t stringLength;
 	INT error;
 	FLOAT fieldOfView, screenAspect;
+
+#ifdef SL_ENGINE_EDITOR
+	HWND renderHWND;
+	WCHAR hwndClassName[64];
+
+	renderHWND = GetWindow(hwnd, GW_CHILD);
+
+	if (!renderHWND)
+		return false;
+
+	GetClassName(hwnd, hwndClassName, 64);
+
+	if (!wcscmp(hwndClassName, L"RenderWindow"))
+		return false;
+#endif
 
 	m_vsync = vsyncEnabled;
 
@@ -101,13 +117,17 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 	swapChainDesc.BufferDesc.Height =					(UINT)screenSize.Y;
 	swapChainDesc.BufferDesc.Format =					DXGI_FORMAT_R8G8B8A8_UNORM;
 	swapChainDesc.BufferUsage =							DXGI_USAGE_RENDER_TARGET_OUTPUT;
+#ifdef SL_ENGINE_EDITOR
+	swapChainDesc.OutputWindow =						renderHWND;
+#else
 	swapChainDesc.OutputWindow =						hwnd;
+#endif
 	swapChainDesc.SampleDesc.Count =					1;
 	swapChainDesc.SampleDesc.Quality =					0;
 	swapChainDesc.BufferDesc.ScanlineOrdering =			DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	swapChainDesc.BufferDesc.Scaling =					DXGI_MODE_SCALING_UNSPECIFIED;
 	swapChainDesc.SwapEffect =							DXGI_SWAP_EFFECT_DISCARD;
-	swapChainDesc.Flags =								0;
+	swapChainDesc.Flags =								DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 		
 	if (vsyncEnabled)
 	{
@@ -142,6 +162,7 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 		NULL, 
 		&m_deviceContext
 	);
+
 	if (FAILED(result))
 		return false;
 
@@ -245,6 +266,61 @@ bool RenderClass::Initialize(Vector2 screenSize, BOOL vsyncEnabled, HWND hwnd, B
 	m_worldMatrix =			XMMatrixIdentity();
 	m_orthoMatrix =			XMMatrixOrthographicLH(screenSize.X, screenSize.Y, screenNear, screenDepth);
 
+	std::function<void(Vector2)> resizeFunction =
+		[&](Vector2 size)
+		{
+			HRESULT res;
+			ID3D11Texture2D* newBackBufferPtr;
+			D3D11_TEXTURE2D_DESC newDepthBufferDesc;
+
+			m_deviceContext->OMSetRenderTargets(0, 0, 0);
+			m_renderTargetView->Release();
+			m_depthStencilBuffer->Release();
+
+			res = m_swapChain->ResizeBuffers(0, (UINT)size.X, (UINT)size.Y, DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH);
+			if (FAILED(result))
+				EngineCoreEvents->FireEvent("WindowDestroyed");
+
+			res = m_swapChain->GetBuffer(NULL, __uuidof(ID3D11Texture2D), (LPVOID*)&newBackBufferPtr);
+			if (FAILED(result))
+				EngineCoreEvents->FireEvent("WindowDestroyed");
+
+			res = m_device->CreateRenderTargetView(newBackBufferPtr, NULL, &m_renderTargetView);
+			if (FAILED(result))
+				EngineCoreEvents->FireEvent("WindowDestroyed");
+
+			newBackBufferPtr->Release();
+			newBackBufferPtr = nullptr;
+
+			newDepthBufferDesc.Width = (UINT)size.X;
+			newDepthBufferDesc.Height = (UINT)size.Y;
+			newDepthBufferDesc.MipLevels = 1;
+			newDepthBufferDesc.ArraySize = 1;
+			newDepthBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+			newDepthBufferDesc.SampleDesc.Count = 1;
+			newDepthBufferDesc.SampleDesc.Quality = 0;
+			newDepthBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+			newDepthBufferDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+			newDepthBufferDesc.CPUAccessFlags = 0;
+			newDepthBufferDesc.MiscFlags = 0;
+
+			result = m_device->CreateTexture2D(&newDepthBufferDesc, NULL, &m_depthStencilBuffer);
+			if (FAILED(result))
+				EngineCoreEvents->FireEvent("WindowDestroyed");
+
+			m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
+
+			m_viewport.Width = size.X;
+			m_viewport.Height = size.Y;
+
+			m_deviceContext->RSSetViewports(1, &m_viewport);
+		};
+
+#ifndef SL_ENGINE_EDITOR
+	EngineCoreEvents->AddListener<Vector2>(resizeFunction, "WindowUpdated");
+#else
+	EngineCoreEvents->AddListener<Vector2>(resizeFunction, "WindowRenderUpdated");
+#endif
 	return true;
 }
 

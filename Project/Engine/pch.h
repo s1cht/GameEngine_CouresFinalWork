@@ -1,5 +1,7 @@
 #pragma once
 
+#define SL_ENGINE_EDITOR
+
 // Windows directories
 #include <Windows.h>
 
@@ -15,16 +17,20 @@
 #include <ctime>
 #include <utility>
 #include <algorithm>
+#include <thread>
 
 // Lib
+// DirectXTK
 #include "DirectXTK/Inc/SpriteFont.h"
 #include "DirectXTK/Inc/SpriteBatch.h"
+// LUA
+#include "luacpp/LuaCpp.hpp"
 
 // DirectX directories
 #include <d3d11.h>
+#include <d3d9.h>
 #include <D3Dcompiler.h>
 #include <DirectXMath.h>
-#include <d2d1.h>
 
 typedef unsigned short USHORT;
 typedef unsigned char UCHAR;
