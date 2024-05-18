@@ -40,7 +40,9 @@ bool GraphicsEngine::Initialize()
 #else
 		m_Window->GetRenderSize(),
 #endif
-		VSYNC_ENABLED, m_hwnd, FULLSCREEN, SCREEN_DEPTH, SCREEN_NEAR))
+		VSYNC_ENABLED, 
+		m_hwnd,
+		FULLSCREEN, SCREEN_DEPTH, SCREEN_NEAR))
 	{
 		MessageBox(m_hwnd, L"Render", L"Error", MB_OK);
 		return false;

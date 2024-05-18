@@ -9,6 +9,7 @@ GameEngine::GameEngine()
 	m_ResourceManager = std::make_unique<ResourceManager>();
 	m_World = std::make_unique<World>();
 	m_InstanceService = std::make_unique<InstanceService>();
+	m_windowSize = Vector2::Zero();
 }
 
 bool GameEngine::Initialize()
@@ -95,105 +96,36 @@ bool GameEngine::Initialize()
 void GameEngine::Run()
 {
 	MSG msg;
-	UINT shaderCount;
-	float rotation = 0.f;
-	float rez = 0.005f;
-	float angle = 0.f;
-	bool show_demo_window = true;
-	bool show_another_window = false;
-	Vector3 f = Vector3::Zero();
-	Vector3 vector = Vector3::Zero();
-	Vector2 windowSize = Vector2::Zero();
-	Shader** shaders;
-	World* world = dynamic_cast<World*>(m_World.get());
-	Part* part = dynamic_cast<Part*>(m_World->operator[](L"Part"));
-	Light* sunLight = dynamic_cast<Light*>(m_World->operator[](L"SunLight"));
-	ImGuiIO& io = ImGui::GetIO();
+	std::thread editorThread;
+	std::thread gameThread;
 
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	EngineCoreEvents->AddListener([&](void) { isRunning = false; }, "WindowDestroyed");
+	EngineCoreEvents->AddListener<Vector2>([&](Vector2 newSize) {m_windowSize = newSize; }, "WindowUpdated");
+
+#ifdef SL_ENGINE_EDITOR
+	editorThread = std::thread(&GameEngine::RenderEditor, this);
+#endif
+	gameThread = std::thread(&GameEngine::Render, this);
 
 	ZeroMemory(&msg, sizeof(msg));
 
-	shaders = m_ResourceManager->GetShaders(shaderCount);
-
-	EngineCoreEvents->AddListener([&](void) { isRunning = false; }, "WindowDestroyed");
-	EngineCoreEvents->AddListener<Vector2>([&](Vector2 newSize) {windowSize = newSize; }, "WindowRenderUpdated");
-
-	auto GameFunction = [&]()
+	while (isRunning)
+	{
+		if (PeekMessage(&msg, m_Graphics->GetHWND(), 0, 0, PM_REMOVE))
 		{
-			while (isRunning)
-			{
-				if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-				{
-					TranslateMessage(&msg);
-					DispatchMessage(&msg);
-				}
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
 
-				part->SetRotation(0, 0, 0);
-				part->SetPosition(f);
-				sunLight->SetDirection(vector);
-				rotation += 0.0005f;
-				angle += rez;
-
-				if (angle > 90.f)
-					rez = -0.0005f;
-				else if (angle < -90.f)
-					rez = 0.0005f;
-
-				vector.X = cos(angle);
-				vector.Y = 0.f;
-				vector.Z = sin(angle);
-
-				m_Graphics->Frame(world, shaders, world->GetChildren().size(), shaderCount);
-			}
-		};
 #ifdef SL_ENGINE_EDITOR
-	auto EditorFunction = [&]()
-		{
-			while (isRunning)
-			{
-				m_Graphics->UpdateEditor((INT)windowSize.X, (INT)windowSize.Y);
-
-				ImGui_ImplDX9_NewFrame();
-				ImGui_ImplWin32_NewFrame();
-				ImGui::NewFrame();
-
-				if (show_demo_window)
-					ImGui::ShowDemoWindow(&show_demo_window);
-				{
-					ImGui::Begin("Hello, world!");
-
-					ImGui::Text("This is some useful text.");
-					ImGui::Checkbox("Demo Window", &show_demo_window);
-
-					ImGui::SliderFloat("PartX", &f.X, -10.0f, 10.0f);
-					ImGui::SliderFloat("PartY", &f.Y, -10.0f, 10.0f);
-					ImGui::SliderFloat("PartZ", &f.Z, -10.0f, 10.0f);
-
-					ImGui::Text("Application average (%.1f FPS)", io.Framerate);
-					ImGui::End();
-				}
-
-				if (show_another_window)
-				{
-					ImGui::Begin("Another Window", &show_another_window);
-					ImGui::Text("Hello from another window!");
-					if (ImGui::Button("Close Me"))
-						show_another_window = false;
-					ImGui::End();
-				}
-				m_Graphics->EditorFrame();
-			}
-		};
-	std::thread EditorThread(EditorFunction);
+	if (editorThread.joinable()) {
+		editorThread.join();
+	}
 #endif
-
-	std::thread GameThread(GameFunction);
-
-	GameThread.join();
-#ifdef SL_ENGINE_EDITOR
-	EditorThread.join();
-#endif
+	if (gameThread.joinable()) {
+		gameThread.join();
+	}
 
 	return;
 }
@@ -226,6 +158,96 @@ Mesh* GameEngine::GetMesh(std::string resource)
 Shader* GameEngine::GetShader(std::string resource)
 {
 	return m_ResourceManager->GetShader(resource);
+}
+
+DWORD GameEngine::RenderEditor()
+{
+	Vector3 f = Vector3::Zero();
+	bool show_demo_window = true;
+	bool show_another_window = false;
+	ImGuiIO& io = ImGui::GetIO();
+	int c = 0;
+
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+	while (isRunning)
+	{
+		m_Graphics->UpdateEditor((INT)m_windowSize.X, (INT)m_windowSize.Y);
+
+		ImGui_ImplDX9_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+
+		if (show_demo_window)
+			ImGui::ShowDemoWindow(&show_demo_window);
+		{
+			ImGui::Begin("Hello, world!");
+
+			ImGui::Text("This is some useful text.");
+			ImGui::Checkbox("Demo Window", &show_demo_window);
+
+			ImGui::SliderFloat("PartX", &f.X, -10.0f, 10.0f);
+			ImGui::SliderFloat("PartY", &f.Y, -10.0f, 10.0f);
+			ImGui::SliderFloat("PartZ", &f.Z, -10.0f, 10.0f);
+
+			ImGui::Text("Application average (%.1f FPS)", io.Framerate);
+			ImGui::End();
+		}
+
+		if (show_another_window)
+		{
+			ImGui::Begin("Another Window", &show_another_window);
+			ImGui::Text("Hello from another window!");
+			if (ImGui::Button("Close Me"))
+				show_another_window = false;
+			ImGui::End();
+		}
+		m_Graphics->EditorFrame();
+		
+		std::this_thread::sleep_for(std::chrono::milliseconds(16));
+	}
+
+	return 1;
+}
+
+DWORD GameEngine::Render()
+{
+	UINT shaderCount;
+	float rotation = 0.f;
+	float rez = 0.005f;
+	float angle = 0.f;
+	Vector3 vector = Vector3::Zero();
+	Shader** shaders;
+	World* world = dynamic_cast<World*>(m_World.get());
+	Light* sunLight = dynamic_cast<Light*>(m_World->operator[](L"SunLight"));
+	int c = 0;
+
+	shaders = m_ResourceManager->GetShaders(shaderCount);
+
+	while (isRunning)
+	{
+		sunLight->SetDirection(vector);
+		rotation += 0.0005f;
+		angle += rez;
+
+		if (angle > 90.f)
+			rez = -0.0005f;
+		else if (angle < -90.f)
+			rez = 0.0005f;
+
+		vector.X = cos(angle);
+		vector.Y = 0.f;
+		vector.Z = sin(angle);
+
+		m_Graphics->Frame(world, shaders, world->GetChildren().size(), shaderCount);
+	}
+	return 1;
+}
+
+DWORD GameEngine::HandleMessages()
+{
+
+	return 1;
 }
 
 GameEngine::~GameEngine()

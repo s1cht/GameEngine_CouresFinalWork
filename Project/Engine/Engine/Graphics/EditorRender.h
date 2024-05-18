@@ -17,6 +17,7 @@ public:
 	void Shutdown();
 
 	void UpdateDevice(INT, INT);
+	void ResetDevice();
 
 	void EndScene();
 

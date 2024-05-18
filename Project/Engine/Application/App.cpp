@@ -41,13 +41,13 @@ bool App::Initialize()
 	camera->SetPosition(Vector3{ -3.f, 0.f, -3.f });
 	camera->SetRotation(Vector3{ 0.f, 15.f, 0.f});
 
-	for (size_t i = 0; i < 1000; i++)
+	for (size_t i = 0; i < 10; i++)
 	{
 		Part* part = instanceService->New<Part>(gameWorld);
 		part->SetMesh(m_Engine->GetMesh("Sphere"));
 		part->SetSize(Vector3{ 1.f, 1.f, 1.f });
 		part->SetRotation(Vector3{ 0.f, 45.f, 0.f });
-		part->SetPosition(Vector3{ (float)i - 100.f , 0.f, 0.f });
+		part->SetPosition(Vector3{ (float)i - 5.f , 0.f, 0.f });
 	}
 
 	gameWorld = nullptr;

@@ -11,17 +11,23 @@ LRESULT Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	switch (msg)
 	{
+	case WM_SIZE:
+	{
+		if (wParam == SIZE_MINIMIZED)
+			return 0;
+		Vector2 WindowSize = { (FLOAT)LOWORD(lParam), (FLOAT)HIWORD(lParam) };
+		EngineCoreEvents->FireEvent("WindowUpdated", &WindowSize);
+		return 0;
+		break;
+	}
 	case WM_PAINT:
 	{
-
 		PAINTSTRUCT ps;
 		RECT rc;
 		HDC hdc = BeginPaint(hwnd, &ps);
 		GetClientRect(hwnd, &rc);
 		FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
 		EndPaint(hwnd, &ps);
-		Vector2 WindowSize = { (FLOAT)rc.right, (FLOAT)rc.bottom };
-		EngineCoreEvents->FireEvent("WindowUpdated", &WindowSize);
 		return 0;
 		break;
 	}

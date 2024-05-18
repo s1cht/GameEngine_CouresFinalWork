@@ -4,6 +4,8 @@
 
 #ifdef SL_ENGINE_EDITOR
 
+static D3DPRESENT_PARAMETERS deviceParams = {};
+
 EditorRender::EditorRender()
 {
 	m_device = nullptr;
@@ -17,7 +19,6 @@ bool EditorRender::Initialize(HWND hwnd)
 {
 	HRESULT result;
 	IDirect3D9* factory;
-	D3DPRESENT_PARAMETERS deviceParams;
 
 	factory = Direct3DCreate9(D3D_SDK_VERSION);
 	if (!factory)
@@ -30,7 +31,7 @@ bool EditorRender::Initialize(HWND hwnd)
 	deviceParams.BackBufferFormat = D3DFMT_UNKNOWN;
 	deviceParams.EnableAutoDepthStencil = TRUE;
 	deviceParams.AutoDepthStencilFormat = D3DFMT_D16;
-	deviceParams.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
+	deviceParams.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 
 	result = factory->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd,
 		D3DCREATE_HARDWARE_VERTEXPROCESSING,
@@ -55,22 +56,27 @@ void EditorRender::Shutdown()
 
 void EditorRender::UpdateDevice(INT w, INT h)
 {
-	D3DPRESENT_PARAMETERS deviceParams;
-	HRESULT result;
 	if (w != 0 && h != 0)
 	{
 		deviceParams.BackBufferWidth = w;
 		deviceParams.BackBufferHeight = h;
-		ImGui_ImplDX9_InvalidateDeviceObjects();
-		result = m_device->Reset(&deviceParams);
-		if (result == D3DERR_INVALIDCALL)
-			IM_ASSERT(0);
-		ImGui_ImplDX9_CreateDeviceObjects();
+		ResetDevice();
 	}
+}
+
+void EditorRender::ResetDevice()
+{
+	HRESULT result;
+	ImGui_ImplDX9_InvalidateDeviceObjects();
+	result = m_device->Reset(&deviceParams);
+	//if (result == D3DERR_INVALIDCALL)
+	//	IM_ASSERT(0);
+	ImGui_ImplDX9_CreateDeviceObjects();
 }
 
 void EditorRender::EndScene()
 {
+	HRESULT result;
 	D3DCOLOR color = D3DCOLOR_RGBA(5, 5, 5, 255);
 	ImGui::EndFrame();
 	m_device->SetRenderState(D3DRS_ZENABLE, FALSE);
@@ -84,7 +90,10 @@ void EditorRender::EndScene()
 		ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 		m_device->EndScene();
 	}
-	m_device->Present(nullptr, nullptr, nullptr, nullptr);
+	result = m_device->Present(nullptr, nullptr, nullptr, nullptr);
+
+	if (result == D3DERR_DEVICELOST && m_device->TestCooperativeLevel() == D3DERR_DEVICENOTRESET)
+		ResetDevice();
 }
 
 IDirect3DDevice9* EditorRender::GetDevice()
