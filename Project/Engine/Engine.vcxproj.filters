@@ -55,9 +55,6 @@
     <Filter Include="Engine\Resources\Resources\Texture">
       <UniqueIdentifier>{d0a4c29e-3f05-4538-8d2a-c6fe11c50c89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Graphics\Camera">
-      <UniqueIdentifier>{8d6c89a6-6e1a-465f-9ad4-378029ca983d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Resources\Resources\Mesh">
       <UniqueIdentifier>{28c3e0c8-7de2-4cd1-89d7-9aa6b347fc59}</UniqueIdentifier>
     </Filter>
@@ -94,6 +91,27 @@
     <Filter Include="ImGUI">
       <UniqueIdentifier>{4e49d25e-889c-471b-ad92-fe8f253fceca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Graphics\RenderToTexture">
+      <UniqueIdentifier>{590abfe0-cff4-4e92-ace9-2dd7e415a8c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Editor">
+      <UniqueIdentifier>{3637d954-8db7-4f78-9875-6bba7939dd70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Instance\Camera">
+      <UniqueIdentifier>{8d6c89a6-6e1a-465f-9ad4-378029ca983d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Editor\Designer">
+      <UniqueIdentifier>{43ac5e74-56c3-490d-8891-bb0c44cb7790}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Editor\Flags">
+      <UniqueIdentifier>{46cf64c1-5354-4bb2-a04f-60b1fb7145cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources\FileManager">
+      <UniqueIdentifier>{9f666016-720b-4073-89a4-f7e2464eaf89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources\FileManager\FormatSyntax">
+      <UniqueIdentifier>{0c0c4d5a-feca-4b3f-978b-c6d0f7ad97f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Graphics\Render.cpp">
@@ -121,8 +139,8 @@
     <ClCompile Include="Engine\Core\Events\CoreEvents.cpp">
       <Filter>Engine\Core\Events\CoreEvents</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Resources\Camera.cpp">
-      <Filter>Engine\Graphics\Camera</Filter>
+    <ClCompile Include="Engine\Core\Instance\Instances\Camera.cpp">
+      <Filter>Engine\Core\Instance\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Resources\Texture.cpp">
       <Filter>Engine\Resources\Resources\Texture</Filter>
@@ -187,11 +205,23 @@
     <ClCompile Include="lib\ImGUI\imgui_widgets.cpp">
       <Filter>ImGUI</Filter>
     </ClCompile>
-    <ClCompile Include="lib\ImGUI\imgui_impl_dx9.cpp">
-      <Filter>ImGUI</Filter>
+    <ClCompile Include="Engine\Graphics\RenderToTexture.cpp">
+      <Filter>Engine\Graphics\RenderToTexture</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Graphics\EditorRender.cpp">
-      <Filter>Engine\Graphics\Render</Filter>
+    <ClCompile Include="Engine\Editor\EditorDesigner.cpp">
+      <Filter>Engine\Editor\Designer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\EditorFlags.cpp">
+      <Filter>Engine\Editor\Flags</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\FileManager.cpp">
+      <Filter>Engine\Resources\FileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\SLPRSyntax.cpp">
+      <Filter>Engine\Resources\FileManager\FormatSyntax</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Instance\IUnknown.cpp">
+      <Filter>Engine\Core\Instance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -229,8 +259,8 @@
     <ClInclude Include="Engine\Core\Math\EngineMath.h">
       <Filter>Engine\Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Resources\Camera.h">
-      <Filter>Engine\Graphics\Camera</Filter>
+    <ClInclude Include="Engine\Core\Instance\Instances\Camera.h">
+      <Filter>Engine\Core\Instance\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Resources\Texture.h">
       <Filter>Engine\Resources\Resources\Texture</Filter>
@@ -298,24 +328,31 @@
     <ClInclude Include="lib\ImGUI\imstb_truetype.h">
       <Filter>ImGUI</Filter>
     </ClInclude>
-    <ClInclude Include="lib\ImGUI\imgui_impl_dx9.h">
-      <Filter>ImGUI</Filter>
+    <ClInclude Include="Engine\Graphics\RenderToTexture.h">
+      <Filter>Engine\Graphics\RenderToTexture</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Graphics\EditorRender.h">
-      <Filter>Engine\Graphics\Render</Filter>
+    <ClInclude Include="Engine\Editor\EditorDesigner.h">
+      <Filter>Engine\Editor\Designer</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Assets\Shaders\PixelShader.hlsl">
-      <Filter>Engine\Resources\Resources\Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Assets\Shaders\VertexShader.hlsl">
-      <Filter>Engine\Resources\Resources\Shader</Filter>
-    </FxCompile>
+    <ClInclude Include="Engine\Editor\EditorFlags.h">
+      <Filter>Engine\Editor\Flags</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\FileManager.h">
+      <Filter>Engine\Resources\FileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\SLPRSyntax.h">
+      <Filter>Engine\Resources\FileManager\FormatSyntax</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Instance\IUnknown.h">
+      <Filter>Engine\Core\Instance</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Engine\Resources\Engine.rc">
       <Filter>Engine\Resources</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -12,7 +12,6 @@ class RenderClass
 {
 public:
 	RenderClass();
-	RenderClass(const RenderClass&);
 	~RenderClass();
 public:
 	bool Initialize(Vector2, BOOL, HWND, BOOL, FLOAT, FLOAT);
@@ -23,6 +22,9 @@ public:
 
 	ID3D11Device* GetDevice();
 	ID3D11DeviceContext* GetDeviceContext();
+	ID3D11DepthStencilView* GetDepthStencilView();
+
+	ID3D11ShaderResourceView* GetResourceView();
 
 	void GetProjectionMatrix(XMMATRIX&);
 	void GetWorldMatrix(XMMATRIX&);
@@ -30,13 +32,14 @@ public:
 
 	void GetVideoCardInfo(char*, int&);
 
-	void SetBackBufferRenderTarget();
+	bool ResizeDirectX(Vector2);
 	void ResetViewpoint();
 
 private:
 	BOOL m_vsync;
 	INT m_videoCardMemory;
 	char m_videoCardDescription[128];
+	Vector2 m_frameSize;
 
 	IDXGISwapChain* m_swapChain;
 	ID3D11Device* m_device;
@@ -47,14 +50,15 @@ private:
 	ID3D11DepthStencilView* m_depthStencilView;
 	ID3D11RasterizerState* m_rasterizerState;
 
+	ID3D11Texture2D* m_renderTargetImage;
+	ID3D11ShaderResourceView* m_resourceView;
+	ID3D11RenderTargetView* m_renderTextureTargetView;
+
 	XMMATRIX m_projectionMatrix;
 	XMMATRIX m_worldMatrix;
 	XMMATRIX m_orthoMatrix;
 
 	D3D11_VIEWPORT m_viewport;
-
-private:
-	friend class UIRender;
 
 };
 

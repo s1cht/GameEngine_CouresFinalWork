@@ -18,19 +18,22 @@
 #include <utility>
 #include <algorithm>
 #include <thread>
+#include <codecvt>
+#include <sstream>
 
 // Lib
 // DirectXTK
-#include "DirectXTK/Inc/SpriteFont.h"
-#include "DirectXTK/Inc/SpriteBatch.h"
 // LUA
-#include "luacpp/LuaCpp.hpp"
+//#include "luacpp/LuaCpp.hpp"
 
 // DirectX directories
 #include <d3d11.h>
 #include <d3d9.h>
 #include <D3Dcompiler.h>
 #include <DirectXMath.h>
+
+#define ENG_PTR std::shared_ptr
+#define TO_ENG_PTR std::make_shared
 
 typedef unsigned short USHORT;
 typedef unsigned char UCHAR;

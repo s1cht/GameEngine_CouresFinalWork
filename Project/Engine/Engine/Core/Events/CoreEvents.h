@@ -1,13 +1,10 @@
 #pragma once
+#include "pch.h"
 #include "Event.h"
-#include <memory>
 
 class CoreEvents
 {
 private:
-    template<typename T>
-    using EventPtr = std::shared_ptr<Event<T>>;
-
     std::map<std::string, std::map<std::string, std::shared_ptr<EventBase>>> Events;
 
 public:
@@ -16,7 +13,7 @@ public:
 
 public:
     template<typename T>
-    size_t AddListener(const std::function<void(const T&)>& function, const std::string& eventName)
+    size_t AddListener(const std::function<void(const ENG_PTR<T>&)>& function, const std::string& eventName)
     {
         auto& innerMap = Events[typeid(T).name()];
 
@@ -39,12 +36,13 @@ public:
     size_t AddListener(const std::function<void()>& function, const std::string& eventName);
 
     void FireEvent(std::string);
-    void FireEvent(std::string eventName, const void* arg);
+    void FireEvent(std::string eventName, ENG_PTR<void> arg);
 private:
     void DeleteListener(std::string, size_t);
 public:
     friend class Window;
     friend class GameEngine;
+
 };
 
 extern std::unique_ptr<CoreEvents> EngineCoreEvents;

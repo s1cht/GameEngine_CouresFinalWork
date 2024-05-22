@@ -16,7 +16,7 @@ void CoreEvents::FireEvent(std::string eventName) {
     }
 }
 
-void CoreEvents::FireEvent(std::string eventName, const void* arg) {
+void CoreEvents::FireEvent(std::string eventName, ENG_PTR<void> arg) {
     for (auto& typeMap : Events) {
         auto& innerMap = typeMap.second;
         auto it = innerMap.find(eventName);

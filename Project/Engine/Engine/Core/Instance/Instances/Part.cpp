@@ -11,6 +11,7 @@ Part::Part()
 	m_Rotation =	Vector3::Zero();
 	m_Color =		Color4{ 0.5f, 0.5f, 0.5f, 1.f };
 	m_Name =		L"Part";
+	m_ID =			INT();
 }
 
 Part::~Part()
@@ -33,13 +34,13 @@ void Part::Initialize(std::wstring name)
 	m_Name =		name;
 }
 
-void Part::Initialize(std::wstring name, Instance* parent)
+void Part::Initialize(std::wstring name, INSTANCE parent)
 {
 	m_Name =		name;
 	m_Parent =		parent;
 }
 
-void Part::Initialize(std::wstring name, Instance* parent, Mesh* mesh)
+void Part::Initialize(std::wstring name, INSTANCE parent, Mesh* mesh)
 {
 	m_Name =		name;
 	m_Parent =		parent;
@@ -106,7 +107,7 @@ Color4 Part::GetColor()
 	return m_Color;
 }
 
-inline void Part::SetParent(Instance* parent)
+inline void Part::SetParent(INSTANCE parent)
 {
 	m_Parent =		parent;
 }
@@ -120,16 +121,32 @@ inline void Part::SetDevices(ID3D11Device*, ID3D11DeviceContext*)
 {
 }
 
-void Part::AddChild(Instance* child)
+void Part::SetID(INT id)
+{
+	if (!m_idInited)
+	{
+		m_ID = id;
+		m_idInited = true;
+	}
+}
+
+void Part::AddChild(INSTANCE child)
 {
 	m_Children.push_back(child);
 }
 
-void Part::DeleteChild(std::wstring childName)
+void Part::DeleteChild(INT id)
 {
-	for (auto it = m_Children.begin(); it != m_Children.end(); it++)
-		if ((*it)->GetName() == childName)
+	if (m_Children.empty())
+		return;
+	for (auto it = m_Children.begin(); it != m_Children.end(); )
+		if ((*it)->GetID() == id)
+		{
 			m_Children.erase(it);
+			break;
+		}
+		else
+			it++;
 }
 
 void Part::SetMesh(Mesh* mesh)
@@ -142,14 +159,24 @@ void Part::SetTexture(Texture* texture)
 	m_Texture =		texture;
 }
 
-Instance* Part::GetParent()
+INSTANCE Part::GetParent()
 {
 	return m_Parent;
 }
 
-inline std::vector<Instance*> Part::GetChildren()
+ClassName Part::GetInstanceClassName()
+{
+	return m_ClassName;
+}
+
+inline std::vector<INSTANCE> Part::GetChildren()
 {
 	return m_Children;
+}
+
+INT Part::GetID()
+{
+	return m_ID;
 }
 
 inline wstring Part::GetName()
@@ -167,7 +194,7 @@ Texture* Part::GetTexture()
 	return m_Texture;
 }
 
-Instance* Part::operator[](const wstring childName)
+INSTANCE Part::operator[](const wstring childName)
 {
 	for (auto& child : m_Children)
 		if (child->GetName() == childName)
@@ -175,9 +202,38 @@ Instance* Part::operator[](const wstring childName)
 	return nullptr;
 }
 
-Instance* Part::operator[](size_t child)
+INSTANCE Part::operator[](size_t child)
 {
 	if (m_Children[child])
 		return m_Children[child];
+	return nullptr;
+}
+
+INSTANCE Part::GetChildByID(INT id)
+{
+	if (m_ID == id)
+		return shared_from_this();
+
+	if (m_Children.empty())
+		return nullptr;
+
+	if (id > (INT)m_Children.capacity())
+		return (m_Children.end() - 1)->get()->GetChildByID(id);
+
+	for (size_t i = 0; i < m_Children.capacity(); i++)
+	{
+		if (m_Children[i]->GetID() < id)
+		{
+			if (m_Children[i]->GetID() == id)
+				return m_Children[i];
+		}
+		else if (m_Children[i]->GetID() == id)
+			return m_Children[i];
+		else
+		{
+			return m_Children[i - 1]->GetChildByID(id);
+		}
+	}
+
 	return nullptr;
 }

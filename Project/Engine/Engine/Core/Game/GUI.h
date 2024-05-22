@@ -8,27 +8,34 @@ class GUI :
     GUI();
     ~GUI() override;
 
-    void SetParent(Instance*) override;
+    void SetParent(INSTANCE) override;
     void SetName(wstring) override;
+    void SetID(INT) override;
 
-    void AddChild(Instance*) override;
-    void DeleteChild(std::wstring) override;
+    void AddChild(INSTANCE) override;
+    void DeleteChild(INT) override;
 
-    Instance* GetParent() override;
+    INSTANCE GetParent() override;
     wstring GetName() override;
-    std::vector<Instance*> GetChildren() override;
+    ClassName GetInstanceClassName() override;
+    std::vector<INSTANCE> GetChildren() override;
+    INT GetID() override;
+    INSTANCE GetChildByID(INT) override;
 
-    Instance* operator[] (const wstring) override;
-    Instance* operator[] (size_t) override;
+    INSTANCE operator[] (const wstring) override;
+    INSTANCE operator[] (size_t) override;
 
     void Destroy() override;
 
 private:
-    using ClassName = GUI;
+    ClassName m_ClassName = WORLD;
+
+    INT m_ID;
 
     wstring m_Name;
-    Instance* m_Parent;
+    INSTANCE m_Parent;
+    bool m_idInited = false;
 
-    std::vector<Instance*> m_Children;
+    std::vector<INSTANCE> m_Children;
 };
 

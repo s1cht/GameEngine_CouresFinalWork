@@ -10,6 +10,7 @@ Light::Light()
 	m_specularPower = 32.f;
 	m_Name = L"SunLight";
 	m_Parent = nullptr;
+	m_ID = INT();
 }
 
 Light::~Light()
@@ -70,7 +71,7 @@ FLOAT Light::GetSpecularPower()
 	return m_specularPower;
 }
 
-inline void Light::SetParent(Instance* parent)
+inline void Light::SetParent(INSTANCE parent)
 {
 	m_Parent = parent;
 }
@@ -84,19 +85,35 @@ inline void Light::SetDevices(ID3D11Device*, ID3D11DeviceContext*)
 {
 }
 
-void Light::AddChild(Instance* child)
+void Light::SetID(INT id)
+{
+	if (!m_idInited)
+	{
+		m_ID = id;
+		m_idInited = true;
+	}
+}
+
+void Light::AddChild(INSTANCE child)
 {
 	m_Children.push_back(child);
 }
 
-void Light::DeleteChild(std::wstring childName)
+void Light::DeleteChild(INT id)
 {
-	for (auto it = m_Children.begin(); it != m_Children.end(); it++)
-		if ((*it)->GetName() == childName)
+	if (m_Children.empty())
+		return;
+	for (auto it = m_Children.begin(); it != m_Children.end(); )
+		if ((*it)->GetID() == id)
+		{
 			m_Children.erase(it);
+			break;
+		}
+		else
+			it++;
 }
 
-Instance* Light::GetParent()
+INSTANCE Light::GetParent()
 {
 	return m_Parent;
 }
@@ -106,12 +123,22 @@ wstring Light::GetName()
 	return m_Name;
 }
 
-std::vector<Instance*> Light::GetChildren()
+std::vector<INSTANCE> Light::GetChildren()
 {
 	return m_Children;
 }
 
-Instance* Light::operator[](const wstring childName)
+ClassName Light::GetInstanceClassName()
+{
+	return m_ClassName;
+}
+
+INT Light::GetID()
+{
+	return m_ID;
+}
+
+INSTANCE Light::operator[](const wstring childName)
 {
 	for (auto& child : m_Children)
 		if (child->GetName() == childName)
@@ -119,9 +146,38 @@ Instance* Light::operator[](const wstring childName)
 	return nullptr;
 }
 
-Instance* Light::operator[](size_t child)
+INSTANCE Light::operator[](size_t child)
 {
 	if (m_Children[child])
 		return m_Children[child];
+	return nullptr;
+}
+
+INSTANCE Light::GetChildByID(INT id)
+{
+	if (m_ID == id)
+		return shared_from_this();
+
+	if (m_Children.empty())
+		return nullptr;
+
+	if (id > (INT)m_Children.capacity())
+		return (m_Children.end() - 1)->get()->GetChildByID(id);
+
+	for (size_t i = 0; i < m_Children.capacity(); i++)
+	{
+		if (m_Children[i]->GetID() < id)
+		{
+			if (m_Children[i]->GetID() == id)
+				return m_Children[i];
+		}
+		else if (m_Children[i]->GetID() == id)
+			return m_Children[i];
+		else
+		{
+			return m_Children[i - 1]->GetChildByID(id);
+		}
+	}
+
 	return nullptr;
 }

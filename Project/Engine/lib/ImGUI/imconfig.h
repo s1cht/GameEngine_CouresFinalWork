@@ -13,6 +13,7 @@
 //-----------------------------------------------------------------------------
 
 #pragma once
+
 #include "pch.h"
 
 //---- Define assertion handler. Defaults to calling assert().

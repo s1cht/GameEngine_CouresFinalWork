@@ -7,7 +7,7 @@ public:
     virtual ~EventBase() = default;
     virtual void Disconnect(size_t function) = 0;
     virtual void Fire() const = 0;
-    virtual void Fire(const void* arg) const = 0;
+    virtual void Fire(ENG_PTR<void> arg) const = 0;
     virtual bool IsEmpty() = 0;
 };
 

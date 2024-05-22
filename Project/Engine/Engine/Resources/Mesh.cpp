@@ -3,6 +3,8 @@
 
 Mesh::Mesh()
 {
+    m_indexCount = INT();
+    m_vertexCount = INT();
     m_vertexBuffer = nullptr;
     m_indexBuffer = nullptr;
     m_model = nullptr;

@@ -16,8 +16,8 @@ public:
     void Destroy() override;
 
     void Initialize(std::wstring);
-    void Initialize(std::wstring, Instance*);
-    void Initialize(std::wstring, Instance*, Mesh*);
+    void Initialize(std::wstring, INSTANCE);
+    void Initialize(std::wstring, INSTANCE, Mesh*);
 
     void SetPosition(Vector3);
     void SetRotation(Vector3);
@@ -31,12 +31,13 @@ public:
     void SetMesh(Mesh*);
     void SetTexture(Texture*);
 
-    void SetParent(Instance*) override;
+    void SetParent(INSTANCE) override;
     void SetName(std::wstring) override;
     void SetDevices(ID3D11Device*, ID3D11DeviceContext*) override;
+    void SetID(INT) override;
 
-    void AddChild(Instance*) override;
-    void DeleteChild(std::wstring) override;
+    void AddChild(INSTANCE) override;
+    void DeleteChild(INT) override;
 
     Mesh* GetMesh();
 
@@ -47,20 +48,27 @@ public:
     Color4 GetColor();
 
     std::wstring GetName() override;
-    Instance* GetParent() override;
-    std::vector<Instance*> GetChildren() override;
+    INSTANCE GetParent() override;
+    ClassName GetInstanceClassName() override;
+    std::vector<INSTANCE> GetChildren() override;
+    INT GetID() override;
+    INSTANCE GetChildByID(INT) override;
 
     std::string GetMeshName();
     Texture* GetTexture();
 
-    Instance* operator[] (const wstring) override;
-    Instance* operator[] (size_t) override;
+
+    INSTANCE operator[] (const wstring) override;
+    INSTANCE operator[] (size_t) override;
 
 private:
-    std::string m_ClassName = "Part";
+    ClassName m_ClassName = PART;
+
+    INT m_ID;
 
     std::wstring m_Name;
-    Instance* m_Parent;
+    INSTANCE m_Parent;
+    bool m_idInited = false;
 
     Mesh* m_Mesh;
     Texture* m_Texture;
@@ -71,7 +79,7 @@ private:
 
     Color4 m_Color;
 
-    std::vector<Instance*> m_Children;
+    std::vector<INSTANCE> m_Children;
 
 public:
     Event<void> OnDestroyed;
